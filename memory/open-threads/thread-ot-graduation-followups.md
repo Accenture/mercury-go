@@ -9,10 +9,17 @@
      (PR links in older logs resolve there).
   3. ~~`LICENSE` copyright line~~ — done 2026-09-10 on Eric's directive: "Copyright 2026 Accenture"
      (README License section and whitepaper Status line carry it too).
-  4. Repo metadata: description + homepage on GitHub (blank at transfer); the unrelated `dev`
-     branch (a React flow-editor prototype) left untouched — keep or delete. (Contribution
-     workflow is settled: PR required — Eric, 2026-09-10; recorded in `github-origin-mercury-go`.)
-  5. The mercury-composable / mercury thread `ot-agent-memory-attribution-locators` is now
-     triggered: the official URL exists, so F3-option-A + F4 can land in both engines'
-     `docs/mercury-story.md` (PR workflow — product docs).
+  4. ~~Repo metadata~~ — description + homepage set 2026-09-10 via `gh repo edit` (needed the
+     `acn-ericlaw` account; the EMU account got a 404). Still open: the unrelated `dev` branch
+     (a React flow-editor prototype) — keep or delete. (Contribution workflow is settled: PR
+     required — Eric, 2026-09-10; recorded in `github-origin-mercury-go`.)
+  5. ~~Attribution locators in the engines' white papers~~ — landed as PRs
+     Accenture/mercury-composable#350 and Accenture/mercury#253 (2026-09-10): closing note
+     "part of the Mercury family (github.com/Accenture/mercury-go)" + References #20 → the
+     agent-memory whitepaper at the official site; the Java repo's thread is closed.
+  6. Dependabot opened Accenture/mercury-go#1 within minutes of the transfer (org-level
+     Dependabot; the repo ships no `.github/dependabot.yml`): `mkdocs-material` 9.7.6 → 9.7.7
+     in `docs-requirements.txt`, a patch bump; `memory` + `shell-suites` checks green. Safe to
+     merge — the strict `docs` build runs on the resulting `main` push and would surface any
+     theme regression. Eric's merge.
   <!-- id: ot-graduation-followups | created: 2026-09-10 | last_used: 2026-09-10 | uses: 1 | tier: working | origin: 2026-09-10-152543 -->
