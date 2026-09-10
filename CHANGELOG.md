@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > commit. The capability ladder matches `VERSION` and `UPGRADE.md`.
 
 > **Project status — September 10, 2026: graduated.** Having proven itself across multiple
-> field installations, agent-memory was promoted from independent research into the **Mercury
+> field installations, agent-memory was promoted into the **Mercury
 > family** — Accenture's open-source foundation of advanced software for human–AI
 > collaboration. Its official home is now `github.com/Accenture/mercury-go` (full history
 > transferred from `acn-ericlaw/agent-memory`; documentation at

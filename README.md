@@ -18,17 +18,30 @@ Three things in one:
    migrated into the unified format. Steering files folded in, chat history
    converted to dated session logs, originals preserved under `legacy/`.
 
-> **Official status — graduated September 10, 2026.** Having proven itself across multiple
-> field installations, agent-memory has been promoted into the **Mercury family** — Accenture's
-> open-source foundation of advanced software for human–AI collaboration — alongside
-> [mercury-composable](https://github.com/Accenture/mercury-composable) (Java),
-> [mercury](https://github.com/Accenture/mercury) (Rust),
-> [mercury-python](https://github.com/Accenture/mercury-python) and
-> [mercury-nodejs](https://github.com/Accenture/mercury-nodejs). Its official home is
-> [github.com/Accenture/mercury-go](https://github.com/Accenture/mercury-go); documentation at
-> [accenture.github.io/mercury-go](https://accenture.github.io/mercury-go/). Apache-2.0. The
-> tool keeps its name and its version (v4.39.2) — graduation recognizes the tool's state, it
-> does not change it; enabled repositories need no action.
+> **Part of the Mercury family** — Accenture's advanced software foundations for human–AI
+> collaboration — since September 10, 2026, having proven itself across multiple field
+> installations (see [The Mercury Family](#the-mercury-family) below). Official home:
+> [github.com/Accenture/mercury-go](https://github.com/Accenture/mercury-go) · documentation:
+> [accenture.github.io/mercury-go](https://accenture.github.io/mercury-go/) · Apache-2.0.
+> The tool keeps its name and its version (v4.39.2) — graduation recognizes the tool's state,
+> it does not change it; enabled repositories need no action.
+
+## The Mercury Family
+
+**Advanced software foundations for human–AI collaboration** — Accenture open source,
+Apache-2.0. Composable engines whose applications are assembled from self-contained functions
+and YAML-configured event flows — a shape human developers and AI agents read equally well —
+plus the shared memory layer (this tool) that keeps every human and every AI agent on a
+project oriented on the same intent and state. Full page:
+[The Mercury Family](https://accenture.github.io/mercury-go/mercury-family/).
+
+| Member | Role | Repository · Docs |
+| --- | --- | --- |
+| **agent-memory** | Vendor-neutral shared AI memory + cognitive loop — *this repository* | [Accenture/mercury-go](https://github.com/Accenture/mercury-go) · [docs](https://accenture.github.io/mercury-go/) |
+| **mercury-composable** | Java engine — Platform Core, Event Script, Active Knowledge Graph | [Accenture/mercury-composable](https://github.com/Accenture/mercury-composable) · [docs](https://accenture.github.io/mercury-composable/) |
+| **mercury** | Rust engine — twin of mercury-composable: same three layers, same flow YAML | [Accenture/mercury](https://github.com/Accenture/mercury) · [docs](https://accenture.github.io/mercury/) |
+| **mercury-python** | Python language pack — composable functions in Python | [Accenture/mercury-python](https://github.com/Accenture/mercury-python) · [docs](https://accenture.github.io/mercury-python/) |
+| **mercury-nodejs** | Node.js language pack — composable functions in Node.js | [Accenture/mercury-nodejs](https://github.com/Accenture/mercury-nodejs) · [docs](https://accenture.github.io/mercury-nodejs/) |
 
 ---
 
@@ -408,4 +421,4 @@ Notable changes are recorded in the [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
-Licensed under the [Apache License, Version 2.0](LICENSE). See the [`LICENSE`](LICENSE) file for the full text.
+Copyright 2026 Accenture. Licensed under the [Apache License, Version 2.0](LICENSE). See the [`LICENSE`](LICENSE) file for the full text.

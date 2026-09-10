@@ -13,6 +13,7 @@ Cursor, Kiro, GitHub Copilot, Antigravity — can read, write, and evolve.
 [Get started](getting-started.md){ .md-button .md-button--primary }
 [Read the whitepaper](agent-memory-whitepaper.md){ .md-button }
 [View the deck](agent-memory-deck.html){ .md-button }
+[The Mercury Family](mercury-family.md){ .md-button }
 
 ---
 
@@ -121,10 +122,9 @@ git-committed `memory/` directory. The files **are** the product; the agent is t
 </div>
 
 !!! note "Status"
-    **Official — a member of the Mercury family since September 10, 2026.** Having proven
-    itself across multiple field installations, agent-memory graduated from independent
-    research into Accenture's open-source foundation of advanced software for human–AI
-    collaboration, alongside mercury-composable (Java), mercury (Rust), mercury-python and
-    mercury-nodejs. Home: [github.com/Accenture/mercury-go](https://github.com/Accenture/mercury-go),
-    Apache-2.0. The current release is documented against **v4.39.2** — the version is
-    unchanged by graduation, and enabled repositories need no action.
+    **Part of the [Mercury family](mercury-family.md) since September 10, 2026** —
+    Accenture's advanced software foundations for human–AI collaboration, alongside
+    mercury-composable (Java), mercury (Rust), mercury-python and mercury-nodejs. Home:
+    [github.com/Accenture/mercury-go](https://github.com/Accenture/mercury-go), Apache-2.0.
+    The current release is documented against **v4.39.2** — the version is unchanged by
+    graduation, and enabled repositories need no action.
