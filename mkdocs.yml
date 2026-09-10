@@ -10,8 +10,8 @@ repo_url: https://github.com/Accenture/mercury-go
 edit_uri: edit/main/docs/
 
 copyright: >-
-  Apache-2.0 &middot; agent-memory is a member of the Mercury family &mdash; Accenture
-  open source for human&ndash;AI collaboration &mdash; since September 10, 2026.
+  Copyright 2026 Accenture &middot; Apache-2.0 &middot; agent-memory is part of the Mercury
+  family &mdash; advanced software foundations for human&ndash;AI collaboration.
 
 theme:
   name: material

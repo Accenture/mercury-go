@@ -122,7 +122,7 @@ git-committed `memory/` directory. The files **are** the product; the agent is t
 </div>
 
 !!! note "Status"
-    **Official — a member of the [Mercury family](mercury-family.md) since September 10, 2026**:
+    **Part of the [Mercury family](mercury-family.md) since September 10, 2026** —
     Accenture's advanced software foundations for human–AI collaboration, alongside
     mercury-composable (Java), mercury (Rust), mercury-python and mercury-nodejs. Home:
     [github.com/Accenture/mercury-go](https://github.com/Accenture/mercury-go), Apache-2.0.

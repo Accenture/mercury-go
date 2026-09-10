@@ -18,10 +18,9 @@ Three things in one:
    migrated into the unified format. Steering files folded in, chat history
    converted to dated session logs, originals preserved under `legacy/`.
 
-> **Official status — graduated September 10, 2026.** Having proven itself across multiple
-> field installations, agent-memory is a member of the **Mercury family** — Accenture's
-> advanced software foundations for human–AI collaboration (see
-> [The Mercury Family](#the-mercury-family) below). Official home:
+> **Part of the Mercury family** — Accenture's advanced software foundations for human–AI
+> collaboration — since September 10, 2026, having proven itself across multiple field
+> installations (see [The Mercury Family](#the-mercury-family) below). Official home:
 > [github.com/Accenture/mercury-go](https://github.com/Accenture/mercury-go) · documentation:
 > [accenture.github.io/mercury-go](https://accenture.github.io/mercury-go/) · Apache-2.0.
 > The tool keeps its name and its version (v4.39.2) — graduation recognizes the tool's state,
