@@ -1,8 +1,8 @@
 - [ ] (ops) **Graduation follow-ups — the org home `Accenture/mercury-go`** (opened 2026-09-10 at
   graduation; each item is Eric's call or a repo setting only an admin can flip):
-  1. Enable GitHub Pages — Settings → Pages → Deploy from a branch → `gh-pages` / root (the
-     mercury-composable precedent) so `accenture.github.io/mercury-go/` serves; confirm the first
-     `docs` workflow run can push `gh-pages` under the org's GITHUB_TOKEN policy.
+  1. ~~Enable GitHub Pages~~ — done by GitHub itself: pushing `gh-pages` auto-enabled Pages
+     (source `gh-pages` / root); `accenture.github.io/mercury-go/` live (HTTP 200) and the first
+     `docs` run pushed `gh-pages` fine under the org's token policy (2026-09-10).
   2. Fate of `acn-ericlaw/agent-memory` and its site: archive with a README pointer, or redirect —
      the commit transfer left stars/issues/PR history behind (PR links in older logs resolve there).
   3. `LICENSE` copyright line ("Copyright 2026 Eric Law") — whether Accenture takes it on.
