@@ -141,3 +141,7 @@ nav:
       - Agent Cognitive Framework: agent-cognitive-framework.md
       - Architecture Decision Record: arch-decisions/ADR.md
   - Changelog: changelog.md
+  - Project:
+      - Contributing: https://github.com/Accenture/mercury-go/blob/main/CONTRIBUTING.md
+      - Code of Conduct: https://github.com/Accenture/mercury-go/blob/main/CODE_OF_CONDUCT.md
+      - Inclusivity: https://github.com/Accenture/mercury-go/blob/main/INCLUSIVITY.md

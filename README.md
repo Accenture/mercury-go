@@ -419,6 +419,12 @@ ENABLE.md Step 3 →  Mode A: Fresh Enable   (nothing detected → templates fil
 
 Notable changes are recorded in the [CHANGELOG.md](CHANGELOG.md).
 
+## Contributing
+
+Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) and the
+[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) before opening a pull request; our
+[Inclusive Language Guidebook](INCLUSIVITY.md) describes the language we use.
+
 ## License
 
 Copyright 2026 Accenture. Licensed under the [Apache License, Version 2.0](LICENSE). See the [`LICENSE`](LICENSE) file for the full text.
