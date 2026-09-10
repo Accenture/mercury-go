@@ -106,6 +106,7 @@ extra:
 
 nav:
   - Home: index.md
+  - Mercury Family: mercury-family.md
   - Getting Started: getting-started.md
   - Concepts:
       - concepts/index.md

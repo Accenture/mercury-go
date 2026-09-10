@@ -4,9 +4,10 @@
 
 **Version:** 1.7 (describes agent-memory **v4.39.2**)
 **Date:** September 10, 2026
-**Status:** Official — a member of the **Mercury family**, Accenture's open-source foundation of
-advanced software for human–AI collaboration, since **September 10, 2026** (graduation).
-Repository: <https://github.com/Accenture/mercury-go> · Apache-2.0.
+**Status:** Official — a member of the **Mercury family**, Accenture's advanced software
+foundations for human–AI collaboration, since **September 10, 2026** (graduation) — see
+[The Mercury Family](mercury-family.md). Repository: <https://github.com/Accenture/mercury-go> ·
+Copyright 2026 Accenture · Apache-2.0.
 
 > *"Acceleration without direction is only faster drift."*
 
@@ -478,8 +479,7 @@ its documentation:
   the runtime* and native adapters are conveniences, not requirements.
 - **Graduation (September 10, 2026).** Having proven itself across multiple field
   installations — the Rust rewrite, the dogfooded tool itself, Accenture's Mercury product
-  repositories, and the cross-vendor sweep above — agent-memory was promoted from independent
-  research into the **Mercury family**, Accenture's open-source foundation of advanced
+  repositories, and the cross-vendor sweep above — agent-memory was promoted into the **Mercury family**, Accenture's open-source foundation of advanced
   software for human–AI collaboration, with its official home at
   `github.com/Accenture/mercury-go`. The promotion changed the tool's status, not the tool:
   the version stayed v4.39.2 and enabled repositories needed no action — itself a small
