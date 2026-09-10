@@ -18,6 +18,18 @@ Three things in one:
    migrated into the unified format. Steering files folded in, chat history
    converted to dated session logs, originals preserved under `legacy/`.
 
+> **Official status — graduated September 10, 2026.** Having proven itself across multiple
+> field installations, agent-memory has been promoted into the **Mercury family** — Accenture's
+> open-source foundation of advanced software for human–AI collaboration — alongside
+> [mercury-composable](https://github.com/Accenture/mercury-composable) (Java),
+> [mercury](https://github.com/Accenture/mercury) (Rust),
+> [mercury-python](https://github.com/Accenture/mercury-python) and
+> [mercury-nodejs](https://github.com/Accenture/mercury-nodejs). Its official home is
+> [github.com/Accenture/mercury-go](https://github.com/Accenture/mercury-go); documentation at
+> [accenture.github.io/mercury-go](https://accenture.github.io/mercury-go/). Apache-2.0. The
+> tool keeps its name and its version (v4.39.2) — graduation recognizes the tool's state, it
+> does not change it; enabled repositories need no action.
+
 ---
 
 ## Quickstart
@@ -27,7 +39,7 @@ Three short phases: **install the tool**, **enable a repo**, then **work in that
 ### 1 · Install agent-memory (one-time)
 
 ```bash
-git clone https://github.com/your-org/agent-memory
+git clone https://github.com/Accenture/mercury-go agent-memory
 cd agent-memory
 ```
 
@@ -243,7 +255,7 @@ Migration rules per vendor: see [`MIGRATE.md`](./MIGRATE.md).
 If you want this repo to be your project's memory layer (not a tool):
 
 ```bash
-git clone https://github.com/your-org/agent-memory my-project-memory
+git clone https://github.com/Accenture/mercury-go my-project-memory
 cd my-project-memory
 
 # Edit memory/instructions.md and memory/continuity.md for your project

@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > introduced after 3.0.0 shipped), organized by capability rather than by individual
 > commit. The capability ladder matches `VERSION` and `UPGRADE.md`.
 
+> **Project status — September 10, 2026: graduated.** Having proven itself across multiple
+> field installations, agent-memory was promoted from independent research into the **Mercury
+> family** — Accenture's open-source foundation of advanced software for human–AI
+> collaboration. Its official home is now `github.com/Accenture/mercury-go` (full history
+> transferred from `acn-ericlaw/agent-memory`; documentation at
+> `accenture.github.io/mercury-go`). This is a status change, not a release: `VERSION` stays
+> **4.39.2**, there is no upgrade rung, and enabled repositories need no action.
+
 ## Version 4.39.2, 9/4/2026
 
 > **CI secret-scan waiver: silent abort when the last changed file is waived (PATCH).** Field

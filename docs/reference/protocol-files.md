@@ -8,18 +8,18 @@ the source on GitHub.
 
 | File | Role |
 |---|---|
-| [`AGENTS.md`](https://github.com/acn-ericlaw/agent-memory/blob/main/AGENTS.md) | Exact one-line universal discovery shim to `memory/PROTOCOL.md` — or, on a repo that is also a consumable product, the sanctioned contributor/consumer fork (v4.38.0): contributors to the protocol, consumers to the repo's declared AI entry point. |
-| [`memory/PROTOCOL.md`](https://github.com/acn-ericlaw/agent-memory/blob/main/memory/PROTOCOL.md) | Canonical activation and lifecycle protocol. The tool copy includes dual-mode operator routing; enabled targets receive the target-only source from `templates/memory/PROTOCOL.md`. |
-| [`README.md`](https://github.com/acn-ericlaw/agent-memory/blob/main/README.md) | Human-facing quickstart + design philosophy. |
+| [`AGENTS.md`](https://github.com/Accenture/mercury-go/blob/main/AGENTS.md) | Exact one-line universal discovery shim to `memory/PROTOCOL.md` — or, on a repo that is also a consumable product, the sanctioned contributor/consumer fork (v4.38.0): contributors to the protocol, consumers to the repo's declared AI entry point. |
+| [`memory/PROTOCOL.md`](https://github.com/Accenture/mercury-go/blob/main/memory/PROTOCOL.md) | Canonical activation and lifecycle protocol. The tool copy includes dual-mode operator routing; enabled targets receive the target-only source from `templates/memory/PROTOCOL.md`. |
+| [`README.md`](https://github.com/Accenture/mercury-go/blob/main/README.md) | Human-facing quickstart + design philosophy. |
 
 ## Read on demand
 
 | File | Role |
 |---|---|
-| [`DECAY.md`](https://github.com/acn-ericlaw/agent-memory/blob/main/DECAY.md) | The authoritative decay rules — tiers, windows, what never decays, supersession. |
-| [`REVIEW.md`](https://github.com/acn-ericlaw/agent-memory/blob/main/REVIEW.md) | The review ritual, step by step, with the safe-write Safety section. |
-| [`MERGE.md`](https://github.com/acn-ericlaw/agent-memory/blob/main/MERGE.md) | The tiered, human-gated `memory/` conflict-resolution protocol. |
-| [`SKILLS.md`](https://github.com/acn-ericlaw/agent-memory/blob/main/SKILLS.md) | The skills layer — authoring, syncing, deleting, the adapter recipe. |
+| [`DECAY.md`](https://github.com/Accenture/mercury-go/blob/main/DECAY.md) | The authoritative decay rules — tiers, windows, what never decays, supersession. |
+| [`REVIEW.md`](https://github.com/Accenture/mercury-go/blob/main/REVIEW.md) | The review ritual, step by step, with the safe-write Safety section. |
+| [`MERGE.md`](https://github.com/Accenture/mercury-go/blob/main/MERGE.md) | The tiered, human-gated `memory/` conflict-resolution protocol. |
+| [`SKILLS.md`](https://github.com/Accenture/mercury-go/blob/main/SKILLS.md) | The skills layer — authoring, syncing, deleting, the adapter recipe. |
 
 The protocol's instruction-versus-evidence boundary is governed by the
 [agent instruction and memory security contract](../architecture/security.md).
@@ -28,10 +28,10 @@ The protocol's instruction-versus-evidence boundary is governed by the
 
 | File | Role |
 |---|---|
-| [`ENABLE.md`](https://github.com/acn-ericlaw/agent-memory/blob/main/ENABLE.md) | The 10-step enablement flow (Modes A / B / C). Lives in the tool, never installed into a target. |
-| [`MIGRATE.md`](https://github.com/acn-ericlaw/agent-memory/blob/main/MIGRATE.md) | Vendor-file detection + promotion for Mode C. |
-| [`UPGRADE.md`](https://github.com/acn-ericlaw/agent-memory/blob/main/UPGRADE.md) | The version ladder — the per-version record + the detailed text behind each semantic step. |
-| [`MANIFEST.md`](https://github.com/acn-ericlaw/agent-memory/blob/main/MANIFEST.md) | The declarative target state (v4.35.0): every installed artifact + policy, the semantic-steps table, and the coverage contract behind `scripts/reconcile.py`/`.mjs`. |
+| [`ENABLE.md`](https://github.com/Accenture/mercury-go/blob/main/ENABLE.md) | The 10-step enablement flow (Modes A / B / C). Lives in the tool, never installed into a target. |
+| [`MIGRATE.md`](https://github.com/Accenture/mercury-go/blob/main/MIGRATE.md) | Vendor-file detection + promotion for Mode C. |
+| [`UPGRADE.md`](https://github.com/Accenture/mercury-go/blob/main/UPGRADE.md) | The version ladder — the per-version record + the detailed text behind each semantic step. |
+| [`MANIFEST.md`](https://github.com/Accenture/mercury-go/blob/main/MANIFEST.md) | The declarative target state (v4.35.0): every installed artifact + policy, the semantic-steps table, and the coverage contract behind `scripts/reconcile.py`/`.mjs`. |
 
 ## Per-repo state (generated)
 

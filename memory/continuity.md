@@ -7,7 +7,7 @@
 ## Project State
 
 - **project:** agent-memory
-- **status:** v4.39.2 — a vendor-neutral, no-code (markdown) shared-AI-memory + AI-enablement tool: backward memory (decay/review/archive), forward VBDI loop, cross-vendor skills layer, declarative enable/upgrade (MANIFEST reconcile), forge-aware ritual triggers (GitHub/GitLab/AzDO), and the merge-scale thread layout (`memory/open-threads/`). Detail: What's Been Built below; per-version history: `UPGRADE.md` + session logs.
+- **status:** v4.39.2 — official Accenture open source in the Mercury family (graduated 2026-09-10; home `Accenture/mercury-go`, docs `accenture.github.io/mercury-go`); a vendor-neutral, no-code (markdown) shared-AI-memory + AI-enablement tool: backward memory (decay/review/archive), forward VBDI loop, cross-vendor skills layer, declarative enable/upgrade (MANIFEST reconcile), forge-aware ritual triggers (GitHub/GitLab/AzDO), and the merge-scale thread layout (`memory/open-threads/`). Detail: What's Been Built below; per-version history: `UPGRADE.md` + session logs.
 - **last_enabled:** 2026-06-12
 - **last_review:** 2026-08-22 | through 2026-08-22-174047
 - **last_invariant_check:** 2026-08-22 | through 2026-08-22-174808 (all 6 confirmed by Eric — walkthrough with live-tree evidence; no-build-step wording refreshed)
@@ -99,10 +99,20 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
 - Contradictions between vendors surface as Open Threads — the tool never picks a winner
 - Three modes: Fresh Enable (A), Already Ours (B, idempotent), Migrate Vendor (C)
 - Dry-run support so users can preview before committing
+- **`origin` is GitHub `Accenture/mercury-go` — the official home since graduation
+  (2026-09-10); assume GitHub for git ops.** agent-memory joined the Mercury family
+  (Accenture open source for human–AI collaboration) by commit transfer, not GitHub repo
+  transfer: full history + 23 tags + `gh-pages` pushed to `main` of the repurposed `mercury-go`
+  repo (its two placeholder commits joined as unrelated history; fast-forward, nothing forced)
+  — a one-time exception Eric granted for the graduation step; the tool keeps its name and its
+  version. `acn-ericlaw/agent-memory` is the pre-graduation home — PR/issue links in older logs
+  and threads still resolve there. **Contribution workflow for the org home from here on: PR
+  required** (Eric, 2026-09-10 — "since mercury-go is an official repo, a PR is required").
+  <!-- id: github-origin-mercury-go | created: 2026-09-10 | last_used: 2026-09-10 | uses: 1 | tier: working | supersedes: github-origin-git-ops | origin: 2026-09-10-152543 -->
 - **`origin` is GitHub; assume GitHub for git ops** (public repo `acn-ericlaw/agent-memory`,
   Apache-2.0 — migrated from GitLab 2026-06-18; extracted from the publish-github thread at
   the v4.39.0 thread migration)
-  <!-- id: github-origin-git-ops | created: 2026-09-01 | last_used: 2026-09-01 | uses: 1 | tier: working -->
+  <!-- id: github-origin-git-ops | created: 2026-09-01 | last_used: 2026-09-01 | uses: 1 | tier: superseded | superseded-by: github-origin-mercury-go -->
 - Git hook entrypoints dispatch ordered fragments (ADR-0007) — `.githooks/pre-commit` and
   `.githooks/post-commit` stay minimal and stable; executable `.githooks/<hook>.d/*` fragments run
   in C-locale filename order, all fragments run, and the first non-zero status is returned.

@@ -2,16 +2,16 @@ site_name: agent-memory
 site_description: >-
   A lightweight, vendor-neutral AI memory + cognitive-loop system. No-code,
   markdown-only. Shared memory and portable skills across any AI agent.
-site_url: https://acn-ericlaw.github.io/agent-memory/
+site_url: https://accenture.github.io/mercury-go/
 site_author: Eric Law
 
-repo_name: acn-ericlaw/agent-memory
-repo_url: https://github.com/acn-ericlaw/agent-memory
+repo_name: Accenture/mercury-go
+repo_url: https://github.com/Accenture/mercury-go
 edit_uri: edit/main/docs/
 
 copyright: >-
-  Apache-2.0 &middot; agent-memory is independent research, not an official
-  Accenture product.
+  Apache-2.0 &middot; agent-memory is a member of the Mercury family &mdash; Accenture
+  open source for human&ndash;AI collaboration &mdash; since September 10, 2026.
 
 theme:
   name: material
@@ -102,7 +102,7 @@ validation:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/acn-ericlaw/agent-memory
+      link: https://github.com/Accenture/mercury-go
 
 nav:
   - Home: index.md

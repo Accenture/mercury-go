@@ -121,5 +121,10 @@ git-committed `memory/` directory. The files **are** the product; the agent is t
 </div>
 
 !!! note "Status"
-    agent-memory is independent research published under Apache-2.0. It is **not** an
-    official Accenture product. The current release is documented against **v4.39.2**.
+    **Official — a member of the Mercury family since September 10, 2026.** Having proven
+    itself across multiple field installations, agent-memory graduated from independent
+    research into Accenture's open-source foundation of advanced software for human–AI
+    collaboration, alongside mercury-composable (Java), mercury (Rust), mercury-python and
+    mercury-nodejs. Home: [github.com/Accenture/mercury-go](https://github.com/Accenture/mercury-go),
+    Apache-2.0. The current release is documented against **v4.39.2** — the version is
+    unchanged by graduation, and enabled repositories need no action.

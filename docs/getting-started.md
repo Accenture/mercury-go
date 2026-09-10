@@ -8,7 +8,7 @@ drive it by talking to your AI agent.
 ## 1 · Install agent-memory (one-time)
 
 ```bash
-git clone https://github.com/acn-ericlaw/agent-memory
+git clone https://github.com/Accenture/mercury-go agent-memory
 cd agent-memory
 ```
 

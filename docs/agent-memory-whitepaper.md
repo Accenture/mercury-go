@@ -2,8 +2,11 @@
 
 ## Deterministic memory as a substrate; a lightweight cognitive loop as the control layer
 
-**Version:** 1.6 (describes agent-memory **v4.39.2**)
-**Date:** September 5, 2026
+**Version:** 1.7 (describes agent-memory **v4.39.2**)
+**Date:** September 10, 2026
+**Status:** Official — a member of the **Mercury family**, Accenture's open-source foundation of
+advanced software for human–AI collaboration, since **September 10, 2026** (graduation).
+Repository: <https://github.com/Accenture/mercury-go> · Apache-2.0.
 
 > *"Acceleration without direction is only faster drift."*
 
@@ -444,7 +447,8 @@ its documentation:
   had missed — an upgrade silently overwriting a user-customized built-in vs. the additive-upgrades
   invariant — which `apply-critique` then fixed. Using the reviewer to review the reviewer.
 - **Cross-vendor, on a real product repo.** The protocol was driven end-to-end on a large
-  Accenture product repo (`mercury-composable`) by **GitHub Copilot / Gemini 3.1 Pro** — a
+  Accenture product repo (`mercury-composable` — now a sibling in the Mercury family) by
+  **GitHub Copilot / Gemini 3.1 Pro** — a
   different vendor and model from the author. It exercised the second-opinion loop *across*
   vendors, ran the cadence-advisory-triggered review unprompted, and the over-archival guard
   caught a premature archive it then reverted. Two convergence signals stand out: a Copilot
@@ -472,6 +476,14 @@ its documentation:
   `AGENTS.md` shim and the protocol baseline), both working as expected (2026-09). The
   no-adapter case is the stronger evidence: it validates the design bet that the *agent is
   the runtime* and native adapters are conveniences, not requirements.
+- **Graduation (September 10, 2026).** Having proven itself across multiple field
+  installations — the Rust rewrite, the dogfooded tool itself, Accenture's Mercury product
+  repositories, and the cross-vendor sweep above — agent-memory was promoted from independent
+  research into the **Mercury family**, Accenture's open-source foundation of advanced
+  software for human–AI collaboration, with its official home at
+  `github.com/Accenture/mercury-go`. The promotion changed the tool's status, not the tool:
+  the version stayed v4.39.2 and enabled repositories needed no action — itself a small
+  confirmation of the "point it at a repo" adoption model.
 
 ---
 
@@ -553,3 +565,4 @@ no-code, human-gated design.
 6. *Agent Cognitive Framework for Memory-Driven AI Systems* (the framework integrated here as the forward layer). 2026. `docs/agent-cognitive-framework.md`.
 7. Internal design docs: `docs/DESIGN-evolving-memory.md` (backward layer), `docs/DESIGN-vbdi-lifecycle.md` (forward layer), `docs/assessments/2026-06-13-industry-alignment.md`.
 8. Law, Eric. *From Context Engineering to Intent-Driven Development — why the next professional skill is not writing better prompts, but expressing clearer intent*. August 11, 2026. The companion thought-leadership article — written from the evolution of this project and the human–AI collaboration that built it. https://www.linkedin.com/posts/ericclaw_intent-driven-development-activity-7493145001313390593-cyc5
+9. Accenture. *Mercury* — the open-source family of advanced software foundations for human–AI collaboration: `mercury-composable` (Java), `mercury` (Rust), `mercury-python`, `mercury-nodejs`, and — since September 10, 2026 — agent-memory (`mercury-go`). https://github.com/Accenture/mercury-composable · https://github.com/Accenture/mercury-go
