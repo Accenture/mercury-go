@@ -2058,7 +2058,8 @@ irreversible after-the-fact cost; <code>AGENT_MEMORY_SECRET_GUARD=advisory</code
 <code>--no-verify</code> bypasses once). The CI floor stays advisory-by-default (<code>AGENT_MEMORY_STRICT=1</code>
 gates), and its three wrappers gained the matching <strong>changed-config scan</strong> on push.
 JSON/properties waivers live in the committed <code>.agent/secret-scan-ignore</code> (the inline line-tag
-needs a comment syntax those formats lack). Session-log auto-stub stays post-commit
+needs a comment syntax those formats lack) — since v4.40.1 a last-resort escape hatch the tool no
+longer seeds: restructure the fixture first. Session-log auto-stub stays post-commit
 (frictionless), exactly as §7.3 recommended.</p>
 <p><strong>Status:</strong> <strong>IMPLEMENTED v4.19.0</strong> (2026-06-24) — maintainer endorsed git-hooks + CI and added the
 zero-manual / untrained-user adoption constraint; built (<code>.githooks/post-commit</code> + CI workflow,
