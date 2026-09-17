@@ -1,0 +1,11 @@
+- [ ] **Reconcile: `seed-copy` cannot express "deliberately absent".** Surfaced upgrading mercury-composable
+  to v4.40.0 (2026-09-17, PR Accenture/mercury-composable#407): the team had deleted `.agent/secret-scan-ignore`
+  on 2026-09-12 on purpose (guard at zero exceptions; credential-shaped literals restructured away), and the
+  reconcile re-installed the comments-only seed because a `seed-copy` row copies whenever the target lacks the
+  file — and will re-offer it on every future upgrade. Harmless this time (zero patterns), but "never touched
+  when present" has no counterpart for "removed on purpose". Options for the maintainer: a target-side
+  tombstone the reconcile honours (e.g. an `.agent/absent` list or a marker file), or an `optional` MANIFEST
+  policy for seeds that are pure guidance. Keep `upgrades-additive` intact either way — the fix must never
+  delete. → serves: vision-agent-memory (adoption stays "point it at a repo": an upgrade should not resurrect
+  a deliberate deletion)
+  <!-- id: ot-seed-copy-deliberate-absence | created: 2026-09-17 | last_used: 2026-09-17 | uses: 1 | tier: working | origin: 2026-09-17-002547 -->
