@@ -28,7 +28,8 @@
 > `--no-verify` bypasses once). The CI floor stays advisory-by-default (`AGENT_MEMORY_STRICT=1`
 > gates), and its three wrappers gained the matching **changed-config scan** on push.
 > JSON/properties waivers live in the committed `.agent/secret-scan-ignore` (the inline line-tag
-> needs a comment syntax those formats lack). Session-log auto-stub stays post-commit
+> needs a comment syntax those formats lack) — since v4.40.1 a last-resort escape hatch the tool no
+> longer seeds: restructure the fixture first. Session-log auto-stub stays post-commit
 > (frictionless), exactly as §7.3 recommended.
 >
 > **Status:** **IMPLEMENTED v4.19.0** (2026-06-24) — maintainer endorsed git-hooks + CI and added the

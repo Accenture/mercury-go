@@ -8,4 +8,8 @@
   policy for seeds that are pure guidance. Keep `upgrades-additive` intact either way — the fix must never
   delete. → serves: vision-agent-memory (adoption stays "point it at a repo": an upgrade should not resurrect
   a deliberate deletion)
+  Progress (2026-09-17, v4.40.1): the motivating row is gone — `.agent/secret-scan-ignore` is no longer
+  seeded (Eric: a last-resort escape hatch; `secret-waiver-last-resort`), so the reconcile stops re-offering
+  it. The general question — a target-side tombstone or an `optional` policy for the remaining seed-copy
+  rows (PR template, archive INDEX, forge floors) — stays open.
   <!-- id: ot-seed-copy-deliberate-absence | created: 2026-09-17 | last_used: 2026-09-17 | uses: 1 | tier: working | origin: 2026-09-17-002547 -->

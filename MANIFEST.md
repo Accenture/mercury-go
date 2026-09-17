@@ -74,7 +74,6 @@ the sanctioned contributor/consumer fork structure (v4.38.0 — see the AGENTS.m
 | .github/workflows/agent-memory.yml | .github/workflows/agent-memory.yml | verbatim | github | - |
 | .gitlab/agent-memory-ci.yml | templates/.gitlab/agent-memory-ci.yml | verbatim | gitlab | - |
 | .azuredevops/agent-memory-ci.yml | templates/.azuredevops/agent-memory-ci.yml | verbatim | azdo | - |
-| .agent/secret-scan-ignore | templates/.agent/secret-scan-ignore | seed-copy | all | - |
 | memory/archive/INDEX.md | templates/memory/archive/INDEX.md | seed-copy | all | - |
 | .github/pull_request_template.md | templates/.github/pull_request_template.md | seed-copy | github | - |
 | .gitlab/merge_request_templates/Default.md | templates/.gitlab/merge_request_templates/Default.md | seed-copy | gitlab | - |
@@ -167,6 +166,7 @@ in the named `UPGRADE.md` rung. Mode B = reconcile + the applicable rows + stamp
 | 4.39.0 | 4.38.1 -> 4.39.0 | Thread migration (merge-scale layout): create memory/open-threads/ and move every Open Thread block out of memory/continuity.md into its own thread-<id>.md (verbatim cut-paste, checkbox + body + footer intact; mint a kebab id + footer first for a legacy thread that lacks one); replace continuity's Open Threads section body with the template's pointer note; delete the last_session line from Project State (derivable from the newest session log). Run memory-lint after - [thread-file]/[duplicate-id] gate the migration. |
 | 4.39.0 | 4.38.1 -> 4.39.0 | Protocol text changed (open-threads read/create steps, last_session derivation): re-copy a target memory/PROTOCOL.md still byte-identical to the 4.38.0 template; arbitrate a customized one per ENABLE.md 5i (add the new wording, never drop local directives). |
 | 4.40.0 | 4.39.2 -> 4.40.0 | Optionally add thread_stale_window: 40 to memory/decay-policy.md (lint falls back to the default when absent). At the next review run REVIEW.md step 8: list every [thread-stale] thread in one human closure gate and record the owner's decision per thread (close, or re-affirm under Memory References) - the tool never closes a thread. |
+| 4.40.1 | 4.40.0 -> 4.40.1 | Protocol text changed (secret-guard sentence: the waiver file is a last-resort escape hatch, not seeded): re-copy a target memory/PROTOCOL.md still byte-identical to the 4.40.0 template; arbitrate a customized one per ENABLE.md 5i. The tool no longer seeds .agent/secret-scan-ignore: delete a seeded stub that has no entries; keep one with entries only as a knowing last resort (field security scanners still flag waived literals) - prefer restructuring fixtures to placeholders. |
 
 ## Tool-only (never installed)
 
