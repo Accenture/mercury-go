@@ -2033,6 +2033,11 @@ since a fact was last referenced. Compare it against the windows below to decide
 <td style="text-align: right;"><code>40</code></td>
 <td>Sessions between human re-confirmations of <code>core</code> / invariants</td>
 </tr>
+<tr>
+<td><code>thread_stale_window</code></td>
+<td style="text-align: right;"><code>40</code></td>
+<td>Sessions an unchecked Open Thread may go unreferenced before it is <em>stalled</em> and the review raises a human closure gate (v4.40.0)</td>
+</tr>
 </tbody>
 </table>
 <div class="admonition note">
@@ -2049,7 +2054,11 @@ tune them.</p>
 <li>Anything under <code>## Architectural Invariants</code>.</li>
 <li><strong>Unchecked Open Threads</strong> (<code>- [ ]</code>) — they are <em>pinned</em> by being unchecked. Their pinned-ness
   is the protection, <strong>not</strong> the tier label, so the tooling leaves a pinned thread's tier
-  alone (it still refreshes the factual <code>uses</code> / <code>last_used</code>).</li>
+  alone (it still refreshes the factual <code>uses</code> / <code>last_used</code>).
+  Never decaying is not never checked: unreferenced for more than <code>thread_stale_window</code>
+  sessions a thread is <em>stalled</em> — a closure signal — and the review lists it in a human
+  closure gate where the owner closes it or re-affirms it; the tool never closes a thread
+  (v4.40.0).</li>
 </ul>
 <h2 id="running-it-deterministically">Running it deterministically<a class="headerlink" href="#running-it-deterministically" title="Permanent link">&para;</a></h2>
 <p>The mechanical steps of a review are packaged as runnable helpers so a capable agent can't

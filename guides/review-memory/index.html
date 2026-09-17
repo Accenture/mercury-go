@@ -1944,8 +1944,8 @@
 
 <h1 id="review-memory">Review Memory<a class="headerlink" href="#review-memory" title="Permanent link">&para;</a></h1>
 <p>The review is the <strong>manage</strong> step of the memory loop: it replays the ledger, re-tiers facts,
-archives the faded ones, applies supersessions, prompts invariant re-verification, and scans
-for contradictions and altitude drift.</p>
+archives the faded ones, applies supersessions, prompts invariant re-verification, gates
+stalled threads for a human decision, and scans for contradictions and altitude drift.</p>
 <h2 id="when-it-runs">When it runs<a class="headerlink" href="#when-it-runs" title="Permanent link">&para;</a></h2>
 <ul>
 <li>On <strong>cadence</strong> — at least every <code>review_every</code> sessions (default 10).</li>
@@ -1964,7 +1964,8 @@ for contradictions and altitude drift.</p>
   C --&gt; D[Move to archive&lt;br/&gt;archive-fact]
   D --&gt; E[Apply supersessions]
   E --&gt; F[Prompt invariant re-verify]
-  F --&gt; G[Scan for contradictions / drift]
+  F --&gt; S[Gate stalled threads&lt;br/&gt;&lt;i&gt;human closes or re-affirms&lt;/i&gt;]
+  S --&gt; G[Scan for contradictions / drift]
   G --&gt; H[memory-lint: verify clean]</code></pre>
 <p>The split is deliberate — <strong>mechanize the arithmetic, leave the judgment to the agent</strong>:</p>
 <table>
@@ -1982,6 +1983,10 @@ for contradictions and altitude drift.</p>
 <tr>
 <td>Decide <em>which</em> faded facts to retire</td>
 <td>the agent (judgment — never automated)</td>
+</tr>
+<tr>
+<td>Decide a <em>stalled</em> thread's fate — close or re-affirm</td>
+<td>the human, through the closure gate (<code>[thread-stale]</code>, v4.40.0 — never automated)</td>
 </tr>
 <tr>
 <td>Perform the archive <em>move</em></td>
