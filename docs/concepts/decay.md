@@ -37,6 +37,7 @@ All windows are counted in **sessions**, not days — integers only. Defaults (t
 | `continuity_max_facts` | `30` | Primary lean signal — decaying facts/threads before a review is advised |
 | `continuity_max_lines` | `600` | Coarse backstop on `continuity.md` size |
 | `verify_invariants_every` | `40` | Sessions between human re-confirmations of `core` / invariants |
+| `thread_stale_window` | `40` | Sessions an unchecked Open Thread may go unreferenced before it is *stalled* and the review raises a human closure gate (v4.40.0) |
 
 !!! note "Why these numbers"
     The defaults were retuned in v4.24.0 from real measurements across two enabled repos.
@@ -52,6 +53,10 @@ All windows are counted in **sessions**, not days — integers only. Defaults (t
 - **Unchecked Open Threads** (`- [ ]`) — they are *pinned* by being unchecked. Their pinned-ness
   is the protection, **not** the tier label, so the tooling leaves a pinned thread's tier
   alone (it still refreshes the factual `uses` / `last_used`).
+  Never decaying is not never checked: unreferenced for more than `thread_stale_window`
+  sessions a thread is *stalled* — a closure signal — and the review lists it in a human
+  closure gate where the owner closes it or re-affirms it; the tool never closes a thread
+  (v4.40.0).
 
 ## Running it deterministically
 

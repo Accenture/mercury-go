@@ -23,7 +23,7 @@ targets.
 ## memory-lint
 
 The deterministic integrity verifier the review ritual relies on. Ships in **both Python and
-Node** at output parity, so it runs on a node-only box too. Eleven checks:
+Node** at output parity, so it runs on a node-only box too. Fifteen checks:
 
 1. duplicate facts (`[both]`)
 2. over-archived (`[over-archived]`)
@@ -42,6 +42,17 @@ Node** at output parity, so it runs on a node-only box too. Eleven checks:
     inside `- [x]` thread blocks past `closed_narrative_max_lines` (default 150): close
     records should wait out the archive window as 3–6-line stubs; the full narrative lives
     in each thread's origin session log, and `REVIEW.md` condenses oversized records
+12. thread-file contract (`[thread-file]`, v4.39.0) — one thread per `memory/open-threads/`
+    file, named `thread-<id>.md` after its footer id
+13. duplicate ids across the live layer (`[duplicate-id]`, v4.39.0) — the silent-fork shape
+    of a same-id creation collision on parallel branches
+14. duplicated Project State scalars (`[duplicate-state-key]`, v4.39.0) — a union-style hand
+    merge that kept both sides
+15. stalled open threads (`[thread-stale]`, v4.40.0) — an unchecked `- [ ]` thread not
+    referenced for more than `thread_stale_window` sessions (default 40): a *closure signal*.
+    The pin still protects it; the review lists every stalled thread in one human closure
+    gate (`REVIEW.md` step 8) where the owner closes or re-affirms it — the tool never
+    closes a thread
 
 Plus a standalone mode (v4.34.0): `--scan-files FILE...` runs the **credential-class** subset of
 check 10 over arbitrary config files (`.json`/`.yml`/`.yaml`/`.properties`/`.toml`/`.ini`/`.env*`) —

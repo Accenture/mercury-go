@@ -7,9 +7,9 @@
 ## Project State
 
 - **project:** agent-memory
-- **status:** v4.39.2 — official Accenture open source in the Mercury family (graduated 2026-09-10; home `Accenture/mercury-go`, docs `accenture.github.io/mercury-go`); a vendor-neutral, no-code (markdown) shared-AI-memory + AI-enablement tool: backward memory (decay/review/archive), forward VBDI loop, cross-vendor skills layer, declarative enable/upgrade (MANIFEST reconcile), forge-aware ritual triggers (GitHub/GitLab/AzDO), and the merge-scale thread layout (`memory/open-threads/`). Detail: What's Been Built below; per-version history: `UPGRADE.md` + session logs.
+- **status:** v4.40.0 — official Accenture open source in the Mercury family (graduated 2026-09-10; home `Accenture/mercury-go`, docs `accenture.github.io/mercury-go`); a vendor-neutral, no-code (markdown) shared-AI-memory + AI-enablement tool: backward memory (decay/review/archive), forward VBDI loop, cross-vendor skills layer, declarative enable/upgrade (MANIFEST reconcile), forge-aware ritual triggers (GitHub/GitLab/AzDO), the merge-scale thread layout (`memory/open-threads/`), and the stalled-thread human closure gate (`[thread-stale]` + `REVIEW.md` step 8). Detail: What's Been Built below; per-version history: `UPGRADE.md` + session logs.
 - **last_enabled:** 2026-06-12
-- **last_review:** 2026-08-22 | through 2026-08-22-174047
+- **last_review:** 2026-09-16 | through 2026-09-16-235431
 - **last_invariant_check:** 2026-08-22 | through 2026-08-22-174808 (all 6 confirmed by Eric — walkthrough with live-tree evidence; no-build-step wording refreshed)
 - **vision:** `memory/vision.md` (north star; Blueprint gaps in Open Threads below)
 
@@ -48,6 +48,13 @@
   `legacy/`, 3 converted sessions)
 - `examples/evolving-memory-example/` — the review ritual in action (continuity
   before/after, archive, session log with Memory References)
+
+**Field validation (2026-09-16)**
+- The `AGENTS.md` one-line shim (v4.37.0) activates the protocol across vendors in live use:
+  Codex (mercury-composable PR #341 — Codex co-author trailer), Kiro (tested with Claude, GPT and
+  Gemini), Antigravity, and Cursor running Grok (2026-09-05). The v4.37.0 canary
+  (`ot-agents-native-activation-canary`) closed on this evidence.
+  <!-- id: agents-shim-activation-validated | created: 2026-09-16 | last_used: 2026-09-16 | uses: 1 | tier: working | origin: 2026-09-16-235431 -->
 
 ## Supported Migration Sources (v2)
 
@@ -108,17 +115,23 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   version. `acn-ericlaw/agent-memory` is the pre-graduation home — PR/issue links in older logs
   and threads still resolve there. **Contribution workflow for the org home from here on: PR
   required** (Eric, 2026-09-10 — "since mercury-go is an official repo, a PR is required").
-  <!-- id: github-origin-mercury-go | created: 2026-09-10 | last_used: 2026-09-10 | uses: 1 | tier: working | supersedes: github-origin-git-ops | origin: 2026-09-10-152543 -->
-- **`origin` is GitHub; assume GitHub for git ops** (public repo `acn-ericlaw/agent-memory`,
-  Apache-2.0 — migrated from GitLab 2026-06-18; extracted from the publish-github thread at
-  the v4.39.0 thread migration)
-  <!-- id: github-origin-git-ops | created: 2026-09-01 | last_used: 2026-09-01 | uses: 1 | tier: superseded | superseded-by: github-origin-mercury-go -->
+  <!-- id: github-origin-mercury-go | created: 2026-09-10 | last_used: 2026-09-16 | uses: 3 | tier: active | supersedes: github-origin-git-ops | origin: 2026-09-10-152543 -->
 - Git hook entrypoints dispatch ordered fragments (ADR-0007) — `.githooks/pre-commit` and
   `.githooks/post-commit` stay minimal and stable; executable `.githooks/<hook>.d/*` fragments run
   in C-locale filename order, all fragments run, and the first non-zero status is returned.
   Agent-memory owns only its `50-` fragments; differently named fragments belong to other layers
   and upgrades preserve them.
-  <!-- id: git-hook-fragment-dispatch | created: 2026-08-20 | last_used: 2026-08-21 | uses: 3 | tier: active | origin: 2026-08-20-210047 -->
+  <!-- id: git-hook-fragment-dispatch | created: 2026-08-20 | last_used: 2026-08-21 | uses: 3 | tier: archive-candidate | origin: 2026-08-20-210047 -->
+- **A long-stalled open thread is a signal for closure, rectified through a human gate — never
+  auto-closed** (Eric, 2026-09-16; shipped v4.40.0). Unreferenced for more than
+  `thread_stale_window` sessions (default 40), an unchecked thread is *stalled*: `memory-lint`
+  flags it (`[thread-stale]`) and the review lists it in one closure gate (`REVIEW.md` step 8)
+  where the owner closes it (undelivered items recorded as *deliberately dropped*) or re-affirms
+  it under `## Memory References` — the only reset. Inspecting a stalled thread is not a use.
+  Why: under competing priorities loose ends get filed in a thread and left behind without a
+  trace — pinned had come to mean unexamined (mercury-composable field report); and closing a
+  `(blueprint)` gap is an altitude decision, so `DECAY.md` §12 already required the human.
+  <!-- id: stalled-thread-closure-gate | created: 2026-09-16 | last_used: 2026-09-16 | uses: 2 | tier: active | origin: 2026-09-16-234024 -->
 
 ## Open Threads
 

@@ -126,5 +126,5 @@ git-committed `memory/` directory. The files **are** the product; the agent is t
     Accenture's advanced software foundations for human–AI collaboration, alongside
     mercury-composable (Java), mercury (Rust), mercury-python and mercury-nodejs. Home:
     [github.com/Accenture/mercury-go](https://github.com/Accenture/mercury-go), Apache-2.0.
-    The current release is documented against **v4.39.2** — the version is unchanged by
-    graduation, and enabled repositories need no action.
+    The current release is **v4.40.0**; graduation itself changed no version, and enabled
+    repositories needed no action for it.
