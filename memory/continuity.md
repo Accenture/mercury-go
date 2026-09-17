@@ -115,6 +115,9 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   version. `acn-ericlaw/agent-memory` is the pre-graduation home — PR/issue links in older logs
   and threads still resolve there. **Contribution workflow for the org home from here on: PR
   required** (Eric, 2026-09-10 — "since mercury-go is an official repo, a PR is required").
+  **Org-home PR and release creation need the `acn-ericlaw` account** — the Enterprise Managed User
+  account is refused for `createPullRequest` and lacks the `workflow` scope for releases (2026-09-10,
+  2026-09-16/17): switch, create, switch back.
   <!-- id: github-origin-mercury-go | created: 2026-09-10 | last_used: 2026-09-16 | uses: 3 | tier: active | supersedes: github-origin-git-ops | origin: 2026-09-10-152543 -->
 - Git hook entrypoints dispatch ordered fragments (ADR-0007) — `.githooks/pre-commit` and
   `.githooks/post-commit` stay minimal and stable; executable `.githooks/<hook>.d/*` fragments run
