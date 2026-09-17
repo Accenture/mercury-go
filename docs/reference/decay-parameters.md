@@ -11,6 +11,7 @@ files, never compute a score. The rules that consume them live in `DECAY.md` / `
 working_window:   3
 active_window:    8
 archive_window:   20
+thread_stale_window: 40  # unchecked thread unreferenced this long → stalled → human closure gate
 
 # Review triggers
 review_every:          10
@@ -29,7 +30,7 @@ core_min_reviews: 5
 # Never decays
 # - tier: core
 # - anything under "## Architectural Invariants"
-# - unchecked Open Threads ( - [ ] )
+# - unchecked Open Threads ( - [ ] ) — pinned, but they can stall (thread_stale_window)
 ```
 
 ## Reference
@@ -39,6 +40,7 @@ core_min_reviews: 5
 | `working_window` | `3` | `sessions_since_last_used` ≤ this → `working` |
 | `active_window` | `8` | ≤ this (and past `working`) → `active` |
 | `archive_window` | `20` | ≤ this (and past `active`) → `archive-candidate`; past it → archive |
+| `thread_stale_window` | `40` | An unchecked Open Thread not referenced for more than this many sessions is *stalled* — `[thread-stale]` flags it and the review lists it in a human closure gate; the owner closes or re-affirms it, the tool never closes a thread (v4.40.0) |
 | `review_every` | `10` | Run a review at least every N sessions; drives `[review-overdue]` |
 | `continuity_max_facts` | `30` | Decaying facts/threads before `[continuity-bloat]` advises a review |
 | `continuity_max_lines` | `600` | Coarse size backstop on `continuity.md` |
@@ -58,6 +60,11 @@ core_min_reviews: 5
   permanently red (alert fatigue).
 - **`verify_invariants_every`** was raised 20 → 40 to avoid near-daily human re-confirms at
   burst velocity (10–20 sessions/day).
+- **`thread_stale_window`** defaults to the same 40: a pinned thread is the third never-decay
+  class, and "never-decay ≠ never-checked" applies to it too — a thread nobody has referenced
+  in 40 sessions is presumptively a loose end, not live work. Raise it for a repo whose
+  workstreams legitimately run long; never set it below `archive_window`, and never treat the
+  advisory as an auto-close — closure is the owner's call, through the review's gate.
 - The lifecycle windows (`working` / `active` / `archive`) and `review_every` rarely need
   changing — the common bloat cause was reviews not *running*, not the windows being wrong.
   The `[review-overdue]` advisory exists precisely for that.

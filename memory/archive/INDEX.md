@@ -95,3 +95,10 @@
 - template-import-bleed-v4291 — Shipped v4.29.1 (PATCH) — template import blocks → `{{BOOTSTRAP_IMPORTS}}` placeholder. Fr… — faded — 2026-Q3.md
 - coauthor-stable-identity-v4280 — Shipped v4.28.0 (MINOR) — co-author convention cleanup: stable agent identity + one traile… — faded — 2026-Q3.md
 - bp-before-session-presence — (blueprint — SHIPPED v4.29.0 MINOR, 2026-07-12) Before-session context *presence* — the — faded — 2026-Q3.md
+- hook-dispatchers-v4350 — Shipped v4.36.0 (MINOR) — composable Git hook dispatchers. Hook entrypoints became — swept: completed, > archive_window (review 2026-09-16) — 2026-Q3.md
+- secret-fp-backtick-v4332 — Shipped v4.33.2 (PATCH) — `[secret-material]`: backtick is a value delimiter. The — swept: completed, > archive_window (review 2026-09-16) — 2026-Q3.md
+- secret-fp-enum-constants-v4331 — Shipped v4.33.1 (PATCH) — ALL-CAPS enum constants are not credentials. Check 10's — swept: completed, > archive_window (review 2026-09-16) — 2026-Q3.md
+- secret-fp-self-knob-v4342 — Shipped v4.34.2 (PATCH) — the guard's own opt-down knob is not a credential. — swept: completed, > archive_window (review 2026-09-16) — 2026-Q3.md
+- secret-redaction-lint-v4330 — Shipped v4.33.0 (MINOR) — session-log secret redaction: ritual rule + — swept: completed, > archive_window (review 2026-09-16) — 2026-Q3.md
+- secret-review-hardening-v4333 — Shipped v4.33.3 (PATCH) — security-review hardening for `[secret-material]`. A — swept: completed, > archive_window (review 2026-09-16) — 2026-Q3.md
+- github-origin-git-ops — `origin` is GitHub; assume GitHub for git ops (public repo `acn-ericlaw/agent-memory`, — superseded by github-origin-mercury-go — 2026-Q3.md

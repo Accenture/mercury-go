@@ -8,6 +8,8 @@
 - working_window:   3
 - active_window:    8
 - archive_window:   20
+- thread_stale_window: 40  # an unchecked Open Thread not referenced for more than this is STALLED — a closure
+                           #     signal: the review lists it in a human closure gate; never auto-closed (v4.40.0)
 
 ## Review triggers
 - review_every:         10
@@ -28,4 +30,4 @@
 ## Never decays
 - tier: core
 - anything under "## Architectural Invariants"
-- unchecked Open Threads ( - [ ] )
+- unchecked Open Threads ( - [ ] ) — never decay, but stall after thread_stale_window unreferenced sessions → human closure gate

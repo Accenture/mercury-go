@@ -6,4 +6,4 @@
   red-verified first); SKILLS.md house rule. Lesson: the tool's subject matter names its
   own identifiers into scanner FPs — prose constants stay scanner-neutral, now
   suite-enforced. → serves: vision-agent-memory
-  <!-- id: secret-fp-guidance-ident-v4381 | created: 2026-08-26 | last_used: 2026-08-26 | uses: 1 | tier: working | origin: 2026-08-26-000208 -->
+  <!-- id: secret-fp-guidance-ident-v4381 | created: 2026-08-26 | last_used: 2026-08-26 | uses: 1 | tier: archive-candidate | origin: 2026-08-26-000208 -->

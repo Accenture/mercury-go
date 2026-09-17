@@ -19,6 +19,76 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > `accenture.github.io/mercury-go`). This is a status change, not a release: `VERSION` stays
 > **4.39.2**, there is no upgrade rung, and enabled repositories need no action.
 
+## Version 4.40.0, 9/16/2026
+
+> **Stalled open threads → human closure gate (MINOR).** Field report from the
+> mercury-composable team (2026-09-16, running v4.39.2): an unchecked Open Thread is exempt
+> from decay by design, and that exemption also removed the **only** automated freshness
+> signal — a pinned thread there rotted for 184 sessions with four of its five "still open"
+> items long shipped (one via a PR whose own thread had been completed *and archived* by the
+> review), and no lint check, review step, or metadata field could surface it; 7 of its 9 live
+> threads had gone ~117 sessions untouched against an `archive_window` of 20. Verified against
+> source, every claim held — and the tool's own repo showed the same rot (two threads past 90
+> sessions, one still describing as "paused" a plan that shipped in v4.0.0). The sharper
+> framing is ours: `DECAY.md` §6's "never-decay ≠ never-checked" gave `core` facts and
+> invariants a human re-check and omitted the third never-decay class listed beside them —
+> pinned had come to mean *unexamined*. Maintainer decision: **a long-stalled or neglected
+> open thread is a signal for closure, rectified through a human gate** — under competing
+> priorities, loose ends get filed in a thread and left behind without a trace; the tool must
+> surface them, and never close them on its own.
+
+### Added
+
+- **`[thread-stale]` advisory** (memory-lint check 15, both runtimes at parity): an unchecked
+  `- [ ]` thread not referenced for more than `thread_stale_window` sessions is *stalled*.
+  Refs-based `sessions_since_last_used` like `[overdue]`; a never-referenced thread counts from
+  `created` (its seeded first use), so no pinned thread is invisible. The pin is untouched — the
+  check only says "a human should decide" and points at the gate. Six mirrored tests per
+  runtime (knob default/parse, past/within window, unpinned ignored, never-referenced, thread
+  layer end-to-end); suites at 73 each (was 67).
+- **`thread_stale_window` knob** in `decay-policy.md` (default 40 = the invariant re-check
+  cadence; an absent knob falls back, so existing targets need no policy edit). The template,
+  this repo's policy, the example fixture, and the docs reference carry it.
+- **`REVIEW.md` step 8 — the human closure gate.** The review lists every stalled thread in
+  **one** `Close stalled threads (due)` gate thread (its own `thread-<id>.md`; an open gate is
+  extended rather than doubled), re-reads each body with the human, and the **human** decides
+  per thread: close (`[x]` + 3–6-line record; anything undelivered recorded as *deliberately
+  dropped*, never silently lost — a `(blueprint)` gap closing this way is an altitude decision,
+  §12) or re-affirm (a `## Memory References` entry with the reason — the only reset; the
+  exception, not the default). The review never closes a thread itself. It rides the review
+  cadence like invariant verification; the lint advisory makes it impossible to miss between
+  reviews.
+- **One lifecycle per record** (`DECAY.md` §6, schema): a commitment tracked inside another
+  record inherits that record's lifecycle — a "still open" sub-list inside a thread has no
+  signal of its own, and a Project-State scalar (`status`) is overwritten wholesale. An
+  independently completable item gets its own thread. (Both stale records the reporting team
+  found had this shape.)
+
+### Changed
+
+- **`DECAY.md`** §5 rule 4 (pinned ≠ unwatched) and the §6 callout now cover all three
+  never-decay classes; **`REVIEW.md`** Contradiction backstop re-reads each unchecked thread's
+  body (all items shipped → normal completion; anything undelivered → the gate), the Summarise
+  step states that inspecting a stalled thread is **not** a use (only a re-affirmation is), the
+  summary format gains a `Stalled threads:` line, and Stamp/Summarise renumber to 9/10.
+- **Doc fix:** the invariant-verification step pointer read "step 6" in `REVIEW.md`, `DECAY.md`
+  §6 and the schema since the archival-verify step was inserted before it; corrected to step 7.
+  `docs/reference/built-in-skills.md` now lists all 15 checks (12–14 had been missing since
+  v4.39.0).
+- **Lockstep:** memory-lint `SKILL.md` (description unchanged → no adapter re-sync), schema
+  (`status` field note, thread lifecycle note, knob list), MANIFEST Semantic steps row
+  (optional knob + first gate), UPGRADE ladder row + `4.39.2 → 4.40.0` rung, docs (decay
+  parameters, decay concept, review guide, site status note), README table; `VERSION` → 4.40.0.
+- **Dogfood:** the tool's own repo flags two stalled threads at ship time — `bp-sdlc-overlay`
+  (155 sessions) and `vbdi-lifecycle-direction` (92; its body still says "paused at the framing
+  stage" of a plan v4.0.0 delivered). The gate is raised at its next review; the maintainer
+  decides.
+
+Targets: reconcile (re-copy of `DECAY.md`, `REVIEW.md`, `.agent/schema.md`, the memory-lint
+built-in); optionally add the knob; stamp; expect the first gate at the next review. Credit:
+the mercury-composable team's report (proposals 1–3), refined by the maintainer's human-gate
+decision.
+
 ## Version 4.39.2, 9/4/2026
 
 > **CI secret-scan waiver: silent abort when the last changed file is waived (PATCH).** Field

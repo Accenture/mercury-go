@@ -1,8 +1,8 @@
 # Review Memory
 
 The review is the **manage** step of the memory loop: it replays the ledger, re-tiers facts,
-archives the faded ones, applies supersessions, prompts invariant re-verification, and scans
-for contradictions and altitude drift.
+archives the faded ones, applies supersessions, prompts invariant re-verification, gates
+stalled threads for a human decision, and scans for contradictions and altitude drift.
 
 ## When it runs
 
@@ -24,7 +24,8 @@ flowchart TD
   C --> D[Move to archive<br/>archive-fact]
   D --> E[Apply supersessions]
   E --> F[Prompt invariant re-verify]
-  F --> G[Scan for contradictions / drift]
+  F --> S[Gate stalled threads<br/><i>human closes or re-affirms</i>]
+  S --> G[Scan for contradictions / drift]
   G --> H[memory-lint: verify clean]
 ```
 
@@ -34,6 +35,7 @@ The split is deliberate — **mechanize the arithmetic, leave the judgment to th
 |---|---|
 | Recompute tier / `uses` / `last_used` | [`refresh-metadata`](../reference/built-in-skills.md#refresh-metadata) (deterministic) |
 | Decide *which* faded facts to retire | the agent (judgment — never automated) |
+| Decide a *stalled* thread's fate — close or re-affirm | the human, through the closure gate (`[thread-stale]`, v4.40.0 — never automated) |
 | Perform the archive *move* | [`archive-fact`](../reference/built-in-skills.md#archive-fact) (truncation-proof) |
 | Verify the result | [`memory-lint`](../reference/built-in-skills.md#memory-lint) (read-only) |
 

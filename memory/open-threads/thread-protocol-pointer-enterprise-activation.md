@@ -5,4 +5,4 @@
   3 review findings fixed pre-merge). Lesson: the consent artifact must agree with apply.
   Full detail: origin log + spec under `docs/specs/memory-protocol-pointer/` + the
   `4.36.0→4.37.0` rung. → serves: vision-agent-memory
-  <!-- id: protocol-pointer-enterprise-activation | created: 2026-08-20 | last_used: 2026-08-22 | uses: 8 | tier: active | origin: 2026-08-20-204952 -->
+  <!-- id: protocol-pointer-enterprise-activation | created: 2026-08-20 | last_used: 2026-08-22 | uses: 8 | tier: archive-candidate | origin: 2026-08-20-204952 -->

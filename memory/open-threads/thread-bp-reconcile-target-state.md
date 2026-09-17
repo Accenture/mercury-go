@@ -5,4 +5,4 @@
   stays agent-owned. Pre-ship adversarial review fixed 2 blockers (silent downgrade; mjs
   symlink escape). Lesson: mechanize arithmetic, never judgment. Full detail: origin log +
   the `4.34.2→4.35.0` rung + `docs/DESIGN-reconcile.md`. → serves: vision-agent-memory
-  <!-- id: bp-reconcile-target-state | created: 2026-08-20 | last_used: 2026-08-22 | uses: 4 | tier: active | supersedes: ot-mode-b-automation-backlog | origin: 2026-08-20-223624 -->
+  <!-- id: bp-reconcile-target-state | created: 2026-08-20 | last_used: 2026-08-22 | uses: 4 | tier: archive-candidate | supersedes: ot-mode-b-automation-backlog | origin: 2026-08-20-223624 -->

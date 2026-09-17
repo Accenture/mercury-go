@@ -143,6 +143,7 @@ dev-numbered 4.22–4.25 — into a single MINOR over the released 4.21.0.)*
 | 4.39.0 | **Merge-scale memory: threads as files (MINOR):** from maintainer field reports — `continuity.md` merge conflicts became regular business as team adoption grew, concentrated in `## Open Threads` and the `last_session` scalar (PR #27's field artifact: two stacked branches, both appending a thread and bumping `last_session`). Structural fix, no merge-time machinery: (1) **one thread per file** — `memory/open-threads/thread-<id>.md`, filename = the fact id, content = exactly the thread's bullet block; parallel work on different threads cannot conflict, a same-thread edit conflicts per-file (the MERGE.md Tier 2 human gate, preserved by design — a rejected merge-driver alternative silently unioned it; see docs/DESIGN-merge-scale.md). No index file — the directory is the index, like sessions/. (2) **`last_session` dropped** — derivable from the newest session log; the protocol's multi-agent check reads that log's `**Agent:**` header. (3) **archive files union-merge** (`memory/archive/*.md merge=union` in `.gitattributes`; git-native, backstopped by `[both]`/`[over-archived]`). (4) Reviews run serialized (REVIEW.md). All three built-in script pairs treat thread files as fact surfaces (lint 67 tests ×2, refresh 6 ×2, archive 9 ×2); new lint checks `[thread-file]`, `[duplicate-id]`, and `[duplicate-state-key]` (absorbed from PR #27 — credit: Roland Heusser); `tests/test_thread_layout_merge.sh` pins the merge contract with real git merges (4 cases incl. a mutation check). Protocol-text change → ships the mandated Semantic steps row |
 | 4.39.1 | **Same-thread merge claim: honest boundary (PATCH):** from an independent CoPilot assessment of v4.39.0 (same-day). Git conflicts only on adjacent/overlapping hunks; separated same-thread edits merge cleanly with both sides kept — the docs now state the measured boundary and route the clean-merge case to the write-time contradiction check (`DECAY.md` §10). `MERGE.md` / `.agent/schema.md` / `docs/DESIGN-merge-scale.md` precision + two new merge-contract test cases (4 → 6). No behavior, script, or shape change; converges by plain re-copy |
 | 4.39.2 | **CI secret-scan waiver: silent abort on waived last file (PATCH):** field report (2026-09-04, mercury-composable PR #318 — the first PR to exercise a `.agent/secret-scan-ignore` entry there). The changed-config secret scan's exemption filter ended its loop body with `[ "$keep" = "1" ] && printf ...`; a waived LAST changed config file makes the false test the loop's exit status, fails the command substitution's assignment, and under runner `set -e` kills the step with zero output — a red `memory` check that fires preferentially on a team's first legitimate waiver use. One-line fix (`if ... fi`) applied to all three floors (GitHub workflow + GitLab/AzDO templates); class sweep clean (pre-commit fragment already used `if/else`); new `tests/test_ci_secret_scan_waiver.sh` extracts each floor's loop verbatim and pins 4 cases under `-e`, red-verified. Converges by plain re-copy of the forge CI floor |
+| 4.40.0 | **Stalled open threads → human closure gate (MINOR):** field report (2026-09-16, mercury-composable on v4.39.2): an unchecked Open Thread is exempt from decay by design, and that exemption also removed the only automated freshness signal — a pinned thread rotted 184 sessions with four of its five "still open" items long shipped, and no lint check, review step, or metadata field could surface it (7 of 9 live threads there ~117 sessions untouched; the tool's own repo had two past 90 sessions, one still describing as "paused" a plan v4.0.0 shipped). `DECAY.md` §6's "never-decay ≠ never-checked" covered `core` + invariants but not the third never-decay class. Now: `thread_stale_window` knob (default 40 = the invariant cadence) + `memory-lint` check 15 `[thread-stale]` (refs-based; never-referenced threads count from `created`) for detection, and `REVIEW.md` step 8 — **one human closure gate** listing every stalled thread: the owner closes (undelivered items recorded as *deliberately dropped*) or re-affirms (a `## Memory References` entry, the only reset); the tool never closes a thread (maintainer decision: a long-stalled thread is a signal for closure, rectified through a human gate). Plus the one-lifecycle-per-record rule and a review backstop that re-reads unchecked bodies; invariant-step pointers corrected 6 → 7. Converges by re-copy of `DECAY.md`/`REVIEW.md`/schema/the lint built-in; optional knob; first gate at the next review |
 
 
 Each enabled repo records what it is on in **`.agent/version.md`**:
@@ -2486,3 +2487,42 @@ the motivating fixture plus three neighbors.
    runners); in a target with a populated `.agent/secret-scan-ignore`, a push whose only
    changed config file is a waived one now reports `no changed config files; skipping.`
    instead of an outputless red check.
+
+## Rung: 4.39.2 → 4.40.0 — Stalled open threads: human closure gate (MINOR)
+
+**What changed:** a field report from the mercury-composable team (2026-09-16, on v4.39.2)
+showed that the decay exemption for unchecked Open Threads — correct in itself — had also
+removed the only automated freshness signal: a pinned thread rotted for 184 sessions with
+four of its five "still open" items long shipped, and nothing in `memory-lint`, `REVIEW.md`,
+or the metadata could surface it. `DECAY.md` §6 already said "never-decay ≠ never-checked" for
+`core` facts and invariants; unchecked threads were the third never-decay class in the same
+list with no re-check. The maintainer's decision: a long-stalled thread is a **signal for
+closure**, rectified through a **human gate**. This rung adds the `thread_stale_window` knob
+(default 40 — the invariant re-check cadence), the `[thread-stale]` lint advisory (refs-based;
+a never-referenced thread counts from `created`), `REVIEW.md` step 8 (one closure gate per
+review — the owner closes or re-affirms each listed thread, the tool never closes one), the
+one-lifecycle-per-record rule, a review backstop that re-reads unchecked bodies, and a doc fix
+to the invariant-step pointers (6 → 7).
+
+**Steps:**
+
+1. **Reconcile** (or hand-walk `MANIFEST.md`): re-copies `DECAY.md`, `REVIEW.md`,
+   `.agent/schema.md` and the `memory-lint` built-in (both runtimes, mirror tests, `SKILL.md`)
+   — all `verbatim`/`verbatim-dir` rows. No protocol text changed, so there is no protocol
+   semantic step; the skill's description is unchanged, so adapters need no re-sync.
+2. **Optional — policy knob:** add `thread_stale_window: 40` to `memory/decay-policy.md`
+   (comment wording in the template). Lint falls back to the default when the knob is absent
+   — documentation, not activation. Raise it for a repo whose workstreams legitimately run
+   long; never set it below `archive_window`.
+3. **At the next review**, expect `[thread-stale]` on any repo older than ~40 sessions and
+   run `REVIEW.md` step 8: raise **one** `Close stalled threads (due)` gate thread listing
+   every stalled id with its count, re-read each body with the owner, and record the owner's
+   decision per thread — close (undelivered items *deliberately dropped*, named) or re-affirm
+   (a `## Memory References` entry). Never close a thread on the owner's behalf, and never
+   list a stalled thread under `## Memory References` merely because you inspected it.
+4. **Stamp** `.agent/version.md` → `version: 4.40.0`, `last_upgraded: <today>`, preserving
+   `enabled_with` and `mode`. Use an edit/read-before-write path, never truncate first.
+
+**Verify:** `memory-lint` runs with no errors (both runtimes print identical output); in the
+tool repo both lint suites pass (73 mirrored tests each) and a lint run flags its own two
+stalled threads; a raised gate thread passes `[thread-file]`.

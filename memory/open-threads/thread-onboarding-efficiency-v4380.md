@@ -5,4 +5,4 @@
   (knob 150), optional ready-to-work checkpoint; first exercise of the protocol-propagation
   semantic row. Lesson: my ≤8-line bound from the handoff's *paraphrase* rejected the live
   11-line fork — verbatim fixtures, third strike. → serves: vision-agent-memory
-  <!-- id: onboarding-efficiency-v4380 | created: 2026-08-21 | last_used: 2026-08-22 | uses: 1 | tier: active | origin: 2026-08-22-010250 -->
+  <!-- id: onboarding-efficiency-v4380 | created: 2026-08-21 | last_used: 2026-08-22 | uses: 1 | tier: archive-candidate | origin: 2026-08-22-010250 -->
