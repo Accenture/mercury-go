@@ -23,8 +23,10 @@ replacing an entrypoint.
   deliberate, scoped exception to the advisory doctrine, because secrets carry irreversible
   after-the-fact cost (rotation, history exposure). Opt down to warn-only with
   `AGENT_MEMORY_SECRET_GUARD=advisory`; `git commit --no-verify` bypasses once;
-  JSON/properties exemptions live in the committed `.agent/secret-scan-ignore`. The CI floor
-  runs the matching changed-config scan on every push.
+  a fixture that trips it is restructured with a placeholder or env var (even dummy test values are
+  false positives in field security scanners); a committed `.agent/secret-scan-ignore` is a
+  last-resort escape hatch the tool no longer seeds (v4.40.1). The CI floor runs the matching
+  changed-config scan on every push.
 - A committed **`post-commit.d/50-agent-memory-ritual-capture` fragment** (advisory; never blocks).
   After a commit it
   auto-stubs a session log when the commit did real work but carried none, and re-syncs

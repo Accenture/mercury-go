@@ -144,15 +144,15 @@ class ReconcileTests(unittest.TestCase):
         t = make_target(self.tmp, "https://github.com/acme/demo.git")
         mech, _a, _s, _n = self.plan(t)
         rec.apply_mechanical(TOOL_ROOT, t, mech)
-        marker = "# my local waiver\n"
-        with open(os.path.join(t, ".agent", "secret-scan-ignore"), "a", encoding="utf-8") as f:
+        marker = "<!-- my local addition -->\n"
+        with open(os.path.join(t, ".github", "pull_request_template.md"), "a", encoding="utf-8") as f:
             f.write(marker)
         mech2, _a2, _s2, notes2 = self.plan(t)
-        self.assertNotIn(".agent/secret-scan-ignore", [r["target"] for _v, r, _f, _d in mech2])
-        self.assertIn(("keep", ".agent/secret-scan-ignore"),
+        self.assertNotIn(".github/pull_request_template.md", [r["target"] for _v, r, _f, _d in mech2])
+        self.assertIn(("keep", ".github/pull_request_template.md"),
                       [(v, p) for v, p, _d in notes2 if v == "keep"])
         rec.apply_mechanical(TOOL_ROOT, t, mech2)
-        with open(os.path.join(t, ".agent", "secret-scan-ignore"), encoding="utf-8") as f:
+        with open(os.path.join(t, ".github", "pull_request_template.md"), encoding="utf-8") as f:
             self.assertIn(marker, f.read())
 
     def test_seed_generate_content_untouched(self):

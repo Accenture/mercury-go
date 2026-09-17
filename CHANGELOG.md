@@ -19,6 +19,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > `accenture.github.io/mercury-go`). This is a status change, not a release: `VERSION` stays
 > **4.39.2**, there is no upgrade rung, and enabled repositories need no action.
 
+## Version 4.40.1, 9/17/2026
+
+> **Secret guard: prose punctuation no longer defeats the placeholder exemptions, and the waiver
+> file becomes a last resort the tool no longer seeds (PATCH).** Two items from the
+> mercury-composable team, both raised on v4.40.0 within a day of upgrading.
+>
+> - **Trailing sentence punctuation.** A comment sentence that mentions a setting —
+>   `credentials.source=OAUTHBEARER,` — was flagged `[secret-material]` while the bare setting was
+>   exempt: the assignment capture stops only at whitespace, quotes, backticks and `;`, so the
+>   punctuation rode into the captured value and defeated the enum exemption's full match. The note
+>   named one branch; the probe showed every placeholder class except the tool's own knob failed the
+>   same way (`password=changeme.`, `client.secret=${CLIENT_SECRET}.`, `api.key=<your-key-here>,`).
+>   Fix: `_is_placeholder_value` retries once with trailing `).,` stripped — **after** the as-is
+>   pass, so exemptions that legitimately end in `)` (`$(vault_read …)`, `(REDACTED)`) keep
+>   matching unchanged, and a real value with trailing punctuation still matches nothing on either
+>   pass. Both runtimes; one mirrored test each (suites at 74).
+> - **The waiver file is a last resort, not a default.** Maintainer decision (2026-09-17), on the
+>   team's suggestion after they deleted their re-seeded stub twice: the tool no longer seeds
+>   `.agent/secret-scan-ignore` (MANIFEST row + template removed; the ENABLE step dropped), and every
+>   guidance surface — hook header and messages, `.githooks/README.md`, both protocol copies,
+>   memory-lint `SKILL.md`, the docs — now says: restructure the fixture (placeholder / env var),
+>   because zero secret leakage is the goal and **even dummy test values are false positives in
+>   field security scanners**, which key on the `key=<literal>` shape regardless of value. A
+>   committed waiver file remains an escape hatch to exercise only knowing those implications. The
+>   mechanism is unchanged: the hook and the three CI floors still honor a committed file, and the
+>   hook now states the implication each time it exempts one.
+
+### Changed
+
+- **memory-lint** `_is_placeholder_value` / `is_placeholder_value` (Python + Node): the as-is
+  exemption pass, then one retry with trailing `).,` stripped. Mirrored test in each suite.
+- **MANIFEST:** the `.agent/secret-scan-ignore` seed-copy row removed and
+  `templates/.agent/secret-scan-ignore` deleted — the reconcile stops re-offering the file, which
+  closes the motivating case of `ot-seed-copy-deliberate-absence` (the general seed-copy question
+  stays open). The reconcile tests use the PR template as their seed-copy example.
+- **Protocol text** (both copies): the secret-guard sentence now reads "a fixture that trips it is
+  restructured … a committed `.agent/secret-scan-ignore` is a last-resort escape hatch (not seeded
+  since v4.40.1)" → Semantic steps row (re-copy a still-stock target protocol; arbitrate a
+  customized one per `ENABLE.md` §5i).
+- **Lockstep:** hook fragment + `.githooks/README.md`, `ENABLE.md` (5e step removed; two mentions
+  reworded), memory-lint `SKILL.md`, docs (built-in skills, reliability, ritual-triggers design
+  note), `UPGRADE.md` row + `4.40.0 → 4.40.1` rung, README table; `VERSION` → 4.40.1.
+
+Targets: reconcile re-copies the hook fragment, its README, the memory-lint built-in and a
+still-stock protocol; a seeded stub with no entries may simply be deleted; a file with entries is a
+last-resort waiver — keep it only knowing the implications, and prefer restructuring the fixtures.
+Credit: the mercury-composable team's note (2026-09-17) and their suggestion on the waiver file.
+
 ## Version 4.40.0, 9/16/2026
 
 > **Stalled open threads → human closure gate (MINOR).** Field report from the

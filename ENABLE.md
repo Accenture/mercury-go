@@ -534,10 +534,6 @@ Install the layer so the repo's memory can decay, review, and archive over time:
   `{{AGENT_MEMORY_VERSION}}` from this tool's root `VERSION`, `{{TODAY}}`, and
   `{{ENABLE_MODE}}` (`A` for fresh, `C` for migrate). The **stamp is the agent's
   closing step** — the reconcile helper deliberately never writes it.
-- `.agent/secret-scan-ignore` — copy verbatim from `templates/.agent/secret-scan-ignore`
-  (a commented, zero-effect stub documenting the config-file waiver format for the
-  pre-commit / CI secret scans; v4.34.0) [reconcile-covered; seed-copy — a stub that has
-  accumulated the team's waivers is never overwritten].
 
 `DECAY.md`, `REVIEW.md`, and `SKILLS.md` are installed at the repo root in Step 6.
 
@@ -790,8 +786,9 @@ DevOps sets from `templates/` — so the after-session ritual fires reliably for
   `50-` fragments, so other hook layers compose before or after without replacing an entrypoint.
   The **pre-commit secret-guard fragment** (v4.34.0) scans the *staged* content
   of `memory/**.md` **and of config files** (`.json`/`.yml`/`.yaml`/`.properties`/`.toml`/`.ini`/
-  `.env*` — credential-class checks; JSON/properties waivers via the committed
-  `.agent/secret-scan-ignore`) for `[secret-material]` before the commit exists — **enforcing by
+  `.env*` — credential-class checks; a fixture that trips it is restructured with a placeholder or
+  env var — a committed `.agent/secret-scan-ignore` is a last-resort escape hatch the tool no longer
+  seeds, v4.40.1) for `[secret-material]` before the commit exists — **enforcing by
   default**: findings block the commit (`AGENT_MEMORY_SECRET_GUARD=advisory` opts down to
   warn-only; `--no-verify` bypasses once); the one placement that *prevents* a committed secret
   instead of detecting it post-push. The **post-commit ritual-capture fragment** auto-stubs a
@@ -803,7 +800,7 @@ DevOps sets from `templates/` — so the after-session ritual fires reliably for
   stop for a human decision rather than dropping behavior or running it twice.
 - The **CI floor** — runs `memory-lint`, an advisory session-log check, **and a changed-config
   credential scan (v4.34.0 — the push-time sibling of the pre-commit guard, honoring the same
-  `.agent/secret-scan-ignore`)** on every push and
+  last-resort `.agent/secret-scan-ignore` if a team has committed one)** on every push and
   pull/merge request (on Azure DevOps: pushes only, until an admin adds the optional Build
   Validation policy). **Forge-aware (v4.31.0; +Azure DevOps v4.32.0):**
   - **GitHub-hosted:** copy **`.github/workflows/agent-memory.yml`** verbatim from this tool's root.

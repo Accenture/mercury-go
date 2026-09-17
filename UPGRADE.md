@@ -144,6 +144,7 @@ dev-numbered 4.22–4.25 — into a single MINOR over the released 4.21.0.)*
 | 4.39.1 | **Same-thread merge claim: honest boundary (PATCH):** from an independent CoPilot assessment of v4.39.0 (same-day). Git conflicts only on adjacent/overlapping hunks; separated same-thread edits merge cleanly with both sides kept — the docs now state the measured boundary and route the clean-merge case to the write-time contradiction check (`DECAY.md` §10). `MERGE.md` / `.agent/schema.md` / `docs/DESIGN-merge-scale.md` precision + two new merge-contract test cases (4 → 6). No behavior, script, or shape change; converges by plain re-copy |
 | 4.39.2 | **CI secret-scan waiver: silent abort on waived last file (PATCH):** field report (2026-09-04, mercury-composable PR #318 — the first PR to exercise a `.agent/secret-scan-ignore` entry there). The changed-config secret scan's exemption filter ended its loop body with `[ "$keep" = "1" ] && printf ...`; a waived LAST changed config file makes the false test the loop's exit status, fails the command substitution's assignment, and under runner `set -e` kills the step with zero output — a red `memory` check that fires preferentially on a team's first legitimate waiver use. One-line fix (`if ... fi`) applied to all three floors (GitHub workflow + GitLab/AzDO templates); class sweep clean (pre-commit fragment already used `if/else`); new `tests/test_ci_secret_scan_waiver.sh` extracts each floor's loop verbatim and pins 4 cases under `-e`, red-verified. Converges by plain re-copy of the forge CI floor |
 | 4.40.0 | **Stalled open threads → human closure gate (MINOR):** field report (2026-09-16, mercury-composable on v4.39.2): an unchecked Open Thread is exempt from decay by design, and that exemption also removed the only automated freshness signal — a pinned thread rotted 184 sessions with four of its five "still open" items long shipped, and no lint check, review step, or metadata field could surface it (7 of 9 live threads there ~117 sessions untouched; the tool's own repo had two past 90 sessions, one still describing as "paused" a plan v4.0.0 shipped). `DECAY.md` §6's "never-decay ≠ never-checked" covered `core` + invariants but not the third never-decay class. Now: `thread_stale_window` knob (default 40 = the invariant cadence) + `memory-lint` check 15 `[thread-stale]` (refs-based; never-referenced threads count from `created`) for detection, and `REVIEW.md` step 8 — **one human closure gate** listing every stalled thread: the owner closes (undelivered items recorded as *deliberately dropped*) or re-affirms (a `## Memory References` entry, the only reset); the tool never closes a thread (maintainer decision: a long-stalled thread is a signal for closure, rectified through a human gate). Plus the one-lifecycle-per-record rule and a review backstop that re-reads unchecked bodies; invariant-step pointers corrected 6 → 7. Converges by re-copy of `DECAY.md`/`REVIEW.md`/schema/the lint built-in; optional knob; first gate at the next review |
+| 4.40.1 | **Secret guard: punctuation-tolerant placeholder exemptions + the waiver file as a last resort (PATCH):** field note (mercury-composable, 2026-09-17, on v4.40.0): a comment sentence mentioning a setting — `credentials.source=OAUTHBEARER,` — flagged `[secret-material]` while the bare setting was exempt; trailing sentence punctuation rides into the captured value and defeated every placeholder exemption except the tool's own knob (`password=changeme.`, `client.secret=${CLIENT_SECRET}.` too). Fix: retry the exemptions once with trailing `).,` stripped, after the as-is pass (so `$(…)` / `(REDACTED)` keep matching; real values still flag), both runtimes, mirrored tests (74 each). And, on the same team's suggestion after deleting their re-seeded stub twice, maintainer decision: `.agent/secret-scan-ignore` is a **last-resort escape hatch** — no longer seeded (MANIFEST row + template removed), every guidance surface says restructure the fixture (zero secret leakage is the goal; even dummy test values are false positives in field security scanners); the hook and CI floors still honor a committed file and the hook states the implication when it exempts one. Protocol text changed → semantic row; converges by re-copy of the hook fragment, the lint built-in and a still-stock protocol |
 
 
 Each enabled repo records what it is on in **`.agent/version.md`**:
@@ -2526,3 +2527,37 @@ to the invariant-step pointers (6 → 7).
 **Verify:** `memory-lint` runs with no errors (both runtimes print identical output); in the
 tool repo both lint suites pass (73 mirrored tests each) and a lint run flags its own two
 stalled threads; a raised gate thread passes `[thread-file]`.
+
+## Rung: 4.40.0 → 4.40.1 — secret guard: punctuation-tolerant exemptions; the waiver file as a last resort (PATCH)
+
+**What changed:** two items from the mercury-composable team, on v4.40.0. (1) The `[secret-material]`
+placeholder exemptions failed on trailing sentence punctuation: a comment sentence mentioning a
+setting — `credentials.source=OAUTHBEARER,` — was flagged while the bare setting was exempt, and the
+same shape defeated the placeholder-word, template and angle-placeholder exemptions. The scanner now
+retries the exemptions once with trailing `).,` stripped, after the as-is pass, so exemptions ending
+in `)` keep matching and a real value still flags. (2) Maintainer decision: `.agent/secret-scan-ignore`
+is a last-resort escape hatch — the tool no longer seeds it and no surface recommends it; the field
+restructures fixtures to placeholders because even dummy test values are false positives in field
+security scanners. The hook and the CI floors still honor a committed file; the hook states the
+implication when it exempts one.
+
+**Steps:**
+
+1. **Reconcile** (or hand-walk `MANIFEST.md`): re-copies `.githooks/pre-commit.d/50-agent-memory-secret-guard`,
+   `.githooks/README.md` and the memory-lint built-in (both runtimes, tests, `SKILL.md`). The CI floors are
+   unchanged (they already honor a committed waiver file only when present).
+2. **Protocol text changed — the mandated Semantic step:** if the target's `memory/PROTOCOL.md` is
+   byte-identical to the **4.40.0** template, re-copy it from `templates/memory/PROTOCOL.md`. If it carries
+   local content, arbitrate per `ENABLE.md` §5i: replace the sentence "config waivers live in
+   `.agent/secret-scan-ignore` and never waive memory" with the last-resort wording — never drop or reorder
+   the target's local directives.
+3. **The waiver file:** the tool no longer seeds it. A seeded stub with no entries may simply be deleted
+   (mercury-composable did, twice, before this rung). A file with entries is now a last-resort waiver: keep
+   it only if the team understands that field security scanners still flag the waived literals, and prefer
+   restructuring those fixtures to `${ENV_VAR:placeholder}`.
+4. **Stamp** `.agent/version.md` → `version: 4.40.1`, `last_upgraded: <today>`, preserving `enabled_with`
+   and `mode`. Use an edit/read-before-write path, never truncate first.
+
+**Verify:** `memory-lint` runs with no errors; in the tool repo both lint suites pass (74 mirrored tests
+each) and `--scan-files` on a comment line ending `…=OAUTHBEARER,` reports nothing while a real value with
+trailing punctuation still flags; the hook prints the last-resort notice when a waiver applies.

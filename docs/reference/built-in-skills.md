@@ -56,8 +56,10 @@ Node** at output parity, so it runs on a node-only box too. Fifteen checks:
 
 Plus a standalone mode (v4.34.0): `--scan-files FILE...` runs the **credential-class** subset of
 check 10 over arbitrary config files (`.json`/`.yml`/`.yaml`/`.properties`/`.toml`/`.ini`/`.env*`) —
-the engine behind the `pre-commit` secret guard and the CI floor's changed-config scan. JSON and
-`.properties` exemptions live in the committed `.agent/secret-scan-ignore`.
+the engine behind the `pre-commit` secret guard and the CI floor's changed-config scan. A fixture that
+trips it is restructured with a placeholder or env var — even dummy test values are false positives in
+field security scanners. A committed `.agent/secret-scan-ignore` remains a last-resort escape hatch for a
+JSON/`.properties` fixture that truly cannot be restructured; the tool no longer seeds it (v4.40.1).
 
 ```bash
 python agent-skills/memory-lint/scripts/memory-lint.py      # or

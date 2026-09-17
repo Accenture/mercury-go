@@ -140,13 +140,13 @@ test("seed-copy never overwritten", () => {
   const t = makeTarget(tmpdir(), "https://github.com/acme/demo.git");
   const [mech] = plan(t);
   applyMechanical(TOOL_ROOT, t, mech);
-  const marker = "# my local waiver\n";
-  fs.appendFileSync(path.join(t, ".agent", "secret-scan-ignore"), marker);
+  const marker = "<!-- my local addition -->\n";
+  fs.appendFileSync(path.join(t, ".github", "pull_request_template.md"), marker);
   const [mech2, , , notes2] = plan(t);
-  assert.ok(!mech2.some(([, r]) => r.target === ".agent/secret-scan-ignore"));
-  assert.ok(notes2.some(([v, p]) => v === "keep" && p === ".agent/secret-scan-ignore"));
+  assert.ok(!mech2.some(([, r]) => r.target === ".github/pull_request_template.md"));
+  assert.ok(notes2.some(([v, p]) => v === "keep" && p === ".github/pull_request_template.md"));
   applyMechanical(TOOL_ROOT, t, mech2);
-  assert.ok(fs.readFileSync(path.join(t, ".agent", "secret-scan-ignore"), "utf-8").includes(marker));
+  assert.ok(fs.readFileSync(path.join(t, ".github", "pull_request_template.md"), "utf-8").includes(marker));
 });
 
 test("seed-generate content untouched", () => {
