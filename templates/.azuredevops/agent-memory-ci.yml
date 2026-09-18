@@ -90,6 +90,18 @@ jobs:
                 echo "config secret scan: ok"
               fi
             fi
+            # undeclared-reference check (v4.41.0) — push-time sibling of the pre-commit advisory: a memory
+            # fact edited in this range must be declared in a session log added/changed in the same range.
+            if [ -f agent-skills/memory-lint/scripts/memory-lint.py ] && git cat-file -e "$base^{commit}" 2>/dev/null; then
+              undecl="$(python3 agent-skills/memory-lint/scripts/memory-lint.py --range "$base" HEAD 2>/dev/null | grep -F '[undeclared-reference]' || true)"
+              if [ -n "$undecl" ]; then
+                printf '%s\n' "$undecl"
+                echo "##vso[task.logissue type=warning]agent-memory undeclared reference: a memory fact was edited without being declared in a staged session log (see log above) — add the id to '## Memory References'"
+                status=1
+              else
+                echo "undeclared-reference check: ok"
+              fi
+            fi
           else
             echo "no base ref; skipping ritual check"
           fi

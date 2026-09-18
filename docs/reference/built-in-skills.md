@@ -23,7 +23,7 @@ targets.
 ## memory-lint
 
 The deterministic integrity verifier the review ritual relies on. Ships in **both Python and
-Node** at output parity, so it runs on a node-only box too. Fifteen checks:
+Node** at output parity, so it runs on a node-only box too. Sixteen checks:
 
 1. duplicate facts (`[both]`)
 2. over-archived (`[over-archived]`)
@@ -53,6 +53,11 @@ Node** at output parity, so it runs on a node-only box too. Fifteen checks:
     The pin still protects it; the review lists every stalled thread in one human closure
     gate (`REVIEW.md` step 8) where the owner closes or re-affirms it — the tool never
     closes a thread
+16. undeclared references (`[undeclared-reference]`, v4.41.0; `--staged` / `--range BASE [HEAD]`) —
+    a memory fact whose body changes in a commit must be declared in a session log staged with
+    it, or `refresh-metadata` reads the edit as non-use. Footer-only lines, condensed closed
+    records, verbatim moves and deletions never count; silent when no log is staged. Run by the
+    pre-commit fragment and the CI floors, advisory
 
 Plus a standalone mode (v4.34.0): `--scan-files FILE...` runs the **credential-class** subset of
 check 10 over arbitrary config files (`.json`/`.yml`/`.yaml`/`.properties`/`.toml`/`.ini`/`.env*`) —

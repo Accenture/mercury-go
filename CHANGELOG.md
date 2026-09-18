@@ -19,6 +19,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > `accenture.github.io/mercury-go`). This is a status change, not a release: `VERSION` stays
 > **4.39.2**, there is no upgrade rung, and enabled repositories need no action.
 
+## Version 4.41.0, 9/17/2026
+
+> **`[undeclared-reference]` — a fact edited without being declared (MINOR).** Field report from the
+> mercury-composable team (2026-09-17, on v4.40.1): at their first closure gate the maintainer closed
+> two Blueprint gaps; the closing session rewrote both records across five commits and declared
+> neither, so `refresh-metadata` read the human's decision as non-use and `[overdue]` proposed
+> sweeping them hours later. The footers and the reference log *agreed* — both consistently wrong —
+> so no repo-state check could see it; the missing input was the diff. Measured over the last 60
+> memory commits of three repos, 93–98% of fact-editing commits stage a session log alongside, and
+> every repo carried undeclared edits — including edits to core invariants. Part of the cause was
+> our own v4.40.0 wording, which told the gate to list a stalled thread "only when re-affirmed"; a
+> closure is a use too, and the close record is what makes the sweep counter honest.
+
+### Added
+
+- **memory-lint check 16 `[undeclared-reference]`** (Python + Node at parity; 11 mirrored tests each,
+  suites at 85): over the staged index (`--staged`, run by the pre-commit fragment) or a commit range
+  (`--range BASE [HEAD]`, run by the three CI floors), a memory fact whose **body** changes must be
+  declared in a session log staged in the same change. Counted: edits, closures (`- [ ]` → `- [x]`)
+  and new blocks in `continuity.md`, `open-threads/*.md` and `vision.md`. Not counted: footer-only
+  lines (a metadata refresh), condensing an already-closed record (declaring it would defer its
+  sweep), a verbatim block move (the v4.39.0 migration), a deleted block (archival). Silent when the
+  change stages no log. The message names the remedy. The check is the first memory-lint mode that
+  calls `git` (stdlib `subprocess` / `node:child_process`; still agent-, git- or CI-invoked, never a
+  daemon). Replayed over the field commits: both closures flagged; the refresh-metadata commit and a
+  condensation commit clean.
+- **Hook and floors:** the pre-commit fragment runs `--staged` and prints the advisory on stderr
+  (never blocks); the GitHub, GitLab and Azure DevOps floors run `--range base HEAD` after the
+  changed-config scan (advisory; strict mode gates as for the other checks).
+
+### Changed
+
+- **Closures are declared.** `REVIEW.md` step 8 and step 10 now say a stalled thread is listed when
+  the human *acted* on it — re-affirmed or closed — and that a thread merely read is not; step 5
+  defines completion age as the closing reference and tells a reviewer meeting `[overdue]` on a
+  thread closed within the window to declare it retroactively rather than sweep. `DECAY.md` §2 gains
+  the `Closed` event and the check's rationale; §6 says a closure is declared like a re-affirmation.
+  The protocol (both copies) tracks "referenced, created, reactivated, or closed" ids and declares each
+  closed thread at session close → Semantic steps row. Schema: a `Closed:` line in the Memory
+  References template.
+- **Lockstep:** memory-lint `SKILL.md`, `.githooks/README.md`, `ENABLE.md`, docs (built-in skills,
+  reliability), `UPGRADE.md` row + `4.40.1 → 4.41.0` rung, README table; `VERSION` → 4.41.0.
+
+Targets: reconcile re-copies the hook fragment, its README, the memory-lint built-in, `DECAY.md`,
+`REVIEW.md`, the schema and the CI floor; then the protocol semantic step. Credit: the
+mercury-composable team's proposal (2026-09-17) — the check follows their design, with the
+condensation, move and deletion exclusions added from the history measurement.
+
 ## Version 4.40.1, 9/17/2026
 
 > **Secret guard: prose punctuation no longer defeats the placeholder exemptions, and the waiver
