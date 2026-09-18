@@ -1,12 +1,10 @@
-- [ ] **Opt-in seed for the governance pair — sample `docs/arch-decisions/ADR.md` + `RFC.md` templates (v4.42.0).**
-  Eric (2026-09-18): ship the two skeletons with placeholders so a team that adopts the ledger and the
-  register starts from the canonical shape — **opt-in**: `ENABLE.md` asks once at enable and copies the
-  pair only on yes; Mode B never re-offers it (half the family adopted ledgers by hand: mercury-composable
-  24 ADRs + a register, mercury 18). Needs a new MANIFEST policy `optional` (offered once, never
-  re-offered — RFC-0002 option b made concrete) with reconcile support in both runtimes + tests,
-  `templates/docs/arch-decisions/ADR.md` + `RFC.md`, an ENABLE step, a schema note; the ledger stays
-  optional ("never heavyweight"). Build after 4.41.2 ships; promote RFC-0005 to an ADR once the policy
-  design is fixed.
-  → proposal: RFC-0005 in `docs/arch-decisions/RFC.md` (the reasoning lives there; this thread holds the state)
-  → serves: vision-agent-memory (adoption stays "point it at a repo": governance is offered, never imposed)
+- [x] **Opt-in seed for the governance pair — sample `docs/arch-decisions/ADR.md` + `RFC.md` templates (v4.42.0).**
+  Shipped in v4.42.0: a seventh MANIFEST policy `optional` (installed only on `--adopt <target>`, never touched
+  when present, listed for reference when absent — never pending, never re-asked), skeletons under
+  `templates/docs/arch-decisions/`, the Step 10 offer made once at enable, both reconcile runtimes + 4 mirrored
+  tests each. Lesson: the opt-in stance needed its own policy — `seed-copy` cannot express a file a team
+  deliberately does not have (RFC-0002), and that is exactly what "offered, never imposed" is.
+  → proposal: RFC-0005 in `docs/arch-decisions/RFC.md` (implemented; promotion to an ADR at the maintainer's gate)
+  → serves: vision-agent-memory
+  raised in 2026-09-18-232013; closed in 2026-09-18-234620
   <!-- id: governance-pair-opt-in-seed | created: 2026-09-18 | last_used: 2026-09-18 | uses: 1 | tier: working | origin: 2026-09-18-232013 -->

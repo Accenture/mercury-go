@@ -39,6 +39,10 @@ flowchart LR
 
 ## What reconcile may do — and never does
 
+- **Optional rows are never imposed** (v4.42.0): the governance pair `docs/arch-decisions/ADR.md` +
+  `RFC.md` is installed only on an explicit `--adopt <target>`; if your repo never adopted it, an
+  upgrade lists it as an `optional` note for reference and does not ask again. Adopt any time with
+  `--apply --adopt docs/arch-decisions/`.
 - Re-copy a stale tool-owned file from its canonical source; seed a missing one.
 - Add missing entries to the managed `.gitignore`/`.gitattributes` blocks (add-only,
   de-duplicated — it also catches entries older upgrades never back-filled).

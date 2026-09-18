@@ -14,7 +14,7 @@ import { fileURLToPath } from "node:url";
 
 import {
   POLICIES, FORGES, parseSemver, parseManifest, detectInstalled, detectForge,
-  buildPlan, applyMechanical, safeTargetPath, main, isSanctionedFork,
+  buildPlan, applyMechanical, safeTargetPath, main, isSanctionedFork, adoptMatches,
 } from "./reconcile.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
@@ -67,6 +67,57 @@ function plan(t, forge = null) {
   const installed = detectInstalled(t);
   return buildPlan(TOOL_ROOT, t, MANIFEST, forge || detectForge(t), installed, CURRENT);
 }
+
+// -- optional rows (v4.42.0): offered, never imposed ----------------------------
+
+test("optional rows declared", () => {
+  const opt = MANIFEST.rows.filter((r) => r.policy === "optional").map((r) => r.target).sort();
+  assert.deepEqual(opt, ["docs/arch-decisions/ADR.md", "docs/arch-decisions/RFC.md"]);
+  assert.ok(POLICIES.has("optional"));
+  assert.ok(adoptMatches(["docs/arch-decisions/"], "docs/arch-decisions/RFC.md"));
+  assert.ok(!adoptMatches(["docs/arch-decisions"], "docs/arch-decisions/RFC.md"));
+});
+
+test("optional absent is listed, not pending", () => {
+  const t = makeTarget(tmpdir(), "https://github.com/acme/demo.git");
+  const [mech, agent, , notes] = plan(t);
+  const touched = [...mech.map(([, r]) => r.target), ...agent.map(([, p]) => p)];
+  assert.ok(!touched.includes("docs/arch-decisions/ADR.md") && !touched.includes("docs/arch-decisions/RFC.md"));
+  assert.deepEqual(notes.filter(([v]) => v === "optional").map(([, p]) => p).sort(),
+    ["docs/arch-decisions/ADR.md", "docs/arch-decisions/RFC.md"]);
+  applyMechanical(TOOL_ROOT, t, mech);
+  assert.ok(!fs.existsSync(path.join(t, "docs", "arch-decisions"))); // never imposed
+  const [mech2] = plan(t);
+  assert.deepEqual(mech2, []); // absent optional rows never block convergence
+});
+
+test("adopt installs the pair, then never touches it", () => {
+  const t = makeTarget(tmpdir(), "https://github.com/acme/demo.git");
+  const [mech] = buildPlan(TOOL_ROOT, t, MANIFEST, "github", null, CURRENT, ["docs/arch-decisions/"]);
+  assert.deepEqual(mech.filter(([v]) => v === "adopt").map(([, r]) => r.target).sort(),
+    ["docs/arch-decisions/ADR.md", "docs/arch-decisions/RFC.md"]);
+  applyMechanical(TOOL_ROOT, t, mech);
+  for (const name of ["ADR.md", "RFC.md"]) {
+    assert.ok(fs.readFileSync(path.join(TOOL_ROOT, "templates", "docs", "arch-decisions", name)).equals(
+      fs.readFileSync(path.join(t, "docs", "arch-decisions", name))));
+  }
+  const marker = "\n## ADR-0001 — Our first decision\n";
+  fs.appendFileSync(path.join(t, "docs", "arch-decisions", "ADR.md"), marker);
+  const [mech2, , , notes2] = buildPlan(TOOL_ROOT, t, MANIFEST, "github", null, CURRENT, ["docs/arch-decisions/ADR.md"]);
+  assert.deepEqual(mech2.filter(([, r]) => r.policy === "optional"), []);
+  assert.ok(notes2.some(([v, p]) => v === "ok" && p === "docs/arch-decisions/ADR.md"));
+  assert.ok(fs.readFileSync(path.join(t, "docs", "arch-decisions", "ADR.md"), "utf-8").includes(marker));
+});
+
+test("adopt a single row; unknown path refused via the CLI", () => {
+  const t = makeTarget(tmpdir(), "https://github.com/acme/demo.git");
+  const [mech, , , notes] = buildPlan(TOOL_ROOT, t, MANIFEST, "github", null, CURRENT, ["docs/arch-decisions/RFC.md"]);
+  assert.deepEqual(mech.filter(([v]) => v === "adopt").map(([, r]) => r.target), ["docs/arch-decisions/RFC.md"]);
+  assert.ok(notes.some(([v, p]) => v === "optional" && p === "docs/arch-decisions/ADR.md"));
+  const res = runCli(t, "--adopt", "docs/nope.md");
+  assert.equal(res.status, 1);
+  assert.ok(res.stdout.includes("--adopt matches no optional row"));
+});
 
 // -- parsing --------------------------------------------------------------
 

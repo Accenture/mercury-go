@@ -6,7 +6,7 @@ stdlib only. A byte-parity Node twin lives at scripts/reconcile.mjs.
 
 Usage:
   python3 scripts/reconcile.py --target <path> [--apply] [--pre-apply-complete]
-      [--forge github|gitlab|azdo|unknown]
+      [--forge github|gitlab|azdo|unknown] [--adopt <optional-row-target>]...
   python3 scripts/reconcile.py --check-manifest
 
 Default is a dry-run report. --apply performs the mechanical policies only
@@ -24,7 +24,7 @@ import sys
 
 EXCLUDED_DIRS = {"__pycache__", ".DS_Store"}
 EXCLUDED_FILE_RE = re.compile(r"(\.py[co]|\.DS_Store)$")
-POLICIES = {"verbatim", "verbatim-dir", "seed-copy", "sentinel-merge", "seed-generate", "stamp"}
+POLICIES = {"verbatim", "verbatim-dir", "seed-copy", "sentinel-merge", "seed-generate", "stamp", "optional"}
 FORGES = {"all", "github", "gitlab", "azdo"}
 
 
@@ -287,10 +287,20 @@ def is_sanctioned_fork(raw):
     return False
 
 
-def build_plan(tool_root, target, manifest, forge, installed, current_version):
+def adopt_matches(adopt, row_target):
+    """--adopt names an optional row by its exact target, or a directory prefix ending in '/'."""
+    return any(a == row_target or (a.endswith("/") and row_target.startswith(a)) for a in adopt)
+
+
+def build_plan(tool_root, target, manifest, forge, installed, current_version, adopt=()):
     """Returns (mechanical, agent, semantic, notes) action lists."""
     mechanical, agent, notes = [], [], []
     fresh = installed is None
+    adopt = list(adopt)
+    unmatched = [a for a in adopt if not any(
+        r["policy"] == "optional" and adopt_matches([a], r["target"]) for r in manifest["rows"])]
+    if unmatched:
+        die("--adopt matches no optional row: " + ", ".join(unmatched))
     for row in manifest["rows"]:
         if not row_applies(row["forge"], forge):
             continue
@@ -383,6 +393,20 @@ def build_plan(tool_root, target, manifest, forge, installed, current_version):
             else:
                 step = row["attrs"].replace("step:", "ENABLE.md Step ")
                 agent.append(("generate", row["target"], step))
+
+        elif policy == "optional":
+            # offered, never imposed (v4.42.0): installed only on an explicit --adopt; an existing
+            # copy is never touched; an absent one is listed for reference and is never pending
+            if not os.path.isfile(src):
+                die("manifest source missing in the tool checkout: " + row["source"])
+            if os.path.isfile(tgt):
+                notes.append(("ok", row["target"], "adopted — optional, never touched"))
+            elif adopt_matches(adopt, row["target"]):
+                mechanical.append(("adopt", row, [], "optional — requested with --adopt"))
+            else:
+                notes.append(("optional", row["target"],
+                              "not installed — adopt on the team's request: --apply --adopt " + row["target"] +
+                              "; never pending, never re-asked on upgrade"))
 
         elif policy == "stamp":
             if installed == current_version:
@@ -613,6 +637,7 @@ def check_manifest(tool_root, manifest):
 def main(argv):
     target, forge_override = None, None
     do_apply, do_check, pre_apply_complete = False, False, False
+    adopt = []
     i = 0
     while i < len(argv):
         a = argv[i]
@@ -630,6 +655,9 @@ def main(argv):
             pre_apply_complete = True
         elif a == "--check-manifest":
             do_check = True
+        elif a == "--adopt":
+            i += 1
+            adopt.append(argv[i] if i < len(argv) else die("--adopt needs an optional row target"))
         else:
             die("unknown argument: " + a)
         i += 1
@@ -674,7 +702,7 @@ def main(argv):
     print("mode:      " + ("apply" if do_apply else "dry-run"))
 
     mechanical, agent, semantic, notes = build_plan(
-        tool_root, target, manifest, forge, installed, current_version)
+        tool_root, target, manifest, forge, installed, current_version, adopt)
     print_report(mechanical, agent, semantic, notes, "apply" if do_apply else "dry-run")
 
     pending = len(mechanical) + len(agent) + len(semantic)
