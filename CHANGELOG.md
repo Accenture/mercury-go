@@ -19,6 +19,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > `accenture.github.io/mercury-go`). This is a status change, not a release: `VERSION` stays
 > **4.39.2**, there is no upgrade rung, and enabled repositories need no action.
 
+## Version 4.41.2, 9/18/2026
+
+> **A phantom fact in every enabled repo, and an ADR ledger that records decisions only (PATCH).**
+> Two field reports from the mercury-composable team (2026-09-18, on v4.41.1), consolidated.
+>
+> - **The seeded header's example footer counted as a live fact.** `continuity.md`'s header documents
+>   the footer format with a literal example inside an inline code span; `parse_footers()` matched it,
+>   so every enabled repo carried a phantom `kebab-id` fact — `tier: active`, not pinned, counted in
+>   `decay_eligible` — that inflated the run header and the `[continuity-bloat]` counter by one while
+>   raising nothing itself (a never-referenced id has no `[overdue]` or `[stale-metadata]`, and
+>   `refresh-metadata` preserves it). In the field it fired `[continuity-bloat] 36 > 35` when the true
+>   count was 35, exactly at the cap: a false trigger for the review ritual, which then goes looking for
+>   something to archive that does not exist. Reproduced on copies of three family repos (17→16, 23→22,
+>   21→20 live facts with the one header line neutralized; no other warning changed). Fix as proposed:
+>   a footer wrapped in backticks is documentation — skipped by `parse_footers`, by the
+>   `[undeclared-reference]` block mapper and by `archive-fact`'s locator (both runtimes). Blockquote
+>   position is **not** the discriminator: every Vision footer is blockquoted and real. The seeded
+>   header now shows `id: <kebab-id>`, consistent with `YYYY-MM-DD` and `N` on the same line.
+> - **The ADR ledger records decisions; proposals live outside it.** The protocol told the agent to
+>   "propose a newer ADR … and wait for human approval", which read literally means writing a
+>   non-decision into the decision record. The field ledger accumulated five ADRs at `Status: Proposed`
+>   for decisions that had already shipped, and a withdrawn proposal has no honest ledger status
+>   (`Superseded` implies a successor, `Deprecated` implies it was once in force). Maintainer ruling:
+>   an entry is written only when a decision is accepted; work under consideration lives in the repo's
+>   proposal register — for example a sibling `docs/arch-decisions/RFC.md` with its own `RFC-NNNN`
+>   sequence (a proposal does not reserve an ADR number; proposals merge, split or die; a promoted one
+>   is recorded in the register as a pointer to its ADR, a withdrawn one with the reason). `RFC-` over
+>   `P-` because it is the industry-recognised marker for a design proposal open to comment, and the
+>   RFC → ADR pairing is the established pattern. Nothing in the tool reads ADR status, so this is
+>   guidance only; a repo with `Proposed` entries resolves them once — accept the ones that shipped,
+>   withdraw the rest.
+
+### Fixed
+
+- **memory-lint** `parse_footers` (Python + Node): skips a footer wrapped in an inline code span; the
+  `[undeclared-reference]` block mapper applies the same rule, so both parsers agree on what a fact is.
+  Four mirrored tests per runtime (suites at 89).
+- **archive-fact** `footer_line_index` (Python + Node): the example line is never the block to move;
+  one mirrored test per runtime.
+- **`templates/memory/continuity.md`:** the header example reads `id: <kebab-id>`. A target's
+  continuity is user-owned and never re-copied, so the parser fix is what covers existing repos; a team
+  may apply the same one-line change by hand, as mercury-composable did.
+
+### Changed
+
+- **Protocol text** (both copies): the ADR paragraph — an entry only on acceptance; proposals in the
+  repo's register (example `docs/arch-decisions/RFC.md`, `RFC-NNNN`), never a `Proposed` ADR →
+  Semantic steps row (re-copy a still-stock target protocol; arbitrate a customized one per
+  `ENABLE.md` §5i).
+- **`DECAY.md` §12**, **`.agent/schema.md`** (ADR section: status vocabulary `Accepted → Superseded /
+  Deprecated`, the register, the human gate writes the ADR on approval), memory-lint `SKILL.md`; the
+  tool's own `docs/arch-decisions/ADR.md` lifecycle line (it holds no `Proposed` entries).
+- **Lockstep:** `UPGRADE.md` row + `4.41.1 → 4.41.2` rung, README table; `VERSION` → 4.41.2.
+
+Targets: reconcile re-copies the memory-lint and archive-fact built-ins, `DECAY.md` and `.agent/schema.md`;
+then the protocol semantic step. Credit: both reports from the mercury-composable team (2026-09-18) — the
+first with a tested patch, the second with the field ledger's own history as evidence.
+
 ## Version 4.41.1, 9/18/2026
 
 > **Thread ids name the thing, never their kind (PATCH).** Field note from the mercury-composable

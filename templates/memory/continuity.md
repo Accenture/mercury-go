@@ -5,7 +5,7 @@
 >
 > Each fact carries a metadata footer in an HTML comment, maintained by the review
 > ritual — invisible when rendered, read/written by agents:
-> `<!-- id: kebab-id | created: YYYY-MM-DD | last_used: YYYY-MM-DD | uses: N | tier: active -->`
+> `<!-- id: <kebab-id> | created: YYYY-MM-DD | last_used: YYYY-MM-DD | uses: N | tier: active -->`
 > See `.agent/schema.md` for the fields and `memory/decay-policy.md` for the windows.
 
 ---

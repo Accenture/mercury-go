@@ -24,7 +24,9 @@ never restated as competing truth.
 
 ## Lifecycle (mirrors `DECAY.md` §9)
 
-- **Status:** `Proposed` → `Accepted` → `Superseded` / `Deprecated`.
+- **Status:** `Accepted` → `Superseded` / `Deprecated`. An entry is written only when a decision
+  is accepted (v4.41.2); work under consideration would live in a sibling `RFC.md` register with
+  its own `RFC-NNNN` ids, never here as `Proposed` — a withdrawn proposal has no honest ledger status.
 - **Never deleted.** A decision that no longer holds is **superseded** (replaced by a
   newer ADR) or **deprecated** (no longer relevant, not replaced) — the old entry
   stays in place, its `Status` updated. History is the point.
