@@ -169,7 +169,9 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   sequence (Eric chose `RFC-` over `P-` as the industry-recognised marker for a proposal open to
   comment, and the file is named after the prefix). Separate sequences: a proposal does not reserve an
   ADR number. Guidance only — nothing in the tool reads ADR status; a repo with `Proposed` entries
-  resolves them once by hand (mercury holds six as of 2026-09-18).
+  resolves them once by hand (mercury holds six as of 2026-09-18). Adopted here the same day:
+  `docs/arch-decisions/RFC.md` opened with RFC-0001…0004 (three from open threads, one proposing to
+  formalize this rule as ADR-0008 — the maintainer's gate).
   <!-- id: adr-ledger-decisions-only | created: 2026-09-18 | last_used: 2026-09-18 | uses: 1 | tier: working | origin: 2026-09-18-230858 -->
 
 ## Open Threads

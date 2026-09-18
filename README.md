@@ -357,6 +357,7 @@ agent-memory/
   docs/                              ← design rationale + governance (human-facing, on-demand)
     arch-decisions/
       ADR.md                         ← Architecture Decision Records (optional convention; dogfooded here)
+      RFC.md                         ← the proposal register (RFC-NNNN; an ADR is written only on acceptance)
     DESIGN-*.md                      ← long-form per-feature design narratives
     agent-cognitive-framework.md     ← the VBDI source framework
 

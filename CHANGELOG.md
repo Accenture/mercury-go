@@ -71,6 +71,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`DECAY.md` §12**, **`.agent/schema.md`** (ADR section: status vocabulary `Accepted → Superseded /
   Deprecated`, the register, the human gate writes the ADR on approval), memory-lint `SKILL.md`; the
   tool's own `docs/arch-decisions/ADR.md` lifecycle line (it holds no `Proposed` entries).
+- **Dogfooded the rule before release:** this repo opened `docs/arch-decisions/RFC.md` with four real
+  proposals (protocol-text propagation, `seed-copy` "deliberately absent", the `thread-` filename prefix,
+  and formalizing the ledger rule itself as ADR-0008 — the maintainer's gate); each thread-backed proposal
+  points at its thread and the thread points back.
 - **Lockstep:** `UPGRADE.md` row + `4.41.1 → 4.41.2` rung, README table; `VERSION` → 4.41.2.
 
 Targets: reconcile re-copies the memory-lint and archive-fact built-ins, `DECAY.md` and `.agent/schema.md`;

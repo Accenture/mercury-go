@@ -4,7 +4,8 @@
 > **architecture decisions** — one decision per entry, with its rationale and the
 > trade-offs it accepts. It is read **on demand**, not part of the per-session agent
 > read path, so it adds **zero default token cost** (the same footing as
-> `docs/DESIGN-*.md`).
+> `docs/DESIGN-*.md`). **Proposals are not ADRs:** work under consideration lives in the sibling
+> register `RFC.md` (`RFC-NNNN`, its own sequence) and reaches this ledger only on acceptance (v4.41.2).
 
 ## What an ADR is (and is not)
 

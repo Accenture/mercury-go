@@ -12,4 +12,5 @@
   seeded (Eric: a last-resort escape hatch; `secret-waiver-last-resort`), so the reconcile stops re-offering
   it. The general question — a target-side tombstone or an `optional` policy for the remaining seed-copy
   rows (PR template, archive INDEX, forge floors) — stays open.
+  → proposal: RFC-0002 in `docs/arch-decisions/RFC.md` (the reasoning lives there; this thread holds the state)
   <!-- id: ot-seed-copy-deliberate-absence | created: 2026-09-17 | last_used: 2026-09-17 | uses: 1 | tier: working | origin: 2026-09-17-002547 -->
