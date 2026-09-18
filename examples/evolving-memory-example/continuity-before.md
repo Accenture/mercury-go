@@ -54,9 +54,9 @@
 ## Open Threads
 
 - [ ] Add idempotency keys to the payments endpoint
-  <!-- id: thread-idempotency-keys | created: 2026-06-11 | last_used: 2026-06-20 | uses: 3 | tier: active -->
+  <!-- id: idempotency-keys | created: 2026-06-11 | last_used: 2026-06-20 | uses: 3 | tier: active -->
 - [x] Migrate CI from CircleCI to GitHub Actions
-  <!-- id: thread-ci-migration | created: 2026-04-05 | last_used: 2026-04-28 | uses: 5 | tier: active -->
+  <!-- id: ci-migration | created: 2026-04-05 | last_used: 2026-04-28 | uses: 5 | tier: active -->
 
 ## User Preferences
 

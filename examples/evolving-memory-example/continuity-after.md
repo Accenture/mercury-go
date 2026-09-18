@@ -55,10 +55,10 @@
 ## Open Threads
 
 - [ ] Add idempotency keys to the payments endpoint
-  <!-- id: thread-idempotency-keys | created: 2026-06-11 | last_used: 2026-06-20 | uses: 3 | tier: active -->
+  <!-- id: idempotency-keys | created: 2026-06-11 | last_used: 2026-06-20 | uses: 3 | tier: active -->
 - [ ] Re-verify invariants (first check, due): confirm `post-only-mutations` and
   `utc-everywhere` still hold, or supersede any that don't (`DECAY.md` §9)
-  <!-- id: thread-verify-invariants | created: 2026-06-20 | last_used: 2026-06-20 | uses: 1 | tier: active -->
+  <!-- id: verify-invariants | created: 2026-06-20 | last_used: 2026-06-20 | uses: 1 | tier: active -->
 
 ## User Preferences
 
