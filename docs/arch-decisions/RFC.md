@@ -39,9 +39,28 @@
 
 ---
 
+## RFC-0005 — An opt-in seed for the governance pair: sample `ADR.md` + `RFC.md` templates
+**Status:** Open · **Raised:** 2026-09-18 · **Serves:** vision-agent-memory · **Thread:** `governance-pair-opt-in-seed`
+<!-- id: rfc-0005 | status: open | thread: governance-pair-opt-in-seed -->
+
+**Proposal.** Ship `templates/docs/arch-decisions/ADR.md` and `RFC.md` as skeletons with placeholders,
+so a team that adopts the governance pair starts from the canonical shape instead of copying this
+repo's files by hand (half the family adopted ledgers by hand: mercury-composable 24 ADRs and a
+register, mercury 18 ADRs). Raised by the maintainer (2026-09-18).
+
+**Options.** (a) Opt-in seed: `ENABLE.md` asks once at enable and copies the pair only on yes; Mode B
+never re-offers it. Requires a new MANIFEST policy, `optional` — offered once, never re-offered — which
+is RFC-0002's option (b) made concrete, with reconcile support in both runtimes and tests. Keeps the
+ledger optional and the tool never heavyweight. (b) Plain `seed-copy`: fastest, but installs governance
+ceremony into every enabled repo and re-offers the pair on every upgrade after a team deletes it — the
+very hazard RFC-0002 records. (c) Do nothing: this repo's files remain the reference shape.
+
+**Resolution.** Maintainer go for option (a) as **v4.42.0** (2026-09-18), after 4.41.2 ships; promote to
+an ADR when the `optional` policy's design is fixed.
+
 ## RFC-0004 — Formalize the ledger rule itself as ADR-0008
-**Status:** Open · **Raised:** 2026-09-18 · **Serves:** vision-agent-memory · **Thread:** — (Key Decision `adr-ledger-decisions-only`)
-<!-- id: rfc-0004 | status: open | formalizes-candidate: adr-ledger-decisions-only -->
+**Status:** Promoted → ADR-0008 · **Raised:** 2026-09-18 · **Serves:** vision-agent-memory · **Thread:** — (Key Decision `adr-ledger-decisions-only`)
+<!-- id: rfc-0004 | status: promoted | adr: ADR-0008 | formalizes-candidate: adr-ledger-decisions-only -->
 
 **Proposal.** Record "the ADR ledger records decisions only; proposals live in `RFC.md`" as
 ADR-0008, `formalizes: adr-ledger-decisions-only`, with the continuity fact gaining its
@@ -53,7 +72,8 @@ reverse choice the ledger exists to hold; ADR-0007 (hook dispatch) is a comparab
 Key Decision: the continuity fact, the protocol text and this register already carry it, and an ADR
 about the ledger's bookkeeping may read as ceremony ("never heavyweight"). The maintainer decides.
 
-**Resolution.** —
+**Resolution.** Promoted → ADR-0008 (2026-09-18) at the maintainer's gate — the accepted form is in
+`ADR.md`; this entry stays as the pointer.
 
 ## RFC-0003 — Drop the redundant `thread-` filename prefix in `memory/open-threads/`
 **Status:** Parked · **Raised:** 2026-09-18 · **Serves:** vision-agent-memory · **Thread:** `open-threads-filename-prefix`

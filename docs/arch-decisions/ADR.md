@@ -59,6 +59,34 @@ trade-offs** the decision accepts.
 
 ---
 
+## ADR-0008 — The ADR ledger records decisions only; proposals live in the RFC register
+**Status:** Accepted · **Date:** 2026-09-18T23:20:13.067Z · **Serves:** vision-agent-memory
+<!-- id: adr-0008 | status: accepted | formalizes: adr-ledger-decisions-only | proposed-as: RFC-0004 -->
+
+**Abstract.** An entry is written into this ledger only when a decision is accepted. Work under
+consideration lives in the sibling register `RFC.md`, with its own `RFC-NNNN` sequence; a proposal
+does not reserve an ADR number, and it resolves either by promotion (the ADR is written and the
+register keeps a pointer) or by withdrawal (recorded with the reason). Nothing here ever carries a
+`Proposed` status. Superseded/Deprecated handling is unchanged — that is the post-decision stage.
+
+**Rationale.** A ledger's value is that it is an immutable journey of decisions: a reader can tell
+what the project committed to, and when, without checking each entry's status. The prior guidance
+("propose a newer ADR … and wait for human approval") named only this file, so a literal reading
+wrote non-decisions into the decision record. In the field (mercury-composable, 2026-09-18) five ADRs
+sat at `Status: Proposed` for a month for decisions that had already shipped, and a withdrawn
+proposal had no honest status at all — `Superseded` implies a successor, `Deprecated` implies it was
+once in force. Alternatives weighed: keep `Proposed` inside the ledger and rely on discipline to flip
+it (the field-tested failure: nothing in the protocol says to come back); no register at all, with
+proposals living only in conversation and Open Threads (loses the reasoning — options and trade-offs —
+that a later reader needs to judge a decision, and gives a reshaped proposal no place to be revised);
+a register named by the repo (chosen as the *portable* form: the protocol mandates the rule, not the
+filename, and names `RFC.md` only as the example). `RFC-` over `P-` because it is the
+industry-recognised marker for a design proposal open to comment and the RFC → ADR pairing is the
+established pattern. **Trade-offs:** one more on-demand file and two sequences to keep straight;
+promotion adds a copy step (the accepted form is written into the ledger, the register keeps a
+pointer). The cost buys the property the ledger exists for. Proposed as RFC-0004 and promoted at the
+maintainer's gate the same day — the first proposal to travel the path it describes.
+
 ## ADR-0007 — Git hook entrypoints dispatch ordered fragments
 **Status:** Accepted · **Date:** 2026-08-20T21:00:47.000Z · **Serves:** vision-agent-memory
 <!-- id: adr-0007 | status: accepted | formalizes: git-hook-fragment-dispatch -->

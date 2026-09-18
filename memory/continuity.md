@@ -159,7 +159,7 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   files stay as they are. The `thread-` filename prefix itself is a parked backlog
   (`open-threads-filename-prefix`).
   <!-- id: id-naming-no-kind-prefix | created: 2026-09-18 | last_used: 2026-09-18 | uses: 1 | tier: working | origin: 2026-09-18-215724 -->
-- **The ADR ledger records decisions only; proposals live in an `RFC.md` register** (Eric, 2026-09-18,
+- **The ADR ledger records decisions only; proposals live in an `RFC.md` register (ADR-0008)** (Eric, 2026-09-18,
   on the mercury-composable team's report; shipped v4.41.2). The protocol's old "propose a newer ADR …
   and wait for human approval" put non-decisions into the decision record — their ledger held five
   `Proposed` ADRs for decisions that had already shipped, and a withdrawn proposal has no honest ledger
