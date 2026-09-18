@@ -59,6 +59,32 @@ trade-offs** the decision accepts.
 
 ---
 
+## ADR-0009 — The governance pair is an opt-in seed: offered once, never imposed (the `optional` policy)
+**Status:** Accepted · **Date:** 2026-09-18T23:50:01.095Z · **Serves:** vision-agent-memory
+<!-- id: adr-0009 | status: accepted | formalizes: governance-pair-optional-seed | proposed-as: RFC-0005 -->
+
+**Abstract.** The tool ships sample `docs/arch-decisions/ADR.md` and `RFC.md` skeletons, but installs
+them only when a team asks: a seventh MANIFEST policy, `optional`, whose row is copied only on an explicit
+`--adopt <target>`, is never touched when present, and is listed for reference when absent without ever
+counting as pending work. The fresh enable offers the pair once (`ENABLE.md` Step 10); an upgrade never
+re-asks. Governance is offered, never imposed.
+
+**Rationale.** Two field repos had adopted an ADR ledger by hand, so a canonical starting shape has
+real demand — but the ledger is documented as opt-in and the Vision names "never heavyweight" as a
+non-goal. The obvious mechanism, a `seed-copy` row, was rejected: it installs the pair into every enabled
+repo, and because `seed-copy` copies whenever the target lacks the file, it re-offers the pair on every
+upgrade after a team deletes it — the "deliberately absent" hazard RFC-0002 records from the waiver-file
+incident. Alternatives weighed: `seed-copy` (fast, but ceremony everywhere and re-offers after deletion);
+no templates at all, with the tool's own files as the reference shape (leaves every adopting team to copy
+and generalize by hand); an `optional` policy scoped to guidance-only seeds (chosen — it is RFC-0002's
+option (b) made concrete, and the pair is its first use). Design points: `--adopt` is explicit and
+repeatable, a `dir/` prefix adopts every optional row under it, an unmatched path is refused, and absent
+optional rows are excluded from the pending count so convergence is unaffected. The skeletons are
+project-neutral with no placeholders, so the mechanical copy is complete. **Trade-offs:** one more policy
+for operators to know, a `[notes]` line per unadopted row on every dry-run (reference, by design), and the
+question of which existing `seed-copy` rows should migrate to `optional` is deliberately left open in
+RFC-0002. Proposed as RFC-0005 and promoted at the maintainer's gate once the design was implemented.
+
 ## ADR-0008 — The ADR ledger records decisions only; proposals live in the RFC register
 **Status:** Accepted · **Date:** 2026-09-18T23:20:13.067Z · **Serves:** vision-agent-memory
 <!-- id: adr-0008 | status: accepted | formalizes: adr-ledger-decisions-only | proposed-as: RFC-0004 -->

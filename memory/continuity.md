@@ -173,7 +173,7 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   `docs/arch-decisions/RFC.md` opened with RFC-0001…0004 (three from open threads, one proposing to
   formalize this rule as ADR-0008 — the maintainer's gate).
   <!-- id: adr-ledger-decisions-only | created: 2026-09-18 | last_used: 2026-09-18 | uses: 1 | tier: working | origin: 2026-09-18-230858 -->
-- **The governance pair is an opt-in seed — offered once, never imposed** (Eric, 2026-09-18, RFC-0005;
+- **The governance pair is an opt-in seed — offered once, never imposed (ADR-0009)** (Eric, 2026-09-18, RFC-0005;
   shipped v4.42.0). Sample `docs/arch-decisions/ADR.md` + `RFC.md` skeletons ship as `templates/`, but under a
   new MANIFEST policy `optional`: installed only on an explicit `--adopt <target>` (a `dir/` prefix adopts every
   optional row under it), never touched when present, listed in the dry-run for reference when absent and

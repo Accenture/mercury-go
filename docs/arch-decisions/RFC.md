@@ -40,8 +40,8 @@
 ---
 
 ## RFC-0005 — An opt-in seed for the governance pair: sample `ADR.md` + `RFC.md` templates
-**Status:** Open · **Raised:** 2026-09-18 · **Serves:** vision-agent-memory · **Thread:** `governance-pair-opt-in-seed`
-<!-- id: rfc-0005 | status: open | thread: governance-pair-opt-in-seed -->
+**Status:** Promoted → ADR-0009 · **Raised:** 2026-09-18 · **Serves:** vision-agent-memory · **Thread:** `governance-pair-opt-in-seed` (closed — shipped)
+<!-- id: rfc-0005 | status: promoted | adr: ADR-0009 | thread: governance-pair-opt-in-seed -->
 
 **Proposal.** Ship `templates/docs/arch-decisions/ADR.md` and `RFC.md` as skeletons with placeholders,
 so a team that adopts the governance pair starts from the canonical shape instead of copying this
@@ -59,8 +59,8 @@ very hazard RFC-0002 records. (c) Do nothing: this repo's files remain the refer
 fixed and implemented in v4.42.0: MANIFEST policy `optional` — installed only on an explicit
 `--adopt <target>` (a path ending in `/` adopts every optional row under it), never touched when
 present, listed for reference when absent and never pending; `ENABLE.md` Step 10 offers the pair once;
-Mode B never re-asks; skeletons at `templates/docs/arch-decisions/`. Promotion to an ADR at the
-maintainer's gate.
+Mode B never re-asks; skeletons at `templates/docs/arch-decisions/`. **Promoted → ADR-0009 (2026-09-18)**
+at the maintainer's gate — the accepted form is in `ADR.md`; this entry stays as the pointer.
 
 ## RFC-0004 — Formalize the ledger rule itself as ADR-0008
 **Status:** Promoted → ADR-0008 · **Raised:** 2026-09-18 · **Serves:** vision-agent-memory · **Thread:** — (Key Decision `adr-ledger-decisions-only`)
