@@ -145,6 +145,7 @@ dev-numbered 4.22–4.25 — into a single MINOR over the released 4.21.0.)*
 | 4.39.2 | **CI secret-scan waiver: silent abort on waived last file (PATCH):** field report (2026-09-04, mercury-composable PR #318 — the first PR to exercise a `.agent/secret-scan-ignore` entry there). The changed-config secret scan's exemption filter ended its loop body with `[ "$keep" = "1" ] && printf ...`; a waived LAST changed config file makes the false test the loop's exit status, fails the command substitution's assignment, and under runner `set -e` kills the step with zero output — a red `memory` check that fires preferentially on a team's first legitimate waiver use. One-line fix (`if ... fi`) applied to all three floors (GitHub workflow + GitLab/AzDO templates); class sweep clean (pre-commit fragment already used `if/else`); new `tests/test_ci_secret_scan_waiver.sh` extracts each floor's loop verbatim and pins 4 cases under `-e`, red-verified. Converges by plain re-copy of the forge CI floor |
 | 4.40.0 | **Stalled open threads → human closure gate (MINOR):** field report (2026-09-16, mercury-composable on v4.39.2): an unchecked Open Thread is exempt from decay by design, and that exemption also removed the only automated freshness signal — a pinned thread rotted 184 sessions with four of its five "still open" items long shipped, and no lint check, review step, or metadata field could surface it (7 of 9 live threads there ~117 sessions untouched; the tool's own repo had two past 90 sessions, one still describing as "paused" a plan v4.0.0 shipped). `DECAY.md` §6's "never-decay ≠ never-checked" covered `core` + invariants but not the third never-decay class. Now: `thread_stale_window` knob (default 40 = the invariant cadence) + `memory-lint` check 15 `[thread-stale]` (refs-based; never-referenced threads count from `created`) for detection, and `REVIEW.md` step 8 — **one human closure gate** listing every stalled thread: the owner closes (undelivered items recorded as *deliberately dropped*) or re-affirms (a `## Memory References` entry, the only reset); the tool never closes a thread (maintainer decision: a long-stalled thread is a signal for closure, rectified through a human gate). Plus the one-lifecycle-per-record rule and a review backstop that re-reads unchecked bodies; invariant-step pointers corrected 6 → 7. Converges by re-copy of `DECAY.md`/`REVIEW.md`/schema/the lint built-in; optional knob; first gate at the next review |
 | 4.40.1 | **Secret guard: punctuation-tolerant placeholder exemptions + the waiver file as a last resort (PATCH):** field note (mercury-composable, 2026-09-17, on v4.40.0): a comment sentence mentioning a setting — `credentials.source=OAUTHBEARER,` — flagged `[secret-material]` while the bare setting was exempt; trailing sentence punctuation rides into the captured value and defeated every placeholder exemption except the tool's own knob (`password=changeme.`, `client.secret=${CLIENT_SECRET}.` too). Fix: retry the exemptions once with trailing `).,` stripped, after the as-is pass (so `$(…)` / `(REDACTED)` keep matching; real values still flag), both runtimes, mirrored tests (74 each). And, on the same team's suggestion after deleting their re-seeded stub twice, maintainer decision: `.agent/secret-scan-ignore` is a **last-resort escape hatch** — no longer seeded (MANIFEST row + template removed), every guidance surface says restructure the fixture (zero secret leakage is the goal; even dummy test values are false positives in field security scanners); the hook and CI floors still honor a committed file and the hook states the implication when it exempts one. Protocol text changed → semantic row; converges by re-copy of the hook fragment, the lint built-in and a still-stock protocol |
+| 4.41.0 | **`[undeclared-reference]` — a fact edited without being declared (MINOR):** field report (mercury-composable, 2026-09-17): at their first closure gate the maintainer closed two Blueprint gaps; the closing session rewrote both records and declared neither, so `refresh-metadata` read the decision as non-use and `[overdue]` proposed sweeping them hours later — footers and reference log agreed, so only the diff could see it. New memory-lint check 16 over the staged index (`--staged`, pre-commit fragment) or a commit range (`--range`, all three CI floors): a fact whose body changes must be declared in a session log staged with it; footer-only lines, condensed closed records, verbatim moves and deletions never count; silent when no log is staged; advisory. Both runtimes, 11 mirrored tests each (85). Closures are now declared by rule — `REVIEW.md` steps 5/8/10 and `DECAY.md` §2/§6 corrected (the v4.40.0 wording named only re-affirmation), protocol tracks referenced/created/reactivated/closed → semantic row. Converges by re-copy of the hook fragment, README, lint built-in, DECAY/REVIEW/schema and the CI floor, plus the protocol step |
 
 
 Each enabled repo records what it is on in **`.agent/version.md`**:
@@ -2561,3 +2562,41 @@ implication when it exempts one.
 **Verify:** `memory-lint` runs with no errors; in the tool repo both lint suites pass (74 mirrored tests
 each) and `--scan-files` on a comment line ending `…=OAUTHBEARER,` reports nothing while a real value with
 trailing punctuation still flags; the hook prints the last-resort notice when a waiver applies.
+
+## Rung: 4.40.1 → 4.41.0 — `[undeclared-reference]`: a fact edited without being declared (MINOR)
+
+**What changed:** a field report from the mercury-composable team (2026-09-17). At their first closure
+gate the maintainer closed two Blueprint gaps; the closing session rewrote both records across five
+commits and declared neither under `## Memory References`, so `refresh-metadata` read the human's
+decision as non-use and `[overdue]` proposed sweeping the records hours later. The footers and the
+reference log agreed with each other — both wrong — so no repo-state check could see it; the missing
+input was the diff. memory-lint gains check 16 `[undeclared-reference]`: over the staged index
+(`--staged`, run by the pre-commit fragment) or a commit range (`--range BASE [HEAD]`, run by the CI
+floors), a memory fact whose body changes must be declared in a session log staged with it. Footer-only
+lines, condensing an already-closed record, a verbatim move and a deleted block never count; the check
+is silent when no log is staged; it is advisory and names the remedy. The ritual text is corrected too:
+a closure is a use (the close record is the completion event), only inspecting is not — the v4.40.0
+wording had named re-affirmation alone.
+
+**Steps:**
+
+1. **Reconcile** (or hand-walk `MANIFEST.md`): re-copies the memory-lint built-in (both runtimes,
+   tests, `SKILL.md`), `.githooks/pre-commit.d/50-agent-memory-secret-guard`, `.githooks/README.md`,
+   `DECAY.md`, `REVIEW.md`, `.agent/schema.md` and the forge CI floor. The hook fragment now runs
+   `memory-lint --staged` after the runtime check (advisory, stderr, never blocks); each floor runs
+   `memory-lint --range base HEAD` after the changed-config scan.
+2. **Protocol text changed — the mandated Semantic step:** if the target's `memory/PROTOCOL.md` is
+   byte-identical to the **4.40.1** template, re-copy it. If customized, arbitrate per `ENABLE.md` §5i:
+   the "Maintain memory" bullet tracks "referenced, created, reactivated, or closed" ids and says an edit
+   or a closure is a use; the Update-continuity item 2 declares each closed thread — never drop local
+   directives.
+3. **Repair the field shape if present:** run `memory-lint`; an `[overdue]` on a thread closed within
+   `archive_window` is a missed declaration, not decay — declare the id retroactively in the next
+   session log (as `Referenced … (closed <date>, declared retroactively)`) and let `refresh-metadata`
+   reset it, rather than sweeping a record a human just wrote.
+4. **Stamp** `.agent/version.md` → `version: 4.41.0`, `last_upgraded: <today>`, preserving
+   `enabled_with` and `mode`.
+
+**Verify:** both lint suites pass in the tool repo (85 mirrored tests each); `memory-lint --staged` on a
+clean index prints `undeclared-reference check: ok`; staging a fact edit plus a log that does not declare
+it prints one `[undeclared-reference]` line from the pre-commit fragment and the commit still proceeds.

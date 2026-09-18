@@ -7,7 +7,7 @@
 ## Project State
 
 - **project:** agent-memory
-- **status:** v4.40.1 — official Accenture open source in the Mercury family (graduated 2026-09-10; home `Accenture/mercury-go`, docs `accenture.github.io/mercury-go`); a vendor-neutral, no-code (markdown) shared-AI-memory + AI-enablement tool: backward memory (decay/review/archive), forward VBDI loop, cross-vendor skills layer, declarative enable/upgrade (MANIFEST reconcile), forge-aware ritual triggers (GitHub/GitLab/AzDO), the merge-scale thread layout (`memory/open-threads/`), and the stalled-thread human closure gate (`[thread-stale]` + `REVIEW.md` step 8). Detail: What's Been Built below; per-version history: `UPGRADE.md` + session logs.
+- **status:** v4.41.0 — official Accenture open source in the Mercury family (graduated 2026-09-10; home `Accenture/mercury-go`, docs `accenture.github.io/mercury-go`); a vendor-neutral, no-code (markdown) shared-AI-memory + AI-enablement tool: backward memory (decay/review/archive), forward VBDI loop, cross-vendor skills layer, declarative enable/upgrade (MANIFEST reconcile), forge-aware ritual triggers (GitHub/GitLab/AzDO), the merge-scale thread layout (`memory/open-threads/`), and the stalled-thread human closure gate (`[thread-stale]` + `REVIEW.md` step 8). Detail: What's Been Built below; per-version history: `UPGRADE.md` + session logs.
 - **last_enabled:** 2026-06-12
 - **last_review:** 2026-09-16 | through 2026-09-16-235431
 - **last_invariant_check:** 2026-08-22 | through 2026-08-22-174808 (all 6 confirmed by Eric — walkthrough with live-tree evidence; no-build-step wording refreshed)
@@ -134,6 +134,11 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   Why: under competing priorities loose ends get filed in a thread and left behind without a
   trace — pinned had come to mean unexamined (mercury-composable field report); and closing a
   `(blueprint)` gap is an altitude decision, so `DECAY.md` §12 already required the human.
+  **v4.41.0 (2026-09-17): a closure is declared under `## Memory References` too** — the close record is
+  the completion event that starts the sweep clock; an edit or a closure is a use, inspecting alone is
+  not. The v4.40.0 wording named only re-affirmation and a field session left two gate closures
+  undeclared, so `refresh-metadata` read the human's decision as non-use; memory-lint check 16
+  `[undeclared-reference]` now catches a fact edited without a declaration at commit time.
   <!-- id: stalled-thread-closure-gate | created: 2026-09-16 | last_used: 2026-09-16 | uses: 2 | tier: active | origin: 2026-09-16-234024 -->
 - **The secret-scan waiver file is a last-resort escape hatch, not a default** (Eric, 2026-09-17, on
   the mercury-composable team's suggestion; shipped v4.40.1). `.agent/secret-scan-ignore` is no longer

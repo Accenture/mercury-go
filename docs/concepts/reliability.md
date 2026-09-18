@@ -26,7 +26,10 @@ replacing an entrypoint.
   a fixture that trips it is restructured with a placeholder or env var (even dummy test values are
   false positives in field security scanners); a committed `.agent/secret-scan-ignore` is a
   last-resort escape hatch the tool no longer seeds (v4.40.1). The CI floor runs the matching
-  changed-config scan on every push.
+  changed-config scan on every push. Since v4.41.0 the same fragment also runs the **advisory**
+  `[undeclared-reference]` check: a memory fact edited in the commit must be declared in a session
+  log staged with it, or the decay arithmetic reads the edit as non-use — never blocks, silent when
+  no log is staged; the CI floors run it over the push/PR range.
 - A committed **`post-commit.d/50-agent-memory-ritual-capture` fragment** (advisory; never blocks).
   After a commit it
   auto-stubs a session log when the commit did real work but carried none, and re-syncs

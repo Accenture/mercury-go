@@ -791,7 +791,9 @@ DevOps sets from `templates/` — so the after-session ritual fires reliably for
   seeds, v4.40.1) for `[secret-material]` before the commit exists — **enforcing by
   default**: findings block the commit (`AGENT_MEMORY_SECRET_GUARD=advisory` opts down to
   warn-only; `--no-verify` bypasses once); the one placement that *prevents* a committed secret
-  instead of detecting it post-push. The **post-commit ritual-capture fragment** auto-stubs a
+  instead of detecting it post-push. The same fragment runs the **advisory `[undeclared-reference]`**
+  check (v4.41.0): a memory fact edited in the commit must be declared in a session log staged with
+  it, or the decay arithmetic reads the edit as non-use. The **post-commit ritual-capture fragment** auto-stubs a
   session log when a commit does real work without one and re-syncs adapters when a skill changed.
   **Composition-safe install:** inspect existing hook entrypoints and fragment directories first.
   Preserve locally owned entrypoint behavior in a differently named ordered fragment before
@@ -800,7 +802,8 @@ DevOps sets from `templates/` — so the after-session ritual fires reliably for
   stop for a human decision rather than dropping behavior or running it twice.
 - The **CI floor** — runs `memory-lint`, an advisory session-log check, **and a changed-config
   credential scan (v4.34.0 — the push-time sibling of the pre-commit guard, honoring the same
-  last-resort `.agent/secret-scan-ignore` if a team has committed one)** on every push and
+  last-resort `.agent/secret-scan-ignore` if a team has committed one), and the advisory
+  `[undeclared-reference]` check over the push/PR range (v4.41.0)** on every push and
   pull/merge request (on Azure DevOps: pushes only, until an admin adds the optional Build
   Validation policy). **Forge-aware (v4.31.0; +Azure DevOps v4.32.0):**
   - **GitHub-hosted:** copy **`.github/workflows/agent-memory.yml`** verbatim from this tool's root.
