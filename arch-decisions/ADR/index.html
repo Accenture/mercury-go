@@ -18,7 +18,7 @@
         <link rel="prev" href="../../agent-cognitive-framework/">
       
       
-        <link rel="next" href="../../changelog/">
+        <link rel="next" href="../RFC/">
       
       
         
@@ -1220,6 +1220,8 @@
       
         
       
+        
+      
     
     
     
@@ -1648,6 +1650,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#adr-0008-the-adr-ledger-records-decisions-only-proposals-live-in-the-rfc-register" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-0008 — The ADR ledger records decisions only; proposals live in the RFC register
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#adr-0007-git-hook-entrypoints-dispatch-ordered-fragments" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1728,6 +1741,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../RFC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Proposal Register (RFC)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1978,6 +2019,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#adr-0008-the-adr-ledger-records-decisions-only-proposals-live-in-the-rfc-register" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-0008 — The ADR ledger records decisions only; proposals live in the RFC register
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#adr-0007-git-hook-entrypoints-dispatch-ordered-fragments" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2080,7 +2132,8 @@
 <strong>architecture decisions</strong> — one decision per entry, with its rationale and the
 trade-offs it accepts. It is read <strong>on demand</strong>, not part of the per-session agent
 read path, so it adds <strong>zero default token cost</strong> (the same footing as
-<code>docs/DESIGN-*.md</code>).</p>
+<code>docs/DESIGN-*.md</code>). <strong>Proposals are not ADRs:</strong> work under consideration lives in the sibling
+register <code>RFC.md</code> (<code>RFC-NNNN</code>, its own sequence) and reaches this ledger only on acceptance (v4.41.2).</p>
 </blockquote>
 <h2 id="what-an-adr-is-and-is-not">What an ADR is (and is not)<a class="headerlink" href="#what-an-adr-is-and-is-not" title="Permanent link">&para;</a></h2>
 <p>An ADR records <em>why</em> a load-bearing architectural choice was made — the kind of
@@ -2097,7 +2150,9 @@ continuity <code>id</code>, and each invariant/decision carries a visible <code>
 never restated as competing truth.</p>
 <h2 id="lifecycle-mirrors-decaymd-9">Lifecycle (mirrors <code>DECAY.md</code> §9)<a class="headerlink" href="#lifecycle-mirrors-decaymd-9" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Status:</strong> <code>Proposed</code> → <code>Accepted</code> → <code>Superseded</code> / <code>Deprecated</code>.</li>
+<li><strong>Status:</strong> <code>Accepted</code> → <code>Superseded</code> / <code>Deprecated</code>. An entry is written only when a decision
+  is accepted (v4.41.2); work under consideration would live in a sibling <code>RFC.md</code> register with
+  its own <code>RFC-NNNN</code> ids, never here as <code>Proposed</code> — a withdrawn proposal has no honest ledger status.</li>
 <li><strong>Never deleted.</strong> A decision that no longer holds is <strong>superseded</strong> (replaced by a
   newer ADR) or <strong>deprecated</strong> (no longer relevant, not replaced) — the old entry
   stays in place, its <code>Status</code> updated. History is the point.</li>
@@ -2127,6 +2182,32 @@ never restated as competing truth.</p>
 this log).</p>
 </blockquote>
 <hr />
+<h2 id="adr-0008-the-adr-ledger-records-decisions-only-proposals-live-in-the-rfc-register">ADR-0008 — The ADR ledger records decisions only; proposals live in the RFC register<a class="headerlink" href="#adr-0008-the-adr-ledger-records-decisions-only-proposals-live-in-the-rfc-register" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> Accepted · <strong>Date:</strong> 2026-09-18T23:20:13.067Z · <strong>Serves:</strong> vision-agent-memory</p>
+<!-- id: adr-0008 | status: accepted | formalizes: adr-ledger-decisions-only | proposed-as: RFC-0004 -->
+
+<p><strong>Abstract.</strong> An entry is written into this ledger only when a decision is accepted. Work under
+consideration lives in the sibling register <code>RFC.md</code>, with its own <code>RFC-NNNN</code> sequence; a proposal
+does not reserve an ADR number, and it resolves either by promotion (the ADR is written and the
+register keeps a pointer) or by withdrawal (recorded with the reason). Nothing here ever carries a
+<code>Proposed</code> status. Superseded/Deprecated handling is unchanged — that is the post-decision stage.</p>
+<p><strong>Rationale.</strong> A ledger's value is that it is an immutable journey of decisions: a reader can tell
+what the project committed to, and when, without checking each entry's status. The prior guidance
+("propose a newer ADR … and wait for human approval") named only this file, so a literal reading
+wrote non-decisions into the decision record. In the field (mercury-composable, 2026-09-18) five ADRs
+sat at <code>Status: Proposed</code> for a month for decisions that had already shipped, and a withdrawn
+proposal had no honest status at all — <code>Superseded</code> implies a successor, <code>Deprecated</code> implies it was
+once in force. Alternatives weighed: keep <code>Proposed</code> inside the ledger and rely on discipline to flip
+it (the field-tested failure: nothing in the protocol says to come back); no register at all, with
+proposals living only in conversation and Open Threads (loses the reasoning — options and trade-offs —
+that a later reader needs to judge a decision, and gives a reshaped proposal no place to be revised);
+a register named by the repo (chosen as the <em>portable</em> form: the protocol mandates the rule, not the
+filename, and names <code>RFC.md</code> only as the example). <code>RFC-</code> over <code>P-</code> because it is the
+industry-recognised marker for a design proposal open to comment and the RFC → ADR pairing is the
+established pattern. <strong>Trade-offs:</strong> one more on-demand file and two sequences to keep straight;
+promotion adds a copy step (the accepted form is written into the ledger, the register keeps a
+pointer). The cost buys the property the ledger exists for. Proposed as RFC-0004 and promoted at the
+maintainer's gate the same day — the first proposal to travel the path it describes.</p>
 <h2 id="adr-0007-git-hook-entrypoints-dispatch-ordered-fragments">ADR-0007 — Git hook entrypoints dispatch ordered fragments<a class="headerlink" href="#adr-0007-git-hook-entrypoints-dispatch-ordered-fragments" title="Permanent link">&para;</a></h2>
 <p><strong>Status:</strong> Accepted · <strong>Date:</strong> 2026-08-20T21:00:47.000Z · <strong>Serves:</strong> vision-agent-memory</p>
 <!-- id: adr-0007 | status: accepted | formalizes: git-hook-fragment-dispatch -->
@@ -2284,13 +2365,13 @@ vendor settings) — the safety boundary is worth more than the feature.</p>
         
         
           
-          <a href="../../changelog/" class="md-footer__link md-footer__link--next" aria-label="Next: Changelog">
+          <a href="../RFC/" class="md-footer__link md-footer__link--next" aria-label="Next: Proposal Register (RFC)">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Changelog
+                Proposal Register (RFC)
               </div>
             </div>
             <div class="md-footer__button md-icon">
