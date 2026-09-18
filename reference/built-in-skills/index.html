@@ -2056,7 +2056,7 @@ targets.</p>
 <hr />
 <h2 id="memory-lint">memory-lint<a class="headerlink" href="#memory-lint" title="Permanent link">&para;</a></h2>
 <p>The deterministic integrity verifier the review ritual relies on. Ships in <strong>both Python and
-Node</strong> at output parity, so it runs on a node-only box too. Fifteen checks:</p>
+Node</strong> at output parity, so it runs on a node-only box too. Sixteen checks:</p>
 <ol>
 <li>duplicate facts (<code>[both]</code>)</li>
 <li>over-archived (<code>[over-archived]</code>)</li>
@@ -2086,6 +2086,11 @@ Node</strong> at output parity, so it runs on a node-only box too. Fifteen check
     The pin still protects it; the review lists every stalled thread in one human closure
     gate (<code>REVIEW.md</code> step 8) where the owner closes or re-affirms it — the tool never
     closes a thread</li>
+<li>undeclared references (<code>[undeclared-reference]</code>, v4.41.0; <code>--staged</code> / <code>--range BASE [HEAD]</code>) —
+    a memory fact whose body changes in a commit must be declared in a session log staged with
+    it, or <code>refresh-metadata</code> reads the edit as non-use. Footer-only lines, condensed closed
+    records, verbatim moves and deletions never count; silent when no log is staged. Run by the
+    pre-commit fragment and the CI floors, advisory</li>
 </ol>
 <p>Plus a standalone mode (v4.34.0): <code>--scan-files FILE...</code> runs the <strong>credential-class</strong> subset of
 check 10 over arbitrary config files (<code>.json</code>/<code>.yml</code>/<code>.yaml</code>/<code>.properties</code>/<code>.toml</code>/<code>.ini</code>/<code>.env*</code>) —
