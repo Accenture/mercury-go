@@ -2029,6 +2029,10 @@ safe (idempotent).</p>
   SS --&gt; S[re-sync adapters&lt;br/&gt;+ stamp version.md]</code></pre>
 <h2 id="what-reconcile-may-do-and-never-does">What reconcile may do — and never does<a class="headerlink" href="#what-reconcile-may-do-and-never-does" title="Permanent link">&para;</a></h2>
 <ul>
+<li><strong>Optional rows are never imposed</strong> (v4.42.0): the governance pair <code>docs/arch-decisions/ADR.md</code> +
+  <code>RFC.md</code> is installed only on an explicit <code>--adopt &lt;target&gt;</code>; if your repo never adopted it, an
+  upgrade lists it as an <code>optional</code> note for reference and does not ask again. Adopt any time with
+  <code>--apply --adopt docs/arch-decisions/</code>.</li>
 <li>Re-copy a stale tool-owned file from its canonical source; seed a missing one.</li>
 <li>Add missing entries to the managed <code>.gitignore</code>/<code>.gitattributes</code> blocks (add-only,
   de-duplicated — it also catches entries older upgrades never back-filled).</li>

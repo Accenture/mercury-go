@@ -2076,8 +2076,8 @@ cost, the same footing as <code>ADR.md</code> and <code>docs/DESIGN-*.md</code>)
 </code></pre></div>
 <hr />
 <h2 id="rfc-0005-an-opt-in-seed-for-the-governance-pair-sample-adrmd-rfcmd-templates">RFC-0005 — An opt-in seed for the governance pair: sample <code>ADR.md</code> + <code>RFC.md</code> templates<a class="headerlink" href="#rfc-0005-an-opt-in-seed-for-the-governance-pair-sample-adrmd-rfcmd-templates" title="Permanent link">&para;</a></h2>
-<p><strong>Status:</strong> Open · <strong>Raised:</strong> 2026-09-18 · <strong>Serves:</strong> vision-agent-memory · <strong>Thread:</strong> <code>governance-pair-opt-in-seed</code></p>
-<!-- id: rfc-0005 | status: open | thread: governance-pair-opt-in-seed -->
+<p><strong>Status:</strong> Promoted → ADR-0009 · <strong>Raised:</strong> 2026-09-18 · <strong>Serves:</strong> vision-agent-memory · <strong>Thread:</strong> <code>governance-pair-opt-in-seed</code> (closed — shipped)</p>
+<!-- id: rfc-0005 | status: promoted | adr: ADR-0009 | thread: governance-pair-opt-in-seed -->
 
 <p><strong>Proposal.</strong> Ship <code>templates/docs/arch-decisions/ADR.md</code> and <code>RFC.md</code> as skeletons with placeholders,
 so a team that adopts the governance pair starts from the canonical shape instead of copying this
@@ -2089,8 +2089,12 @@ is RFC-0002's option (b) made concrete, with reconcile support in both runtimes 
 ledger optional and the tool never heavyweight. (b) Plain <code>seed-copy</code>: fastest, but installs governance
 ceremony into every enabled repo and re-offers the pair on every upgrade after a team deletes it — the
 very hazard RFC-0002 records. (c) Do nothing: this repo's files remain the reference shape.</p>
-<p><strong>Resolution.</strong> Maintainer go for option (a) as <strong>v4.42.0</strong> (2026-09-18), after 4.41.2 ships; promote to
-an ADR when the <code>optional</code> policy's design is fixed.</p>
+<p><strong>Resolution.</strong> Maintainer go for option (a) as <strong>v4.42.0</strong> (2026-09-18), after 4.41.2 ships. Design
+fixed and implemented in v4.42.0: MANIFEST policy <code>optional</code> — installed only on an explicit
+<code>--adopt &lt;target&gt;</code> (a path ending in <code>/</code> adopts every optional row under it), never touched when
+present, listed for reference when absent and never pending; <code>ENABLE.md</code> Step 10 offers the pair once;
+Mode B never re-asks; skeletons at <code>templates/docs/arch-decisions/</code>. <strong>Promoted → ADR-0009 (2026-09-18)</strong>
+at the maintainer's gate — the accepted form is in <code>ADR.md</code>; this entry stays as the pointer.</p>
 <h2 id="rfc-0004-formalize-the-ledger-rule-itself-as-adr-0008">RFC-0004 — Formalize the ledger rule itself as ADR-0008<a class="headerlink" href="#rfc-0004-formalize-the-ledger-rule-itself-as-adr-0008" title="Permanent link">&para;</a></h2>
 <p><strong>Status:</strong> Promoted → ADR-0008 · <strong>Raised:</strong> 2026-09-18 · <strong>Serves:</strong> vision-agent-memory · <strong>Thread:</strong> — (Key Decision <code>adr-ledger-decisions-only</code>)</p>
 <!-- id: rfc-0004 | status: promoted | adr: ADR-0008 | formalizes-candidate: adr-ledger-decisions-only -->
@@ -2133,7 +2137,9 @@ removed on purpose is re-installed by the next upgrade and re-offered forever �
 present" has no counterpart for "removed on purpose" (surfaced upgrading mercury-composable to
 v4.40.0, where a deliberately deleted waiver stub came back). The motivating row is gone since
 v4.40.1; the general question stands for the remaining seed-copy rows (PR template, archive INDEX,
-forge floors).</p>
+forge floors). <em>Progress (v4.42.0):</em> option (b) now exists as the MANIFEST policy <code>optional</code> (first
+used for the governance pair, RFC-0005) — the open question narrows to <em>which</em> existing <code>seed-copy</code>
+rows, if any, should move to it.</p>
 <p><strong>Options.</strong> (a) A target-side tombstone the reconcile honours — an <code>.agent/absent</code> list or a marker
 file — so the target, not the tool, records the deletion. (b) An <code>optional</code> MANIFEST policy for seeds
 that are pure guidance: offered once at enable, never re-offered. Either must keep <code>upgrades-additive</code>

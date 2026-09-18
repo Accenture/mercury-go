@@ -2058,12 +2058,16 @@ rungs earlier: <em>script the mechanical parts, leave the merges to the agent.</
 <p>Three artifacts encode the classification:</p>
 <ul>
 <li><strong><code>MANIFEST.md</code></strong> — the declarative target state. One row per installed artifact:
-  <code>Target | Source | Policy | Forge | Attrs</code>. Six policies: <code>verbatim</code> (tool-owned,
+  <code>Target | Source | Policy | Forge | Attrs</code>. Seven policies: <code>verbatim</code> (tool-owned,
   byte-identical, re-copied on drift), <code>verbatim-dir</code> (the built-in skills), <code>seed-copy</code>
   (install-if-absent, never overwritten — user content accumulates there), <code>sentinel-merge</code>
   (managed blocks in user-owned files, add-only + de-duplicated), <code>seed-generate</code>
   (agent-authored, reported when missing, never inspected when present), <code>stamp</code> (the
-  version manifest — written only by the agent, as the closing step). Plus the <strong>Semantic
+  version manifest — written only by the agent, as the closing step), and <code>optional</code>
+  (v4.42.0 — offered, never imposed: installed only on an explicit <code>--adopt &lt;target&gt;</code>, never
+  touched when present, listed for reference when absent and never pending; the shape
+  <code>seed-copy</code> could not express — a file a team deliberately does not have. First use: the
+  governance pair <code>docs/arch-decisions/ADR.md</code> + <code>RFC.md</code>). Plus the <strong>Semantic
   steps</strong> table: the ladder's non-mechanical migrations, each gated <code>Below</code> a version and
   pointing at its rung for full detail.</li>
 <li><strong><code>scripts/reconcile.py</code> / <code>.mjs</code></strong> — byte-parity twins (the <code>memory-lint</code> pattern; 25
@@ -2082,8 +2086,8 @@ rungs earlier: <em>script the mechanical parts, leave the merges to the agent.</
 </ul>
 <h2 id="the-judgment-boundary-what-the-script-must-never-do">The judgment boundary (what the script must never do)<a class="headerlink" href="#the-judgment-boundary-what-the-script-must-never-do" title="Permanent link">&para;</a></h2>
 <p>The helper deliberately cannot: write <code>.agent/version.md</code> (an early stamp would mask an
-unfinished upgrade — the stamp is the agent's closing act), touch an existing <code>seed-copy</code>
-or <code>seed-generate</code> file, edit a pre-existing <code>.gitlab-ci.yml</code> (user CI is wired by the
+unfinished upgrade — the stamp is the agent's closing act), touch an existing <code>seed-copy</code>,
+<code>seed-generate</code> or <code>optional</code> file, install an <code>optional</code> row without <code>--adopt</code>, edit a pre-existing <code>.gitlab-ci.yml</code> (user CI is wired by the
 agent, add-only, per Step 6's stage-check rules), delete anything, or write outside the
 target (path-realpath guard; it also refuses to run against the tool checkout itself).
 Consent stays where it was: the dry-run report <em>is</em> the informed-consent artifact, shown

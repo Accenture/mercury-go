@@ -1650,6 +1650,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#adr-0009-the-governance-pair-is-an-opt-in-seed-offered-once-never-imposed-the-optional-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-0009 — The governance pair is an opt-in seed: offered once, never imposed (the optional policy)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#adr-0008-the-adr-ledger-records-decisions-only-proposals-live-in-the-rfc-register" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2019,6 +2030,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#adr-0009-the-governance-pair-is-an-opt-in-seed-offered-once-never-imposed-the-optional-policy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ADR-0009 — The governance pair is an opt-in seed: offered once, never imposed (the optional policy)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#adr-0008-the-adr-ledger-records-decisions-only-proposals-live-in-the-rfc-register" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2182,6 +2204,30 @@ never restated as competing truth.</p>
 this log).</p>
 </blockquote>
 <hr />
+<h2 id="adr-0009-the-governance-pair-is-an-opt-in-seed-offered-once-never-imposed-the-optional-policy">ADR-0009 — The governance pair is an opt-in seed: offered once, never imposed (the <code>optional</code> policy)<a class="headerlink" href="#adr-0009-the-governance-pair-is-an-opt-in-seed-offered-once-never-imposed-the-optional-policy" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> Accepted · <strong>Date:</strong> 2026-09-18T23:50:01.095Z · <strong>Serves:</strong> vision-agent-memory</p>
+<!-- id: adr-0009 | status: accepted | formalizes: governance-pair-optional-seed | proposed-as: RFC-0005 -->
+
+<p><strong>Abstract.</strong> The tool ships sample <code>docs/arch-decisions/ADR.md</code> and <code>RFC.md</code> skeletons, but installs
+them only when a team asks: a seventh MANIFEST policy, <code>optional</code>, whose row is copied only on an explicit
+<code>--adopt &lt;target&gt;</code>, is never touched when present, and is listed for reference when absent without ever
+counting as pending work. The fresh enable offers the pair once (<code>ENABLE.md</code> Step 10); an upgrade never
+re-asks. Governance is offered, never imposed.</p>
+<p><strong>Rationale.</strong> Two field repos had adopted an ADR ledger by hand, so a canonical starting shape has
+real demand — but the ledger is documented as opt-in and the Vision names "never heavyweight" as a
+non-goal. The obvious mechanism, a <code>seed-copy</code> row, was rejected: it installs the pair into every enabled
+repo, and because <code>seed-copy</code> copies whenever the target lacks the file, it re-offers the pair on every
+upgrade after a team deletes it — the "deliberately absent" hazard RFC-0002 records from the waiver-file
+incident. Alternatives weighed: <code>seed-copy</code> (fast, but ceremony everywhere and re-offers after deletion);
+no templates at all, with the tool's own files as the reference shape (leaves every adopting team to copy
+and generalize by hand); an <code>optional</code> policy scoped to guidance-only seeds (chosen — it is RFC-0002's
+option (b) made concrete, and the pair is its first use). Design points: <code>--adopt</code> is explicit and
+repeatable, a <code>dir/</code> prefix adopts every optional row under it, an unmatched path is refused, and absent
+optional rows are excluded from the pending count so convergence is unaffected. The skeletons are
+project-neutral with no placeholders, so the mechanical copy is complete. <strong>Trade-offs:</strong> one more policy
+for operators to know, a <code>[notes]</code> line per unadopted row on every dry-run (reference, by design), and the
+question of which existing <code>seed-copy</code> rows should migrate to <code>optional</code> is deliberately left open in
+RFC-0002. Proposed as RFC-0005 and promoted at the maintainer's gate once the design was implemented.</p>
 <h2 id="adr-0008-the-adr-ledger-records-decisions-only-proposals-live-in-the-rfc-register">ADR-0008 — The ADR ledger records decisions only; proposals live in the RFC register<a class="headerlink" href="#adr-0008-the-adr-ledger-records-decisions-only-proposals-live-in-the-rfc-register" title="Permanent link">&para;</a></h2>
 <p><strong>Status:</strong> Accepted · <strong>Date:</strong> 2026-09-18T23:20:13.067Z · <strong>Serves:</strong> vision-agent-memory</p>
 <!-- id: adr-0008 | status: accepted | formalizes: adr-ledger-decisions-only | proposed-as: RFC-0004 -->
