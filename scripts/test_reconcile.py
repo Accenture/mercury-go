@@ -94,6 +94,58 @@ class ReconcileTests(unittest.TestCase):
         targets = [r["target"] for r in rows]
         self.assertLess(targets.index("memory/PROTOCOL.md"), targets.index("AGENTS.md"))
 
+    # -- optional rows (v4.42.0): offered, never imposed ------------------------
+
+    def test_optional_rows_declared(self):
+        opt = [r for r in self.manifest["rows"] if r["policy"] == "optional"]
+        self.assertEqual({r["target"] for r in opt},
+                         {"docs/arch-decisions/ADR.md", "docs/arch-decisions/RFC.md"})
+        self.assertIn("optional", rec.POLICIES)
+
+    def test_optional_absent_is_listed_not_pending(self):
+        t = make_target(self.tmp, "https://github.com/acme/demo.git")
+        mech, agent, _s, notes = self.plan(t)
+        touched = [r["target"] for _v, r, _f, _d in mech] + [p for _v, p, _d in agent]
+        self.assertNotIn("docs/arch-decisions/ADR.md", touched)
+        self.assertNotIn("docs/arch-decisions/RFC.md", touched)
+        listed = {p for v, p, _d in notes if v == "optional"}
+        self.assertEqual(listed, {"docs/arch-decisions/ADR.md", "docs/arch-decisions/RFC.md"})
+        rec.apply_mechanical(TOOL_ROOT, t, mech)
+        self.assertFalse(os.path.exists(os.path.join(t, "docs", "arch-decisions")))  # never imposed
+        mech2, _a, _s2, _n = self.plan(t)
+        self.assertEqual(mech2, [])  # absent optional rows never block convergence
+
+    def test_adopt_installs_the_pair_then_never_touches_it(self):
+        t = make_target(self.tmp, "https://github.com/acme/demo.git")
+        mech, _a, _s, _n = rec.build_plan(TOOL_ROOT, t, self.manifest, "github", None, self.current,
+                                          adopt=["docs/arch-decisions/"])
+        adopted = {r["target"] for v, r, _f, _d in mech if v == "adopt"}
+        self.assertEqual(adopted, {"docs/arch-decisions/ADR.md", "docs/arch-decisions/RFC.md"})
+        rec.apply_mechanical(TOOL_ROOT, t, mech)
+        for name in ("ADR.md", "RFC.md"):
+            with open(os.path.join(TOOL_ROOT, "templates", "docs", "arch-decisions", name), "rb") as a, \
+                 open(os.path.join(t, "docs", "arch-decisions", name), "rb") as b:
+                self.assertEqual(a.read(), b.read())
+        marker = "\n## ADR-0001 — Our first decision\n"
+        with open(os.path.join(t, "docs", "arch-decisions", "ADR.md"), "a", encoding="utf-8") as f:
+            f.write(marker)
+        mech2, _a2, _s2, notes2 = rec.build_plan(TOOL_ROOT, t, self.manifest, "github", None, self.current,
+                                                 adopt=["docs/arch-decisions/ADR.md"])
+        self.assertEqual([r["target"] for _v, r, _f, _d in mech2 if r["policy"] == "optional"], [])
+        self.assertIn(("ok", "docs/arch-decisions/ADR.md"), [(v, p) for v, p, _d in notes2])
+        with open(os.path.join(t, "docs", "arch-decisions", "ADR.md"), encoding="utf-8") as f:
+            self.assertIn(marker, f.read())
+
+    def test_adopt_single_row_and_unknown_path(self):
+        t = make_target(self.tmp, "https://github.com/acme/demo.git")
+        mech, _a, _s, notes = rec.build_plan(TOOL_ROOT, t, self.manifest, "github", None, self.current,
+                                             adopt=["docs/arch-decisions/RFC.md"])
+        self.assertEqual({r["target"] for v, r, _f, _d in mech if v == "adopt"}, {"docs/arch-decisions/RFC.md"})
+        self.assertIn("docs/arch-decisions/ADR.md", {p for v, p, _d in notes if v == "optional"})
+        with self.assertRaises(SystemExit):
+            with contextlib.redirect_stdout(io.StringIO()):
+                rec.build_plan(TOOL_ROOT, t, self.manifest, "github", None, self.current, adopt=["docs/nope.md"])
+
     # -- fresh enable ---------------------------------------------------------
 
     def test_fresh_plan_and_apply(self):

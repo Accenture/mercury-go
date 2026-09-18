@@ -32,6 +32,11 @@
   never touched when present. The reconcile report points each at its `ENABLE.md` step.
 - **stamp** — `.agent/version.md`: written by the agent as the **closing step**, after any
   semantic steps (never by the script — an early stamp would mask an unfinished upgrade).
+- **optional** — offered, never imposed (v4.42.0): installed verbatim **only on an explicit
+  `--adopt <target>`** (the agent asks the human once, at enable — `ENABLE.md` Step 10); an
+  existing copy is **never touched** (it carries the team's own content); an absent one is
+  listed in the dry-run for reference and is **never pending work and never re-asked on
+  upgrade** — the "deliberately absent" case `seed-copy` cannot express (`RFC-0002`).
 
 `Forge` column: `all`, `github`, `gitlab`, or `azdo` (per `ENABLE.md` Step 4 detection).
 Unknown forge → the `github` + `gitlab` rows apply; `azdo` installs only on positive
@@ -90,6 +95,8 @@ the sanctioned contributor/consumer fork structure (v4.38.0 — see the AGENTS.m
 | memory/decay-policy.md | templates/memory/decay-policy.md | seed-generate | all | step:5e |
 | memory/smoke-test.md | templates/memory/smoke-test.md | seed-generate | all | step:5f |
 | memory/vision.md | templates/memory/vision.md | seed-generate | all | step:5g |
+| docs/arch-decisions/ADR.md | templates/docs/arch-decisions/ADR.md | optional | all | - |
+| docs/arch-decisions/RFC.md | templates/docs/arch-decisions/RFC.md | optional | all | - |
 | .agent/version.md | templates/.agent/version.md | stamp | all | - |
 
 Row notes (the table stays machine-lean; nuance lives here):
@@ -132,6 +139,12 @@ Row notes (the table stays machine-lean; nuance lives here):
   `workflow:rules` guard) only when the target has none. A pre-existing root file is never
   edited mechanically: the `wire` attr sends the agent to `ENABLE.md` Step 6 (add-only
   `include:` entry, mandatory stage check, never touch `workflow:rules`, state coverage).
+- **docs/arch-decisions/ADR.md + RFC.md — the governance pair** (v4.42.0, `optional`): the ADR
+  ledger and its proposal register are skeletons a team *adopts*, not a layer the tool installs
+  — governance is offered, never imposed ("never heavyweight"). Fresh enable offers the pair once
+  (Step 10); `reconcile --apply --adopt docs/arch-decisions/` copies both skeletons (a path ending
+  in `/` adopts every optional row under it). Present copies are never touched; absent ones are
+  listed as `optional` notes and never count toward convergence.
 - **Drift on verbatim rows** is expected on an older target (staleness, resolved by
   re-copy) but can also be a local customization — the dry-run lists every drifted file
   *before* apply so the agent can arbitrate (`ENABLE.md` §5i warn-before-clobber; a genuine

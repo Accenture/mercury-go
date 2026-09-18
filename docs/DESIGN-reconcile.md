@@ -43,12 +43,16 @@ rungs earlier: *script the mechanical parts, leave the merges to the agent.*
 Three artifacts encode the classification:
 
 - **`MANIFEST.md`** — the declarative target state. One row per installed artifact:
-  `Target | Source | Policy | Forge | Attrs`. Six policies: `verbatim` (tool-owned,
+  `Target | Source | Policy | Forge | Attrs`. Seven policies: `verbatim` (tool-owned,
   byte-identical, re-copied on drift), `verbatim-dir` (the built-in skills), `seed-copy`
   (install-if-absent, never overwritten — user content accumulates there), `sentinel-merge`
   (managed blocks in user-owned files, add-only + de-duplicated), `seed-generate`
   (agent-authored, reported when missing, never inspected when present), `stamp` (the
-  version manifest — written only by the agent, as the closing step). Plus the **Semantic
+  version manifest — written only by the agent, as the closing step), and `optional`
+  (v4.42.0 — offered, never imposed: installed only on an explicit `--adopt <target>`, never
+  touched when present, listed for reference when absent and never pending; the shape
+  `seed-copy` could not express — a file a team deliberately does not have. First use: the
+  governance pair `docs/arch-decisions/ADR.md` + `RFC.md`). Plus the **Semantic
   steps** table: the ladder's non-mechanical migrations, each gated `Below` a version and
   pointing at its rung for full detail.
 - **`scripts/reconcile.py` / `.mjs`** — byte-parity twins (the `memory-lint` pattern; 25
@@ -68,8 +72,8 @@ Three artifacts encode the classification:
 ## The judgment boundary (what the script must never do)
 
 The helper deliberately cannot: write `.agent/version.md` (an early stamp would mask an
-unfinished upgrade — the stamp is the agent's closing act), touch an existing `seed-copy`
-or `seed-generate` file, edit a pre-existing `.gitlab-ci.yml` (user CI is wired by the
+unfinished upgrade — the stamp is the agent's closing act), touch an existing `seed-copy`,
+`seed-generate` or `optional` file, install an `optional` row without `--adopt`, edit a pre-existing `.gitlab-ci.yml` (user CI is wired by the
 agent, add-only, per Step 6's stage-check rules), delete anything, or write outside the
 target (path-realpath guard; it also refuses to run against the tool checkout itself).
 Consent stays where it was: the dry-run report *is* the informed-consent artifact, shown

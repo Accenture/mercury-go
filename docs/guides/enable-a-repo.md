@@ -60,6 +60,7 @@ seconds of mechanics plus a few minutes of real analysis.
 | `.githooks/` + the forge CI config (`.github/workflows/`, `.gitlab-ci.yml` + `.gitlab/`, or `.azuredevops/`) | the ritual triggers (agent-activated, forge-aware) |
 | `.agent/version.md` | version stamp (gates upgrades) |
 | `legacy/` | preserved originals (migration only) |
+| `docs/arch-decisions/ADR.md` + `RFC.md` | the governance pair — an ADR ledger and its proposal register — **only if you adopt it** (offered once at enable; `optional` policy, v4.42.0) |
 
 ## After enabling
 

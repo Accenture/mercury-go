@@ -6,6 +6,7 @@
 //
 // Usage:
 //   node scripts/reconcile.mjs --target <path> [--apply] [--pre-apply-complete]
+//       [--forge github|gitlab|azdo|unknown] [--adopt <optional-row-target>]...
 //       [--forge github|gitlab|azdo|unknown]
 //   node scripts/reconcile.mjs --check-manifest
 //
@@ -18,7 +19,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const EXCLUDED_DIRS = new Set(["__pycache__", ".DS_Store"]);
 const EXCLUDED_FILE_RE = /(\.py[co]|\.DS_Store)$/;
-export const POLICIES = new Set(["verbatim", "verbatim-dir", "seed-copy", "sentinel-merge", "seed-generate", "stamp"]);
+export const POLICIES = new Set(["verbatim", "verbatim-dir", "seed-copy", "sentinel-merge", "seed-generate", "stamp", "optional"]);
 export const FORGES = new Set(["all", "github", "gitlab", "azdo"]);
 
 class Die extends Error {}
@@ -283,7 +284,14 @@ export function isSanctionedFork(raw) {
   return false;
 }
 
-export function buildPlan(toolRoot, target, manifest, forge, installed, currentVersion) {
+export function adoptMatches(adopt, rowTarget) {
+  // --adopt names an optional row by its exact target, or a directory prefix ending in "/"
+  return adopt.some((a) => a === rowTarget || (a.endsWith("/") && rowTarget.startsWith(a)));
+}
+
+export function buildPlan(toolRoot, target, manifest, forge, installed, currentVersion, adopt = []) {
+  const unmatched = adopt.filter((a) => !manifest.rows.some((r) => r.policy === "optional" && adoptMatches([a], r.target)));
+  if (unmatched.length) die("--adopt matches no optional row: " + unmatched.join(", "));
   const mechanical = [], agent = [], notes = [];
   const fresh = installed === null;
   for (const row of manifest.rows) {
@@ -384,6 +392,19 @@ export function buildPlan(toolRoot, target, manifest, forge, installed, currentV
         notes.push(["ok", row.target, "present — never touched"]);
       } else {
         agent.push(["generate", row.target, row.attrs.replace("step:", "ENABLE.md Step ")]);
+      }
+    } else if (policy === "optional") {
+      // offered, never imposed (v4.42.0): installed only on an explicit --adopt; an existing copy is
+      // never touched; an absent one is listed for reference and is never pending
+      if (!fs.existsSync(src)) die("manifest source missing in the tool checkout: " + row.source);
+      if (fs.existsSync(tgt)) {
+        notes.push(["ok", row.target, "adopted — optional, never touched"]);
+      } else if (adoptMatches(adopt, row.target)) {
+        mechanical.push(["adopt", row, [], "optional — requested with --adopt"]);
+      } else {
+        notes.push(["optional", row.target,
+          "not installed — adopt on the team's request: --apply --adopt " + row.target +
+          "; never pending, never re-asked on upgrade"]);
       }
     } else if (policy === "stamp") {
       if (installed === currentVersion) {
@@ -604,6 +625,7 @@ function checkManifest(toolRoot, manifest) {
 function main(argv) {
   let target = null, forgeOverride = null, doApply = false, doCheck = false;
   let preApplyComplete = false;
+  const adopt = [];
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     if (a === "--target") {
@@ -623,6 +645,10 @@ function main(argv) {
       preApplyComplete = true;
     } else if (a === "--check-manifest") {
       doCheck = true;
+    } else if (a === "--adopt") {
+      i += 1;
+      if (i >= argv.length) die("--adopt needs an optional row target");
+      adopt.push(argv[i]);
     } else {
       die("unknown argument: " + a);
     }
@@ -669,7 +695,7 @@ function main(argv) {
   console.log("mode:      " + (doApply ? "apply" : "dry-run"));
 
   const [mechanical, agent, semantic, notes] = buildPlan(
-    toolRoot, target, manifest, forge, installed, currentVersion);
+    toolRoot, target, manifest, forge, installed, currentVersion, adopt);
   printReport(mechanical, agent, semantic, notes);
 
   const pending = mechanical.length + agent.length + semantic.length;

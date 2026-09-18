@@ -203,7 +203,9 @@ Then:
   steps, a confirming dry-run, `--apply`, then the remaining **Semantic steps**
   (version-gated rows from `MANIFEST.md`; each points at its
   `UPGRADE.md` rung for the full detail), then re-stamp `.agent/version.md` and report
-  what changed. (`UPGRADE.md` stays the per-version record and the detailed text behind
+  what changed. `optional` rows the team never adopted appear as `optional` notes in the
+  dry-run — reference only: **do not re-ask**; the team adopts on its own request with
+  `--apply --adopt <target>` at any time. (`UPGRADE.md` stays the per-version record and the detailed text behind
   each semantic step — read the rungs the report names; walking the full ladder
   rung-by-rung is the no-runtime fallback, not the mechanism.) Ask first:
   > "This repo is on agent-memory v<installed>; current is v<current>.
@@ -233,7 +235,7 @@ If `no`, ask whether to proceed with fresh enable instead, or abort.
 **`MANIFEST.md`** (tool-side, like this file — never installed) declares the complete
 **target state** of an enabled repo: every installed artifact as one row — target path,
 canonical source in this checkout, policy (`verbatim` / `verbatim-dir` / `seed-copy` /
-`sentinel-merge` / `seed-generate` / `stamp`), and forge condition. The runnable
+`sentinel-merge` / `seed-generate` / `stamp` / `optional`), and forge condition. The runnable
 **reconcile helper** diffs a target against it and applies the mechanical policies in one
 pass:
 
@@ -260,7 +262,10 @@ node scripts/reconcile.mjs --target /path/to/repo              # Node twin, byte
   and a fresh custom protocol needs confirmation even when its shim is already exact. All
   other semantic steps remain post-apply.
 - **What `--apply` never does:** touch an existing `seed-copy` or `seed-generate` file,
-  edit a pre-existing `.gitlab-ci.yml`, write `.agent/version.md`, delete anything, or
+  edit a pre-existing `.gitlab-ci.yml`, write `.agent/version.md`, delete anything, install an
+  **`optional`** row without an explicit `--adopt <target>` (v4.42.0 — the governance pair
+  `docs/arch-decisions/ADR.md` + `RFC.md` is offered once in Step 10 and never re-asked; an
+  absent optional row is listed for reference and never counts as pending), or
   write outside the target. Drifted `verbatim` files **are** re-copied (they are
   tool-owned) — so read the dry-run's `recopy` lines first: expected staleness re-syncs,
   but a suspected local customization gets the §5i warn-before-clobber arbitration
@@ -1099,6 +1104,7 @@ Print a clear summary including migration details if Mode C ran:
   • memory/archive/INDEX.md
   • memory/sessions/<first enable log>  (Fresh Enable — records the enable + chosen discovery depth)
   • .agent/schema.md, .agent/version.md  (v<version>)
+  • docs/arch-decisions/ADR.md + RFC.md  (only if adopted in Step 10 — the optional governance pair)
   • DECAY.md, REVIEW.md, SKILLS.md, MERGE.md
   • agent-skills/  (built-in skills: memory-lint, second-opinion, apply-critique — + regenerated adapters)
   • AGENTS.md  (one-line pointer), CLAUDE.md, GEMINI.md, .cursorrules,
@@ -1134,9 +1140,16 @@ After reporting, offer:
 >   (a) Open memory/continuity.md so you can review what I detected
 >   (b) Walk through the migrated sessions
 >   (c) Both
->   (d) Done"
+>   (d) Adopt the governance pair — an ADR ledger + RFC proposal register under
+>       docs/arch-decisions/ (optional; skeletons, read on demand, zero default token cost;
+>       an ADR is written only when a decision is accepted, proposals live in RFC.md)
+>   (e) Done"
 
-Respond accordingly.
+Respond accordingly. For (d), run `reconcile --apply --adopt docs/arch-decisions/` (or copy the two
+skeletons from `templates/docs/arch-decisions/` by hand) and list them in the Step 9 report. This
+offer is made **once**, here; a later upgrade lists an unadopted pair as an `optional` note and
+never asks again (`MANIFEST.md` — policy `optional`, v4.42.0). The team adopts later, if ever, by
+saying so.
 
 ---
 

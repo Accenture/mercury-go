@@ -19,6 +19,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > `accenture.github.io/mercury-go`). This is a status change, not a release: `VERSION` stays
 > **4.39.2**, there is no upgrade rung, and enabled repositories need no action.
 
+## Version 4.42.0, 9/18/2026
+
+> **An opt-in seed for the governance pair, and the `optional` policy that carries it (MINOR).**
+> Raised by the maintainer (2026-09-18, RFC-0005) after two field repos adopted an ADR ledger by hand
+> (mercury-composable 24 ADRs plus a register, mercury 18): a team that wants the pair should start
+> from the canonical shape. The constraint was the tool's own stance — the ledger is documented as
+> opt-in and the Vision says never heavyweight — so a plain `seed-copy` row was rejected: it would
+> install governance ceremony into every enabled repo and re-offer the pair on every upgrade after a
+> team deletes it, the very hazard RFC-0002 records. The shape that fits is a seventh MANIFEST policy,
+> **`optional`**: offered, never imposed. A row is installed only on an explicit `--adopt <target>`
+> (a path ending in `/` adopts every optional row under it); an existing copy is never touched; an
+> absent one is listed in the dry-run as an `optional` note for reference and is **never pending
+> work and never re-asked on upgrade**. `ENABLE.md` Step 10 offers the pair **once**, at enable. This
+> is RFC-0002's option (b) made concrete for the first time; whether existing `seed-copy` rows should
+> move to it stays that proposal's open question.
+
+### Added
+
+- **MANIFEST policy `optional`** (both reconcile runtimes): plan branch, `--adopt <target>` (repeatable;
+  exact target or `dir/` prefix; an unmatched path is refused), `adopt` mechanical verb, `optional`
+  notes; absent optional rows never count toward convergence. Four mirrored tests per runtime
+  (suites at 42); `--check-manifest` covers the new sources.
+- **Templates `templates/docs/arch-decisions/ADR.md` + `RFC.md`** — the governance pair as skeletons:
+  the ledger (entries on acceptance, `Accepted → Superseded / Deprecated`, format block, no entries)
+  and the proposal register (separate `RFC-NNNN` sequence, two recorded exits, format block, no
+  proposals). Project-neutral, no placeholders — the mechanical copy is complete.
+- **`ENABLE.md`:** the policy list, the `--apply` never-does bullet, Mode B ("optional notes are
+  reference only — do not re-ask"), the Step 9 report line, and the Step 10 offer (d) with the exact
+  command. **`.agent/schema.md`:** the ADR section's install stance and a new `RFC.md` section.
+- **Docs:** `docs/DESIGN-reconcile.md` (seven policies; the never-does list), the enable and upgrade
+  guides, the README templates tree; `MANIFEST.md` policy definition, two rows and a row note.
+
+### Changed
+
+- **Lockstep:** `UPGRADE.md` row + `4.41.2 → 4.42.0` rung, README table; `VERSION` → 4.42.0. No
+  protocol text change → no Semantic steps row; a target converges by re-copy of `.agent/schema.md`
+  and sees the two `optional` notes — nothing to do unless the team asks for the pair.
+
+Targets: reconcile re-copies `.agent/schema.md`; the governance pair appears as two `optional` notes
+(reference only). A team that wants it: `reconcile --apply --adopt docs/arch-decisions/`. A repo that
+already keeps its own `ADR.md` sees `ok — adopted, never touched`. Register: RFC-0005 (maintainer go
+2026-09-18); the backlog thread `governance-pair-opt-in-seed` closes with this release.
+
 ## Version 4.41.2, 9/18/2026
 
 > **A phantom fact in every enabled repo, and an ADR ledger that records decisions only (PATCH).**

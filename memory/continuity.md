@@ -7,7 +7,7 @@
 ## Project State
 
 - **project:** agent-memory
-- **status:** v4.41.2 — official Accenture open source in the Mercury family (graduated 2026-09-10; home `Accenture/mercury-go`, docs `accenture.github.io/mercury-go`); a vendor-neutral, no-code (markdown) shared-AI-memory + AI-enablement tool: backward memory (decay/review/archive), forward VBDI loop, cross-vendor skills layer, declarative enable/upgrade (MANIFEST reconcile), forge-aware ritual triggers (GitHub/GitLab/AzDO), the merge-scale thread layout (`memory/open-threads/`), and the stalled-thread human closure gate (`[thread-stale]` + `REVIEW.md` step 8). Detail: What's Been Built below; per-version history: `UPGRADE.md` + session logs.
+- **status:** v4.42.0 — official Accenture open source in the Mercury family (graduated 2026-09-10; home `Accenture/mercury-go`, docs `accenture.github.io/mercury-go`); a vendor-neutral, no-code (markdown) shared-AI-memory + AI-enablement tool: backward memory (decay/review/archive), forward VBDI loop, cross-vendor skills layer, declarative enable/upgrade (MANIFEST reconcile), forge-aware ritual triggers (GitHub/GitLab/AzDO), the merge-scale thread layout (`memory/open-threads/`), and the stalled-thread human closure gate (`[thread-stale]` + `REVIEW.md` step 8). Detail: What's Been Built below; per-version history: `UPGRADE.md` + session logs.
 - **last_enabled:** 2026-06-12
 - **last_review:** 2026-09-16 | through 2026-09-16-235431
 - **last_invariant_check:** 2026-08-22 | through 2026-08-22-174808 (all 6 confirmed by Eric — walkthrough with live-tree evidence; no-build-step wording refreshed)
@@ -173,6 +173,16 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   `docs/arch-decisions/RFC.md` opened with RFC-0001…0004 (three from open threads, one proposing to
   formalize this rule as ADR-0008 — the maintainer's gate).
   <!-- id: adr-ledger-decisions-only | created: 2026-09-18 | last_used: 2026-09-18 | uses: 1 | tier: working | origin: 2026-09-18-230858 -->
+- **The governance pair is an opt-in seed — offered once, never imposed (ADR-0009)** (Eric, 2026-09-18, RFC-0005;
+  shipped v4.42.0). Sample `docs/arch-decisions/ADR.md` + `RFC.md` skeletons ship as `templates/`, but under a
+  new MANIFEST policy `optional`: installed only on an explicit `--adopt <target>` (a `dir/` prefix adopts every
+  optional row under it), never touched when present, listed in the dry-run for reference when absent and
+  **never pending, never re-asked on upgrade**; `ENABLE.md` Step 10 offers the pair once, at enable. Why not
+  `seed-copy`: it would install governance ceremony into every enabled repo ("never heavyweight") and re-offer
+  the pair after a team deletes it — the "deliberately absent" shape `seed-copy` cannot express
+  (`ot-seed-copy-deliberate-absence`, RFC-0002 option b, now concrete). Half the family adopted ledgers by
+  hand before this existed (mercury-composable 24 ADRs + a register, mercury 18).
+  <!-- id: governance-pair-optional-seed | created: 2026-09-18 | last_used: 2026-09-18 | uses: 1 | tier: working | origin: 2026-09-18-234620 -->
 
 ## Open Threads
 

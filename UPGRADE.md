@@ -148,6 +148,7 @@ dev-numbered 4.22–4.25 — into a single MINOR over the released 4.21.0.)*
 | 4.41.0 | **`[undeclared-reference]` — a fact edited without being declared (MINOR):** field report (mercury-composable, 2026-09-17): at their first closure gate the maintainer closed two Blueprint gaps; the closing session rewrote both records and declared neither, so `refresh-metadata` read the decision as non-use and `[overdue]` proposed sweeping them hours later — footers and reference log agreed, so only the diff could see it. New memory-lint check 16 over the staged index (`--staged`, pre-commit fragment) or a commit range (`--range`, all three CI floors): a fact whose body changes must be declared in a session log staged with it; footer-only lines, condensed closed records, verbatim moves and deletions never count; silent when no log is staged; advisory. Both runtimes, 11 mirrored tests each (85). Closures are now declared by rule — `REVIEW.md` steps 5/8/10 and `DECAY.md` §2/§6 corrected (the v4.40.0 wording named only re-affirmation), protocol tracks referenced/created/reactivated/closed → semantic row. Converges by re-copy of the hook fragment, README, lint built-in, DECAY/REVIEW/schema and the CI floor, plus the protocol step |
 | 4.41.1 | **Thread ids name the thing, never their kind (PATCH):** field note (mercury-composable, 2026-09-18, on v4.41.0, cosmetic): `thread-<id>.md` plus an id beginning `ot-`/`thread-` stutters (`thread-thread-….md`); near-universal across the family repos, and the tool caused most of it (the mandated `ot-close-stalled-threads-<date>` gate id, the dogfood `ot-` habit, `thread-` ids in the evolving-memory example). Maintainer ruling: an id names the thing, never its kind; an existing id is never renamed (immutable logs are `refresh-metadata`'s only input). Guidance in `DECAY.md` §1, the schema, `REVIEW.md` step 8 (new gates `close-stalled-threads-<date>`), `ENABLE.md`, the example fixture ids. The `thread-` filename prefix stays — its removal is backlogged (`open-threads-filename-prefix`). No protocol change; converges by re-copy of `DECAY.md`, `REVIEW.md`, `.agent/schema.md` |
 | 4.41.2 | **A phantom fact in every enabled repo + an ADR ledger that records decisions only (PATCH):** two mercury-composable reports (2026-09-18, on v4.41.1). (1) The seeded `continuity.md` header shows the footer format as a literal example inside an inline code span; `parse_footers` matched it, so every enabled repo carried a phantom `kebab-id` fact — active, unpinned, counted toward `[continuity-bloat]` — that raised nothing itself; in the field it fired `36 > 35` when the true count was 35, summoning a review with nothing to archive. Fix: a backtick-wrapped footer is documentation — skipped by `parse_footers`, the `[undeclared-reference]` block mapper and `archive-fact` (both runtimes; blockquote position is not the test — Vision footers are blockquoted and real); the seeded header now reads `id: <kebab-id>`. (2) The protocol's "propose a newer ADR … wait for approval" put non-decisions into the decision record (five `Proposed` ADRs for shipped decisions in the field); ruling: an ADR is written only on acceptance, proposals live in the repo's register (e.g. `docs/arch-decisions/RFC.md`, `RFC-NNNN`), never as a `Proposed` ADR. Protocol text changed → semantic row; converges by re-copy of the memory-lint + archive-fact built-ins, `DECAY.md`, the schema and a still-stock protocol |
+| 4.42.0 | **An opt-in seed for the governance pair + the `optional` MANIFEST policy (MINOR):** maintainer proposal (RFC-0005, 2026-09-18) after two field repos adopted an ADR ledger by hand. Plain `seed-copy` rejected — it would install governance ceremony everywhere and re-offer the pair after a deliberate deletion (RFC-0002). New seventh policy `optional`: installed only on an explicit `--adopt <target>` (`dir/` adopts every optional row under it), never touched when present, listed as an `optional` note when absent — never pending, never re-asked on upgrade. Skeletons `templates/docs/arch-decisions/ADR.md` + `RFC.md` (project-neutral); `ENABLE.md` Step 10 offers the pair once; both reconcile runtimes + 4 mirrored tests each (42); schema, `MANIFEST.md`, docs. No protocol change; a target converges by re-copy of `.agent/schema.md` and sees two `optional` notes |
 
 
 Each enabled repo records what it is on in **`.agent/version.md`**:
@@ -2673,3 +2674,31 @@ never as a `Proposed` ADR.
 carries the literal example (and the same count where the header was already neutralized); no other
 warning changes; both lint suites pass in the tool repo (89 mirrored tests each) and the archive-fact
 suites (11 / 10); `archive-fact kebab-id` is refused with "no footer".
+
+## Rung: 4.41.2 → 4.42.0 — an opt-in seed for the governance pair; the `optional` policy (MINOR)
+
+**What changed:** the maintainer's proposal (RFC-0005, 2026-09-18): ship sample `docs/arch-decisions/ADR.md`
+and `RFC.md` skeletons so a team that adopts the governance pair starts from the canonical shape. Plain
+`seed-copy` was rejected — the ledger is documented as opt-in and the tool is never heavyweight, and a
+`seed-copy` row re-offers a file the team deleted on purpose (RFC-0002). The shape that fits is a seventh
+MANIFEST policy, **`optional`** — offered, never imposed: installed only on an explicit `--adopt <target>`
+(a path ending in `/` adopts every optional row under it), never touched when present, listed for
+reference when absent and **never pending, never re-asked on upgrade**. `ENABLE.md` Step 10 offers the
+pair once, at enable; Mode B lists an unadopted pair as two `optional` notes and does not ask again.
+
+**Steps:**
+
+1. **Reconcile** (or hand-walk `MANIFEST.md`): re-copies `.agent/schema.md` (the ADR section's install
+   stance + the new `RFC.md` section). The dry-run now ends its notes with two `optional` lines for
+   `docs/arch-decisions/ADR.md` and `RFC.md` — **reference only, not work**; a repo that already keeps
+   its own `ADR.md` sees `ok — adopted, never touched` instead. Hooks, CI floors, built-ins and the
+   protocol are unchanged, so there is no Semantic step.
+2. **Do not offer the pair during an upgrade.** The offer belongs to a fresh enable (Step 10). If the
+   team asks for it: `reconcile --apply --adopt docs/arch-decisions/` (or copy the two skeletons from
+   `templates/docs/arch-decisions/` by hand), then list the two files in the upgrade report.
+3. **Stamp** `.agent/version.md` → `version: 4.42.0`, `last_upgraded: <today>`, preserving `enabled_with`
+   and `mode`. Use an edit/read-before-write path, never truncate first.
+
+**Verify:** the reconcile converges with the two `optional` notes present and nothing pending for them;
+`--adopt docs/nope.md` is refused; in the tool repo both reconcile suites pass (42 mirrored tests each)
+and `--check-manifest` is OK in both runtimes.
