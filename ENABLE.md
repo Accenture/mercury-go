@@ -485,7 +485,8 @@ Fill in:
   record as the first code lands: the stack in `## Stack & Tools`, coding conventions,
   Architectural Invariants, **and the stack's build-output `.gitignore` entries** (apply the
   Step 7 stack-aware seed table then — at enable there is no stack to seed)
-- **Metadata footers:** give every fact you write a kebab `id` and the footer
+- **Metadata footers:** give every fact you write a kebab `id` that names the thing, never its
+  kind (`distributed-cache`, not `ot-distributed-cache` — `DECAY.md` §1), and the footer
   `<!-- id: … | created: <today> | last_used: <today> | uses: 1 | tier: working -->`.
   Ordinary facts are born `tier: working`; **Architectural Invariants get `tier: core`**;
   unchecked Open Threads get an id but never decay. `uses: 1` / `last_used: today` is

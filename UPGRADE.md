@@ -146,6 +146,7 @@ dev-numbered 4.22–4.25 — into a single MINOR over the released 4.21.0.)*
 | 4.40.0 | **Stalled open threads → human closure gate (MINOR):** field report (2026-09-16, mercury-composable on v4.39.2): an unchecked Open Thread is exempt from decay by design, and that exemption also removed the only automated freshness signal — a pinned thread rotted 184 sessions with four of its five "still open" items long shipped, and no lint check, review step, or metadata field could surface it (7 of 9 live threads there ~117 sessions untouched; the tool's own repo had two past 90 sessions, one still describing as "paused" a plan v4.0.0 shipped). `DECAY.md` §6's "never-decay ≠ never-checked" covered `core` + invariants but not the third never-decay class. Now: `thread_stale_window` knob (default 40 = the invariant cadence) + `memory-lint` check 15 `[thread-stale]` (refs-based; never-referenced threads count from `created`) for detection, and `REVIEW.md` step 8 — **one human closure gate** listing every stalled thread: the owner closes (undelivered items recorded as *deliberately dropped*) or re-affirms (a `## Memory References` entry, the only reset); the tool never closes a thread (maintainer decision: a long-stalled thread is a signal for closure, rectified through a human gate). Plus the one-lifecycle-per-record rule and a review backstop that re-reads unchecked bodies; invariant-step pointers corrected 6 → 7. Converges by re-copy of `DECAY.md`/`REVIEW.md`/schema/the lint built-in; optional knob; first gate at the next review |
 | 4.40.1 | **Secret guard: punctuation-tolerant placeholder exemptions + the waiver file as a last resort (PATCH):** field note (mercury-composable, 2026-09-17, on v4.40.0): a comment sentence mentioning a setting — `credentials.source=OAUTHBEARER,` — flagged `[secret-material]` while the bare setting was exempt; trailing sentence punctuation rides into the captured value and defeated every placeholder exemption except the tool's own knob (`password=changeme.`, `client.secret=${CLIENT_SECRET}.` too). Fix: retry the exemptions once with trailing `).,` stripped, after the as-is pass (so `$(…)` / `(REDACTED)` keep matching; real values still flag), both runtimes, mirrored tests (74 each). And, on the same team's suggestion after deleting their re-seeded stub twice, maintainer decision: `.agent/secret-scan-ignore` is a **last-resort escape hatch** — no longer seeded (MANIFEST row + template removed), every guidance surface says restructure the fixture (zero secret leakage is the goal; even dummy test values are false positives in field security scanners); the hook and CI floors still honor a committed file and the hook states the implication when it exempts one. Protocol text changed → semantic row; converges by re-copy of the hook fragment, the lint built-in and a still-stock protocol |
 | 4.41.0 | **`[undeclared-reference]` — a fact edited without being declared (MINOR):** field report (mercury-composable, 2026-09-17): at their first closure gate the maintainer closed two Blueprint gaps; the closing session rewrote both records and declared neither, so `refresh-metadata` read the decision as non-use and `[overdue]` proposed sweeping them hours later — footers and reference log agreed, so only the diff could see it. New memory-lint check 16 over the staged index (`--staged`, pre-commit fragment) or a commit range (`--range`, all three CI floors): a fact whose body changes must be declared in a session log staged with it; footer-only lines, condensed closed records, verbatim moves and deletions never count; silent when no log is staged; advisory. Both runtimes, 11 mirrored tests each (85). Closures are now declared by rule — `REVIEW.md` steps 5/8/10 and `DECAY.md` §2/§6 corrected (the v4.40.0 wording named only re-affirmation), protocol tracks referenced/created/reactivated/closed → semantic row. Converges by re-copy of the hook fragment, README, lint built-in, DECAY/REVIEW/schema and the CI floor, plus the protocol step |
+| 4.41.1 | **Thread ids name the thing, never their kind (PATCH):** field note (mercury-composable, 2026-09-18, on v4.41.0, cosmetic): `thread-<id>.md` plus an id beginning `ot-`/`thread-` stutters (`thread-thread-….md`); near-universal across the family repos, and the tool caused most of it (the mandated `ot-close-stalled-threads-<date>` gate id, the dogfood `ot-` habit, `thread-` ids in the evolving-memory example). Maintainer ruling: an id names the thing, never its kind; an existing id is never renamed (immutable logs are `refresh-metadata`'s only input). Guidance in `DECAY.md` §1, the schema, `REVIEW.md` step 8 (new gates `close-stalled-threads-<date>`), `ENABLE.md`, the example fixture ids. The `thread-` filename prefix stays — its removal is backlogged (`open-threads-filename-prefix`). No protocol change; converges by re-copy of `DECAY.md`, `REVIEW.md`, `.agent/schema.md` |
 
 
 Each enabled repo records what it is on in **`.agent/version.md`**:
@@ -2600,3 +2601,32 @@ wording had named re-affirmation alone.
 **Verify:** both lint suites pass in the tool repo (85 mirrored tests each); `memory-lint --staged` on a
 clean index prints `undeclared-reference check: ok`; staging a fact edit plus a log that does not declare
 it prints one `[undeclared-reference]` line from the pre-commit fragment and the commit still proceeds.
+
+## Rung: 4.41.0 → 4.41.1 — thread ids name the thing, never their kind (PATCH)
+
+**What changed:** a cosmetic field note from the mercury-composable team (2026-09-18, on v4.41.0): the
+`thread-<id>.md` filename plus an id that itself begins `ot-` or `thread-` stutters —
+`thread-ot-distributed-cache.md`, `thread-thread-doc-improvement-feedback-loop.md`. The tool caused most
+of it: `REVIEW.md` step 8 mandated `ot-close-stalled-threads-<date>` as the gate id, the dogfood repo set
+the `ot-` habit, and the evolving-memory example used `thread-` ids. Maintainer ruling: **an id names the
+thing, never its kind**, and **an existing id is never renamed** — session logs are immutable and their
+`## Memory References` are the only input to `refresh-metadata`, so a renamed id orphans every historical
+declaration and the fact decays while in active use. Guidance only: `DECAY.md` §1, the schema, `REVIEW.md`
+step 8, `ENABLE.md`, the example fixture ids. The `thread-` filename prefix stays (dropping it is
+backlogged as `open-threads-filename-prefix` — a pure file rename with ids untouched, if ever done).
+
+**Steps:**
+
+1. **Reconcile** (or hand-walk `MANIFEST.md`): re-copies `DECAY.md`, `REVIEW.md` and `.agent/schema.md`.
+   No protocol text changed, so there is no Semantic step; hooks, CI floors and built-ins are unchanged.
+2. **Do not rename anything.** Existing thread ids and filenames — including `thread-ot-…` and
+   `thread-thread-…` — stay exactly as they are; they disappear on their own as those threads close and
+   the review sweeps them. A stalled-thread gate already open under an `ot-close-stalled-threads-…` id
+   keeps it. Optionally record the rule as a local convention in `continuity.md` (mercury-composable did:
+   "a thread id names the thing, never its kind — and an existing thread is never renamed").
+3. **Stamp** `.agent/version.md` → `version: 4.41.1`, `last_upgraded: <today>`, preserving `enabled_with`
+   and `mode`. Use an edit/read-before-write path, never truncate first.
+
+**Verify:** `memory-lint` reports no new errors (no check changed — `[thread-file]` still expects
+`thread-<footer-id>.md`); the reconcile converges; the next gate the review raises is named
+`close-stalled-threads-<YYYYMMDD>`.

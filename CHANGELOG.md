@@ -19,6 +19,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > `accenture.github.io/mercury-go`). This is a status change, not a release: `VERSION` stays
 > **4.39.2**, there is no upgrade rung, and enabled repositories need no action.
 
+## Version 4.41.1, 9/18/2026
+
+> **Thread ids name the thing, never their kind (PATCH).** Field note from the mercury-composable
+> team (2026-09-18, on v4.41.0, filed as cosmetic): every open thread lives at
+> `memory/open-threads/thread-<id>.md`, so an id that itself begins `ot-` or `thread-` stutters —
+> `thread-ot-distributed-cache.md`, and worst `thread-thread-doc-improvement-feedback-loop.md`,
+> which reads as a typo and is not. The stutter is near-universal (mercury-go 21 of 36 thread
+> files, mercury-composable 14 of 14, the other family repos 5–9 of 7–10) and the tool caused more
+> of it than the note claims: `REVIEW.md` step 8 mandated the gate id
+> `ot-close-stalled-threads-<date>` in every repo, the dogfood repo set the `ot-` habit the field
+> copied, and the evolving-memory example taught `thread-` ids. Maintainer ruling (first recorded in
+> mercury-composable, 2026-09-18; now the tool's rule): **an id names the thing, never its kind**,
+> and **an existing id is never renamed** — session logs are immutable and their
+> `## Memory References` are the only input to `refresh-metadata`, so a renamed id orphans every
+> historical declaration and the fact decays while live (their `ot-distributed-cache` is declared
+> in 12 logs). The `thread-` filename prefix itself stays: dropping it would be a pure file rename
+> with ids untouched, backlogged as `open-threads-filename-prefix` with the note's migration
+> analysis (the schema's "filename never changes" sentence, and the in-flight-branch case that
+> merges into two files for one thread — `[duplicate-id]` catches it before merge on GitHub, where
+> the floor lints the PR's merge commit, and after merge elsewhere). No retrospective renames
+> anywhere.
+
+### Changed
+
+- **`DECAY.md` §1 "Assigning an id":** the rule, the reason (the section, the `(blueprint)` tag,
+  the `serves:` trace and the thread filename already carry the kind) and the never-rename rationale.
+- **`.agent/schema.md`** (template): the footer legend and the `memory/open-threads/` section carry
+  the rule; the filename sentence is unchanged.
+- **`REVIEW.md` step 8:** new gates are `close-stalled-threads-<YYYYMMDD>`; a gate raised under the
+  pre-4.41.1 `ot-` name keeps it. Summary example updated. No code keys on the gate id.
+- **`ENABLE.md`** metadata-footer step names the rule for freshly generated facts.
+- **`examples/evolving-memory-example/`:** its three `thread-…` fixture ids are renamed
+  (`idempotency-keys`, `ci-migration`, `verify-invariants`) consistently across continuity, archive,
+  INDEX and the session log — a curated documentation fixture, not a live repo's immutable log.
+- **Lockstep:** `UPGRADE.md` row + `4.41.0 → 4.41.1` rung, README table; `VERSION` → 4.41.1. No
+  protocol text change → no Semantic steps row; targets converge by re-copy of `DECAY.md`,
+  `REVIEW.md` and `.agent/schema.md`.
+
+Targets: reconcile re-copies `DECAY.md`, `REVIEW.md` and `.agent/schema.md`; nothing to migrate —
+existing thread ids and filenames stay exactly as they are. Credit: the mercury-composable team's
+note (2026-09-18) and its migration-hazard analysis.
+
 ## Version 4.41.0, 9/17/2026
 
 > **`[undeclared-reference]` — a fact edited without being declared (MINOR).** Field report from the

@@ -31,7 +31,7 @@ counting session files (no floating-point math — see `DECAY.md` §4), the revi
   `active`.
 - **Archived** `legacy-soap-adapter` and `csv-bulk-import` — both unreferenced for
   more than `archive_window` (20) sessions.
-- **Swept** the completed thread `thread-ci-migration` (`[x]`, done long ago) to
+- **Swept** the completed thread `ci-migration` (`[x]`, done long ago) to
   the archive.
 - **Superseded** `rest-versioning-uri` — the team reversed API versioning to be
   header-based today, so the URI-path decision is now *false* (not merely stale). It

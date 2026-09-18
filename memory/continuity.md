@@ -7,7 +7,7 @@
 ## Project State
 
 - **project:** agent-memory
-- **status:** v4.41.0 — official Accenture open source in the Mercury family (graduated 2026-09-10; home `Accenture/mercury-go`, docs `accenture.github.io/mercury-go`); a vendor-neutral, no-code (markdown) shared-AI-memory + AI-enablement tool: backward memory (decay/review/archive), forward VBDI loop, cross-vendor skills layer, declarative enable/upgrade (MANIFEST reconcile), forge-aware ritual triggers (GitHub/GitLab/AzDO), the merge-scale thread layout (`memory/open-threads/`), and the stalled-thread human closure gate (`[thread-stale]` + `REVIEW.md` step 8). Detail: What's Been Built below; per-version history: `UPGRADE.md` + session logs.
+- **status:** v4.41.1 — official Accenture open source in the Mercury family (graduated 2026-09-10; home `Accenture/mercury-go`, docs `accenture.github.io/mercury-go`); a vendor-neutral, no-code (markdown) shared-AI-memory + AI-enablement tool: backward memory (decay/review/archive), forward VBDI loop, cross-vendor skills layer, declarative enable/upgrade (MANIFEST reconcile), forge-aware ritual triggers (GitHub/GitLab/AzDO), the merge-scale thread layout (`memory/open-threads/`), and the stalled-thread human closure gate (`[thread-stale]` + `REVIEW.md` step 8). Detail: What's Been Built below; per-version history: `UPGRADE.md` + session logs.
 - **last_enabled:** 2026-06-12
 - **last_review:** 2026-09-16 | through 2026-09-16-235431
 - **last_invariant_check:** 2026-08-22 | through 2026-08-22-174808 (all 6 confirmed by Eric — walkthrough with live-tree evidence; no-build-step wording refreshed)
@@ -148,6 +148,17 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   (the hook and CI floors honor a committed file) for a team that knows the implications, and the
   hook states them each time it exempts a file.
   <!-- id: secret-waiver-last-resort | created: 2026-09-17 | last_used: 2026-09-17 | uses: 1 | tier: working | origin: 2026-09-17-012400 -->
+- **An id names the thing, never its kind — and an existing id is never renamed** (Eric, 2026-09-18,
+  first recorded in mercury-composable; the tool's rule since v4.41.1). Every open thread lives at
+  `memory/open-threads/thread-<id>.md`, so an id beginning `ot-`/`thread-`/`bp-` stutters
+  (`thread-ot-…`, `thread-thread-…`) — near-universal across the family repos, and mostly the tool's
+  doing: the mandated `ot-close-stalled-threads-<date>` gate id (now `close-stalled-threads-<date>`),
+  this repo's own `ot-` habit, and `thread-` ids in the evolving-memory example. Renaming an existing
+  id is never the fix: session logs are immutable and their `## Memory References` are
+  `refresh-metadata`'s only input, so the fact would decay while live. This repo's 21 `thread-ot-…`
+  files stay as they are. The `thread-` filename prefix itself is a parked backlog
+  (`open-threads-filename-prefix`).
+  <!-- id: id-naming-no-kind-prefix | created: 2026-09-18 | last_used: 2026-09-18 | uses: 1 | tier: working | origin: 2026-09-18-215724 -->
 
 ## Open Threads
 
