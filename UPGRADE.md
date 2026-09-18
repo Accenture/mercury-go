@@ -147,6 +147,7 @@ dev-numbered 4.22–4.25 — into a single MINOR over the released 4.21.0.)*
 | 4.40.1 | **Secret guard: punctuation-tolerant placeholder exemptions + the waiver file as a last resort (PATCH):** field note (mercury-composable, 2026-09-17, on v4.40.0): a comment sentence mentioning a setting — `credentials.source=OAUTHBEARER,` — flagged `[secret-material]` while the bare setting was exempt; trailing sentence punctuation rides into the captured value and defeated every placeholder exemption except the tool's own knob (`password=changeme.`, `client.secret=${CLIENT_SECRET}.` too). Fix: retry the exemptions once with trailing `).,` stripped, after the as-is pass (so `$(…)` / `(REDACTED)` keep matching; real values still flag), both runtimes, mirrored tests (74 each). And, on the same team's suggestion after deleting their re-seeded stub twice, maintainer decision: `.agent/secret-scan-ignore` is a **last-resort escape hatch** — no longer seeded (MANIFEST row + template removed), every guidance surface says restructure the fixture (zero secret leakage is the goal; even dummy test values are false positives in field security scanners); the hook and CI floors still honor a committed file and the hook states the implication when it exempts one. Protocol text changed → semantic row; converges by re-copy of the hook fragment, the lint built-in and a still-stock protocol |
 | 4.41.0 | **`[undeclared-reference]` — a fact edited without being declared (MINOR):** field report (mercury-composable, 2026-09-17): at their first closure gate the maintainer closed two Blueprint gaps; the closing session rewrote both records and declared neither, so `refresh-metadata` read the decision as non-use and `[overdue]` proposed sweeping them hours later — footers and reference log agreed, so only the diff could see it. New memory-lint check 16 over the staged index (`--staged`, pre-commit fragment) or a commit range (`--range`, all three CI floors): a fact whose body changes must be declared in a session log staged with it; footer-only lines, condensed closed records, verbatim moves and deletions never count; silent when no log is staged; advisory. Both runtimes, 11 mirrored tests each (85). Closures are now declared by rule — `REVIEW.md` steps 5/8/10 and `DECAY.md` §2/§6 corrected (the v4.40.0 wording named only re-affirmation), protocol tracks referenced/created/reactivated/closed → semantic row. Converges by re-copy of the hook fragment, README, lint built-in, DECAY/REVIEW/schema and the CI floor, plus the protocol step |
 | 4.41.1 | **Thread ids name the thing, never their kind (PATCH):** field note (mercury-composable, 2026-09-18, on v4.41.0, cosmetic): `thread-<id>.md` plus an id beginning `ot-`/`thread-` stutters (`thread-thread-….md`); near-universal across the family repos, and the tool caused most of it (the mandated `ot-close-stalled-threads-<date>` gate id, the dogfood `ot-` habit, `thread-` ids in the evolving-memory example). Maintainer ruling: an id names the thing, never its kind; an existing id is never renamed (immutable logs are `refresh-metadata`'s only input). Guidance in `DECAY.md` §1, the schema, `REVIEW.md` step 8 (new gates `close-stalled-threads-<date>`), `ENABLE.md`, the example fixture ids. The `thread-` filename prefix stays — its removal is backlogged (`open-threads-filename-prefix`). No protocol change; converges by re-copy of `DECAY.md`, `REVIEW.md`, `.agent/schema.md` |
+| 4.41.2 | **A phantom fact in every enabled repo + an ADR ledger that records decisions only (PATCH):** two mercury-composable reports (2026-09-18, on v4.41.1). (1) The seeded `continuity.md` header shows the footer format as a literal example inside an inline code span; `parse_footers` matched it, so every enabled repo carried a phantom `kebab-id` fact — active, unpinned, counted toward `[continuity-bloat]` — that raised nothing itself; in the field it fired `36 > 35` when the true count was 35, summoning a review with nothing to archive. Fix: a backtick-wrapped footer is documentation — skipped by `parse_footers`, the `[undeclared-reference]` block mapper and `archive-fact` (both runtimes; blockquote position is not the test — Vision footers are blockquoted and real); the seeded header now reads `id: <kebab-id>`. (2) The protocol's "propose a newer ADR … wait for approval" put non-decisions into the decision record (five `Proposed` ADRs for shipped decisions in the field); ruling: an ADR is written only on acceptance, proposals live in the repo's register (e.g. `docs/arch-decisions/RFC.md`, `RFC-NNNN`), never as a `Proposed` ADR. Protocol text changed → semantic row; converges by re-copy of the memory-lint + archive-fact built-ins, `DECAY.md`, the schema and a still-stock protocol |
 
 
 Each enabled repo records what it is on in **`.agent/version.md`**:
@@ -2630,3 +2631,45 @@ backlogged as `open-threads-filename-prefix` — a pure file rename with ids unt
 **Verify:** `memory-lint` reports no new errors (no check changed — `[thread-file]` still expects
 `thread-<footer-id>.md`); the reconcile converges; the next gate the review raises is named
 `close-stalled-threads-<YYYYMMDD>`.
+
+## Rung: 4.41.1 → 4.41.2 — a phantom fact in every enabled repo; the ADR ledger records decisions only (PATCH)
+
+**What changed:** two field reports from the mercury-composable team (2026-09-18, on v4.41.1). (1) The
+seeded `continuity.md` header documents the footer format with a literal example inside an inline code
+span; memory-lint's `parse_footers` matched it, so every enabled repo carried a phantom `kebab-id` fact —
+`tier: active`, not pinned, counted toward `[continuity-bloat]` — that never raised anything itself. In the
+field it fired `[continuity-bloat] 36 > 35` when the true count was 35: a false trigger that summoned a
+review with nothing to archive. Fix: a footer wrapped in backticks is documentation, skipped by
+`parse_footers`, by the `[undeclared-reference]` block mapper and by `archive-fact`'s locator (both
+runtimes). Blockquote position is not the discriminator — every Vision footer is blockquoted and real. The
+seeded header now shows `id: <kebab-id>`. (2) The protocol's "propose a newer ADR … and wait for human
+approval" put non-decisions into the decision record — the field ledger held five `Proposed` ADRs for
+decisions that had already shipped, and a withdrawn proposal has no honest ledger status. Ruling: an ADR is
+written only when a decision is accepted; work under consideration lives in the repo's proposal register
+(for example `docs/arch-decisions/RFC.md` with its own `RFC-NNNN` sequence — separate from ADR numbering),
+never as a `Proposed` ADR.
+
+**Steps:**
+
+1. **Reconcile** (or hand-walk `MANIFEST.md`): re-copies the memory-lint and archive-fact built-ins (both
+   runtimes, tests, `SKILL.md`), `DECAY.md` and `.agent/schema.md`. Hooks and CI floors are unchanged.
+2. **Protocol text changed — the mandated Semantic step:** if the target's `memory/PROTOCOL.md` is
+   byte-identical to the **4.41.1** template, re-copy it. If customized, arbitrate per `ENABLE.md` §5i:
+   the ADR paragraph under *Work from intent* now says an entry is written only on acceptance and
+   proposals live in the repo's register, never as a `Proposed` ADR — never drop local directives.
+3. **The header example (optional, by hand):** a target's `continuity.md` is user-owned and never
+   re-copied, so the parser fix is what removes the phantom. A team may still change the header's
+   `id: kebab-id` to `id: <kebab-id>` (add a note so it is not tidied back) — that is what
+   mercury-composable did before the fix shipped. Expect the run header's live-fact count and the
+   `[continuity-bloat]` count to drop by one after the upgrade; nothing else changes.
+4. **The ledger (one-time, human):** if `docs/arch-decisions/ADR.md` exists and holds `Status: Proposed`
+   entries, resolve them once — accept the ones whose decision shipped (amend in place; they never left
+   `Proposed`, so a superseding ADR would record a supersession that never happened) and move the rest
+   to the register as withdrawn, with the reason. Not an upgrade step for the tool; the human owns it.
+5. **Stamp** `.agent/version.md` → `version: 4.41.2`, `last_upgraded: <today>`, preserving `enabled_with`
+   and `mode`. Use an edit/read-before-write path, never truncate first.
+
+**Verify:** `memory-lint` reports one fewer live fact than before the upgrade in a repo whose header still
+carries the literal example (and the same count where the header was already neutralized); no other
+warning changes; both lint suites pass in the tool repo (89 mirrored tests each) and the archive-fact
+suites (11 / 10); `archive-fact kebab-id` is refused with "no footer".

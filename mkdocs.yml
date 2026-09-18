@@ -140,6 +140,7 @@ nav:
       - Agent Instruction & Memory Security: architecture/security.md
       - Agent Cognitive Framework: agent-cognitive-framework.md
       - Architecture Decision Record: arch-decisions/ADR.md
+      - Proposal Register (RFC): arch-decisions/RFC.md
   - Changelog: changelog.md
   - Project:
       - Contributing: https://github.com/Accenture/mercury-go/blob/main/CONTRIBUTING.md
