@@ -5,4 +5,4 @@
   graduation step), version unchanged (v4.39.2). Org-home workflow from here on: PR required.
   Lesson: keeping company references out until the intake made the flip a one-commit docs change.
   Follow-ups → `ot-graduation-followups`. origin: 2026-09-10-152543
-  <!-- id: ot-enterprise-github-migration | created: 2026-09-01 | last_used: 2026-09-10 | uses: 3 | tier: active -->
+  <!-- id: ot-enterprise-github-migration | created: 2026-09-01 | last_used: 2026-09-10 | uses: 3 | tier: archive-candidate -->

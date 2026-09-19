@@ -6,4 +6,4 @@
   Lesson: state what the mechanism guarantees, not what the design intends — and external
   fresh-context review catches exactly this class. Detail: the 4.39.0→4.39.1 rung.
   → serves: vision-agent-memory (via bp-multi-user)
-  <!-- id: merge-honesty-v4391 | created: 2026-09-01 | last_used: 2026-09-01 | uses: 1 | tier: active | origin: 2026-09-01-204203 -->
+  <!-- id: merge-honesty-v4391 | created: 2026-09-01 | last_used: 2026-09-01 | uses: 1 | tier: archive-candidate | origin: 2026-09-01-204203 -->

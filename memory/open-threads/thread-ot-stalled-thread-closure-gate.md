@@ -4,4 +4,4 @@
   record. Eric's decision → Key Decision `stalled-thread-closure-gate`. PR Accenture/mercury-go#5 merged
   2026-09-17 (`af22727`); tag `v4.40.0`; release published; the same-day dogfood review ran the first gate (three
   closed). Lesson: pinned ≠ examined — every never-decay class needs a human re-check. → serves: vision-agent-memory
-  <!-- id: ot-stalled-thread-closure-gate | created: 2026-09-16 | last_used: 2026-09-16 | uses: 2 | tier: active | origin: 2026-09-16-231835 -->
+  <!-- id: ot-stalled-thread-closure-gate | created: 2026-09-16 | last_used: 2026-09-17 | uses: 3 | tier: archive-candidate | origin: 2026-09-16-231835 -->
