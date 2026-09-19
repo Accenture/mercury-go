@@ -119,6 +119,15 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   account is refused for `createPullRequest` and lacks the `workflow` scope for releases (2026-09-10,
   2026-09-16/17): switch, create, switch back.
   <!-- id: github-origin-mercury-go | created: 2026-09-10 | last_used: 2026-09-18 | uses: 11 | tier: active | supersedes: github-origin-git-ops | origin: 2026-09-10-152543 -->
+- Git hook entrypoints dispatch ordered fragments (ADR-0007) — `.githooks/pre-commit` and
+  `.githooks/post-commit` stay minimal and stable; executable `.githooks/<hook>.d/*` fragments run
+  in C-locale filename order, all fragments run, and the first non-zero status is returned.
+  Agent-memory owns only its `50-` fragments; differently named fragments belong to other layers
+  and upgrades preserve them.
+  **Pinned `core` by Eric (2026-09-18):** the 2026-09-18 review archived this fact as faded by the
+  deterministic rule (24 sessions unreferenced) while ADR-0007 still formalizes it; the maintainer chose to keep
+  the live *what* in the per-session read path — a human-set tier the review never overrides.
+  <!-- id: git-hook-fragment-dispatch | created: 2026-08-20 | last_used: 2026-09-18 | uses: 4 | tier: core | origin: 2026-08-20-210047 -->
 - **A long-stalled open thread is a signal for closure, rectified through a human gate — never
   auto-closed** (Eric, 2026-09-16; shipped v4.40.0). Unreferenced for more than
   `thread_stale_window` sessions (default 40), an unchecked thread is *stalled*: `memory-lint`

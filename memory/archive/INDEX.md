@@ -102,7 +102,6 @@
 - secret-redaction-lint-v4330 — Shipped v4.33.0 (MINOR) — session-log secret redaction: ritual rule + — swept: completed, > archive_window (review 2026-09-16) — 2026-Q3.md
 - secret-review-hardening-v4333 — Shipped v4.33.3 (PATCH) — security-review hardening for `[secret-material]`. A — swept: completed, > archive_window (review 2026-09-16) — 2026-Q3.md
 - github-origin-git-ops — `origin` is GitHub; assume GitHub for git ops (public repo `acn-ericlaw/agent-memory`, — superseded by github-origin-mercury-go — 2026-Q3.md
-- git-hook-fragment-dispatch — Git hook entrypoints dispatch ordered fragments (ADR-0007) — `.githooks/pre-commit` and — faded — 2026-Q3.md
 - bp-reconcile-target-state — (blueprint — SHIPPED v4.35.0 MINOR, 2026-08-20) Target-state reconcile — enable/upgrade — faded — 2026-Q3.md
 - onboarding-efficiency-v4380 — Shipped v4.38.0 (MINOR) — consumer routing + close-record economy. From the — faded — 2026-Q3.md
 - protocol-pointer-enterprise-activation — (blueprint — SHIPPED v4.37.0 MINOR, 2026-08-21) Protocol behind a one-line root — faded — 2026-Q3.md
