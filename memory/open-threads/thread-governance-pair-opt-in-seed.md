@@ -7,4 +7,4 @@
   → proposal: RFC-0005 in `docs/arch-decisions/RFC.md` (implemented; promotion to an ADR at the maintainer's gate)
   → serves: vision-agent-memory
   raised in 2026-09-18-232013; closed in 2026-09-18-234620
-  <!-- id: governance-pair-opt-in-seed | created: 2026-09-18 | last_used: 2026-09-18 | uses: 1 | tier: working | origin: 2026-09-18-232013 -->
+  <!-- id: governance-pair-opt-in-seed | created: 2026-09-18 | last_used: 2026-09-18 | uses: 2 | tier: active | origin: 2026-09-18-232013 -->

@@ -4,4 +4,4 @@
   `ot-before-session-cursor-kiro-backlog` (41 — Cursor (on Grok) and Kiro validated in the field; the failure class
   never materialized). Lesson: re-affirmation was the exception in practice too — 0 of 3; the presumptive
   closes held. Raised and closed in the same review session; the sweep archives it after `archive_window`.
-  <!-- id: ot-close-stalled-threads-20260916 | created: 2026-09-16 | last_used: 2026-09-16 | uses: 1 | tier: working | origin: 2026-09-16-235431 -->
+  <!-- id: ot-close-stalled-threads-20260916 | created: 2026-09-16 | last_used: 2026-09-16 | uses: 1 | tier: archive-candidate | origin: 2026-09-16-235431 -->

@@ -9,7 +9,7 @@
 - **project:** agent-memory
 - **status:** v4.42.0 — official Accenture open source in the Mercury family (graduated 2026-09-10; home `Accenture/mercury-go`, docs `accenture.github.io/mercury-go`); a vendor-neutral, no-code (markdown) shared-AI-memory + AI-enablement tool: backward memory (decay/review/archive), forward VBDI loop, cross-vendor skills layer, declarative enable/upgrade (MANIFEST reconcile), forge-aware ritual triggers (GitHub/GitLab/AzDO), the merge-scale thread layout (`memory/open-threads/`), and the stalled-thread human closure gate (`[thread-stale]` + `REVIEW.md` step 8). Detail: What's Been Built below; per-version history: `UPGRADE.md` + session logs.
 - **last_enabled:** 2026-06-12
-- **last_review:** 2026-09-16 | through 2026-09-16-235431
+- **last_review:** 2026-09-18 | through 2026-09-19-000416
 - **last_invariant_check:** 2026-08-22 | through 2026-08-22-174808 (all 6 confirmed by Eric — walkthrough with live-tree evidence; no-build-step wording refreshed)
 - **vision:** `memory/vision.md` (north star; Blueprint gaps in Open Threads below)
 
@@ -54,7 +54,7 @@
   Codex (mercury-composable PR #341 — Codex co-author trailer), Kiro (tested with Claude, GPT and
   Gemini), Antigravity, and Cursor running Grok (2026-09-05). The v4.37.0 canary
   (`ot-agents-native-activation-canary`) closed on this evidence.
-  <!-- id: agents-shim-activation-validated | created: 2026-09-16 | last_used: 2026-09-16 | uses: 1 | tier: working | origin: 2026-09-16-235431 -->
+  <!-- id: agents-shim-activation-validated | created: 2026-09-16 | last_used: 2026-09-16 | uses: 1 | tier: archive-candidate | origin: 2026-09-16-235431 -->
 
 ## Supported Migration Sources (v2)
 
@@ -118,13 +118,7 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   **Org-home PR and release creation need the `acn-ericlaw` account** — the Enterprise Managed User
   account is refused for `createPullRequest` and lacks the `workflow` scope for releases (2026-09-10,
   2026-09-16/17): switch, create, switch back.
-  <!-- id: github-origin-mercury-go | created: 2026-09-10 | last_used: 2026-09-16 | uses: 3 | tier: active | supersedes: github-origin-git-ops | origin: 2026-09-10-152543 -->
-- Git hook entrypoints dispatch ordered fragments (ADR-0007) — `.githooks/pre-commit` and
-  `.githooks/post-commit` stay minimal and stable; executable `.githooks/<hook>.d/*` fragments run
-  in C-locale filename order, all fragments run, and the first non-zero status is returned.
-  Agent-memory owns only its `50-` fragments; differently named fragments belong to other layers
-  and upgrades preserve them.
-  <!-- id: git-hook-fragment-dispatch | created: 2026-08-20 | last_used: 2026-08-21 | uses: 3 | tier: archive-candidate | origin: 2026-08-20-210047 -->
+  <!-- id: github-origin-mercury-go | created: 2026-09-10 | last_used: 2026-09-18 | uses: 11 | tier: active | supersedes: github-origin-git-ops | origin: 2026-09-10-152543 -->
 - **A long-stalled open thread is a signal for closure, rectified through a human gate — never
   auto-closed** (Eric, 2026-09-16; shipped v4.40.0). Unreferenced for more than
   `thread_stale_window` sessions (default 40), an unchecked thread is *stalled*: `memory-lint`
@@ -139,7 +133,7 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   not. The v4.40.0 wording named only re-affirmation and a field session left two gate closures
   undeclared, so `refresh-metadata` read the human's decision as non-use; memory-lint check 16
   `[undeclared-reference]` now catches a fact edited without a declaration at commit time.
-  <!-- id: stalled-thread-closure-gate | created: 2026-09-16 | last_used: 2026-09-16 | uses: 2 | tier: active | origin: 2026-09-16-234024 -->
+  <!-- id: stalled-thread-closure-gate | created: 2026-09-16 | last_used: 2026-09-18 | uses: 4 | tier: active | origin: 2026-09-16-234024 -->
 - **The secret-scan waiver file is a last-resort escape hatch, not a default** (Eric, 2026-09-17, on
   the mercury-composable team's suggestion; shipped v4.40.1). `.agent/secret-scan-ignore` is no longer
   seeded or recommended: zero secret leakage is the goal, and even dummy test values are false
@@ -147,7 +141,7 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   a fixture that trips the guard is restructured to `${ENV_VAR:placeholder}`. The mechanism stays
   (the hook and CI floors honor a committed file) for a team that knows the implications, and the
   hook states them each time it exempts a file.
-  <!-- id: secret-waiver-last-resort | created: 2026-09-17 | last_used: 2026-09-17 | uses: 1 | tier: working | origin: 2026-09-17-012400 -->
+  <!-- id: secret-waiver-last-resort | created: 2026-09-17 | last_used: 2026-09-17 | uses: 1 | tier: active | origin: 2026-09-17-012400 -->
 - **An id names the thing, never its kind — and an existing id is never renamed** (Eric, 2026-09-18,
   first recorded in mercury-composable; the tool's rule since v4.41.1). Every open thread lives at
   `memory/open-threads/thread-<id>.md`, so an id beginning `ot-`/`thread-`/`bp-` stutters
@@ -158,7 +152,7 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   `refresh-metadata`'s only input, so the fact would decay while live. This repo's 21 `thread-ot-…`
   files stay as they are. The `thread-` filename prefix itself is a parked backlog
   (`open-threads-filename-prefix`).
-  <!-- id: id-naming-no-kind-prefix | created: 2026-09-18 | last_used: 2026-09-18 | uses: 1 | tier: working | origin: 2026-09-18-215724 -->
+  <!-- id: id-naming-no-kind-prefix | created: 2026-09-18 | last_used: 2026-09-18 | uses: 2 | tier: active | origin: 2026-09-18-215724 -->
 - **The ADR ledger records decisions only; proposals live in an `RFC.md` register (ADR-0008)** (Eric, 2026-09-18,
   on the mercury-composable team's report; shipped v4.41.2). The protocol's old "propose a newer ADR …
   and wait for human approval" put non-decisions into the decision record — their ledger held five
@@ -172,7 +166,7 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   resolves them once by hand (mercury holds six as of 2026-09-18). Adopted here the same day:
   `docs/arch-decisions/RFC.md` opened with RFC-0001…0004 (three from open threads, one proposing to
   formalize this rule as ADR-0008 — the maintainer's gate).
-  <!-- id: adr-ledger-decisions-only | created: 2026-09-18 | last_used: 2026-09-18 | uses: 1 | tier: working | origin: 2026-09-18-230858 -->
+  <!-- id: adr-ledger-decisions-only | created: 2026-09-18 | last_used: 2026-09-18 | uses: 5 | tier: active | origin: 2026-09-18-230858 -->
 - **The governance pair is an opt-in seed — offered once, never imposed (ADR-0009)** (Eric, 2026-09-18, RFC-0005;
   shipped v4.42.0). Sample `docs/arch-decisions/ADR.md` + `RFC.md` skeletons ship as `templates/`, but under a
   new MANIFEST policy `optional`: installed only on an explicit `--adopt <target>` (a `dir/` prefix adopts every
@@ -182,7 +176,7 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   the pair after a team deletes it — the "deliberately absent" shape `seed-copy` cannot express
   (`ot-seed-copy-deliberate-absence`, RFC-0002 option b, now concrete). Half the family adopted ledgers by
   hand before this existed (mercury-composable 24 ADRs + a register, mercury 18).
-  <!-- id: governance-pair-optional-seed | created: 2026-09-18 | last_used: 2026-09-18 | uses: 1 | tier: working | origin: 2026-09-18-234620 -->
+  <!-- id: governance-pair-optional-seed | created: 2026-09-18 | last_used: 2026-09-18 | uses: 2 | tier: active | origin: 2026-09-18-234620 -->
 
 ## Open Threads
 

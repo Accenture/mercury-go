@@ -16,4 +16,4 @@
   rather than leave it to the lint. Not additive-only (accept both shapes forever): a mixed directory
   for the life of long-lived blueprint threads undercuts the legibility gain that motivates the change.
   → proposal: RFC-0003 in `docs/arch-decisions/RFC.md` (the reasoning lives there; this thread holds the state)
-  <!-- id: open-threads-filename-prefix | created: 2026-09-18 | last_used: 2026-09-18 | uses: 1 | tier: working | origin: 2026-09-18-215724 -->
+  <!-- id: open-threads-filename-prefix | created: 2026-09-18 | last_used: 2026-09-18 | uses: 2 | tier: working | origin: 2026-09-18-215724 -->

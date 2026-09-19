@@ -4,4 +4,4 @@
   body's "paused at the framing stage" had been false since. Nothing dropped; the remaining VBDI gaps
   are the Blueprint threads `bp-greenfield` / `bp-multi-user`. Lesson: an umbrella thread outlives its
   plan unless something re-reads it — the gate now does (Eric closed it; first live step-8 exercise).
-  <!-- id: vbdi-lifecycle-direction | created: 2026-06-14 | last_used: 2026-09-16 | uses: 5 | tier: active | origin: 2026-06-14-030729 -->
+  <!-- id: vbdi-lifecycle-direction | created: 2026-06-14 | last_used: 2026-09-16 | uses: 5 | tier: archive-candidate | origin: 2026-06-14-030729 -->

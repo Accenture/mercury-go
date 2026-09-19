@@ -10,4 +10,4 @@
   AC-MP-07/08's "preserved without loss". → serves: vision-agent-memory (a protocol fix must
   reach the repos running it)
   → proposal: RFC-0001 in `docs/arch-decisions/RFC.md` (the reasoning lives there; this thread holds the state)
-  <!-- id: ot-protocol-text-propagation | created: 2026-08-21 | last_used: 2026-09-01 | uses: 3 | tier: working | origin: 2026-08-21-052644 -->
+  <!-- id: ot-protocol-text-propagation | created: 2026-08-21 | last_used: 2026-09-18 | uses: 4 | tier: working | origin: 2026-08-21-052644 -->

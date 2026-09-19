@@ -12,5 +12,8 @@
   seeded (Eric: a last-resort escape hatch; `secret-waiver-last-resort`), so the reconcile stops re-offering
   it. The general question — a target-side tombstone or an `optional` policy for the remaining seed-copy
   rows (PR template, archive INDEX, forge floors) — stays open.
+  Progress (2026-09-18, v4.42.0): option (b) now exists — the MANIFEST policy `optional` (installed only on
+  `--adopt`, never touched, listed for reference, never pending), first used for the governance pair (RFC-0005 →
+  ADR-0009). Still open: which of the remaining `seed-copy` rows, if any, should move to it (RFC-0002).
   → proposal: RFC-0002 in `docs/arch-decisions/RFC.md` (the reasoning lives there; this thread holds the state)
-  <!-- id: ot-seed-copy-deliberate-absence | created: 2026-09-17 | last_used: 2026-09-17 | uses: 1 | tier: working | origin: 2026-09-17-002547 -->
+  <!-- id: ot-seed-copy-deliberate-absence | created: 2026-09-17 | last_used: 2026-09-18 | uses: 5 | tier: working | origin: 2026-09-17-002547 -->
