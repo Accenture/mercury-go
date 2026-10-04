@@ -88,6 +88,9 @@ the decision test to each hit, so a fact that records an event is not kept alive
 code. The agent recommends (c) now, then (b), then (a) on the downstream result; the proposal as first
 written is not recommended.
 
+*Progress (v4.42.2):* option (c) chosen by the maintainer (2026-10-04) and shipped — `REVIEW.md` step 6 checks
+the window's commits first and holds every hit to the decision test. Open: (b), then (a).
+
 **Resolution.** —
 
 ## RFC-0005 — An opt-in seed for the governance pair: sample `ADR.md` + `RFC.md` templates

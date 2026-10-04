@@ -34,7 +34,7 @@ The split is deliberate — **mechanize the arithmetic, leave the judgment to th
 | Step | Who does it |
 |---|---|
 | Recompute tier / `uses` / `last_used` | [`refresh-metadata`](../reference/built-in-skills.md#refresh-metadata) (deterministic) |
-| Decide *which* faded facts to retire | the agent (judgment — never automated), after a subject read for undeclared use: a fact whose subject a window session exercised without declaring it is kept, not archived (v4.42.1) |
+| Decide *which* faded facts to retire | the agent (judgment — never automated), after a subject read for undeclared use — the window's commits to the paths the fact names first, then its logs (v4.42.2): a fact a window session relied on without declaring it is kept, not archived (v4.42.1); a fact recording an event is not kept alive by later work on the same code |
 | Decide a *stalled* thread's fate — close or re-affirm | the human, through the closure gate (`[thread-stale]`, v4.40.0 — never automated) |
 | Perform the archive *move* | [`archive-fact`](../reference/built-in-skills.md#archive-fact) (truncation-proof) |
 | Verify the result | [`memory-lint`](../reference/built-in-skills.md#memory-lint) (read-only) |

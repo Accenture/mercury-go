@@ -150,6 +150,7 @@ dev-numbered 4.22–4.25 — into a single MINOR over the released 4.21.0.)*
 | 4.41.2 | **A phantom fact in every enabled repo + an ADR ledger that records decisions only (PATCH):** two mercury-composable reports (2026-09-18, on v4.41.1). (1) The seeded `continuity.md` header shows the footer format as a literal example inside an inline code span; `parse_footers` matched it, so every enabled repo carried a phantom `kebab-id` fact — active, unpinned, counted toward `[continuity-bloat]` — that raised nothing itself; in the field it fired `36 > 35` when the true count was 35, summoning a review with nothing to archive. Fix: a backtick-wrapped footer is documentation — skipped by `parse_footers`, the `[undeclared-reference]` block mapper and `archive-fact` (both runtimes; blockquote position is not the test — Vision footers are blockquoted and real); the seeded header now reads `id: <kebab-id>`. (2) The protocol's "propose a newer ADR … wait for approval" put non-decisions into the decision record (five `Proposed` ADRs for shipped decisions in the field); ruling: an ADR is written only on acceptance, proposals live in the repo's register (e.g. `docs/arch-decisions/RFC.md`, `RFC-NNNN`), never as a `Proposed` ADR. Protocol text changed → semantic row; converges by re-copy of the memory-lint + archive-fact built-ins, `DECAY.md`, the schema and a still-stock protocol |
 | 4.42.0 | **An opt-in seed for the governance pair + the `optional` MANIFEST policy (MINOR):** maintainer proposal (RFC-0005, 2026-09-18) after two field repos adopted an ADR ledger by hand. Plain `seed-copy` rejected — it would install governance ceremony everywhere and re-offer the pair after a deliberate deletion (RFC-0002). New seventh policy `optional`: installed only on an explicit `--adopt <target>` (`dir/` adopts every optional row under it), never touched when present, listed as an `optional` note when absent — never pending, never re-asked on upgrade. Skeletons `templates/docs/arch-decisions/ADR.md` + `RFC.md` (project-neutral); `ENABLE.md` Step 10 offers the pair once; both reconcile runtimes + 4 mirrored tests each (42); schema, `MANIFEST.md`, docs. No protocol change; a target converges by re-copy of `.agent/schema.md` and sees two `optional` notes |
 | 4.42.1 | **Declare a fact consulted to make a decision; check for declaration gaps before archiving one (PATCH):** field report (mercury-composable and mercury, 2026-10-04, on v4.42.0): three in-use facts archived in five weeks. Each had been consulted to make a decision — a convention reasoned from, a release-sweep rule applied, a Redis retry contract pinned by tests — and declared `(none)`; `refresh-metadata` read reliance as non-use, the fact decayed, a review archived it, and `memory-lint` reported clean. A consultation leaves no diff, so `[undeclared-reference]` cannot see it; only a human-guided subject read caught each one. `DECAY.md` §2 already counted reliance as a use, but the working rule the agent reads at session start named only the two ends (an edit or a closure is a use; inspecting alone is not). Now: the protocol tracks ids *relied on* with a decision test (it shaped a decision — you would have decided differently without it), `DECAY.md` §2 states the same, and `REVIEW.md` step 6 gains **declaration gaps (facts)** — before archiving a fact as faded, search the `archive_window` logs for its subject (not its id, outside `## Memory Review` / `## Memory References`) and read the hits; an exercised-but-undeclared subject keeps the fact and is declared in the review's log. A mention is not an exercise (`ot-review-step6-prose`). The optional `[overdue-subject-seen]` lint aid is held as RFC-0006. Protocol text changed → semantic row; converges by re-copy of `DECAY.md`, `REVIEW.md`, `.agent/schema.md` and a still-stock protocol |
+| 4.42.2 | **The step-6 subject read starts with the window's commits (PATCH):** RFC-0006's measurement (2026-10-04) over every fact this repo ever archived as faded — nine of 67 faded archivals; one wrongful (`git-hook-fragment-dispatch`, two true sessions), eight correct release records. The v4.42.1 log search (backticked terms and title words in log text) found 0 of 2 true sessions: they describe the work in prose ("the pre-commit fragment"), not by the paths the fact names. The window's commits touching those paths found 2 of 2, and with hub files left out (paths touched by ≤ 5% of all commits) flagged nothing on the eight correct archivals. `REVIEW.md` step 6: commits first (`git log --since=<oldest window log> -- <paths>`), then logs; every hit held to the decision test — and a fact recording an event (a release shipped, work completed) is not kept alive by later work on the same code. `DECAY.md` §2 aligned. No protocol change; converges by re-copy of `REVIEW.md` and `DECAY.md` |
 
 
 Each enabled repo records what it is on in **`.agent/version.md`**:
@@ -2747,3 +2748,33 @@ Three guidance changes, no check changed:
 
 **Verify:** `memory-lint` output is unchanged by the upgrade (no check changed); the reconcile converges;
 the next review that archives a fact as faded records its subject read in the `## Memory Review` block.
+
+## Rung: 4.42.1 → 4.42.2 — the step-6 subject read starts with the window's commits (PATCH)
+
+**What changed:** v4.42.1 added *declaration gaps (facts)* to `REVIEW.md` step 6: before archiving a fact as
+faded, search the window's session logs for its subject. RFC-0006 (the optional memory-lint aid) then measured
+that search on the tool repo's history — every fact it ever archived as faded, nine of 67 faded archivals (the
+rest were completed threads, which step 5 governs), each replayed at the review that archived it. One archival
+was wrongful (`git-hook-fragment-dispatch`: v4.40.1 and v4.41.0 changed its hook fragment in the window); eight
+were correct (release records). The log search found **neither** true session — they describe the work in prose
+("the pre-commit fragment"), not by the paths the fact names. The window's **commits** touching those paths found
+**both**; with hub files left out (a path touched by at most 5% of all commits) they flagged nothing on the eight
+correct archivals. At looser cuts every false flag was later work on code that a release *record* describes —
+an exercise of the code, not reliance on the record.
+
+So step 6 now looks in two places, commits first: `git log --since=<oldest window log's date> -- <paths the fact
+names>` (hubs such as `AGENTS.md`, `UPGRADE.md`, `memory/continuity.md` left out), then the logs as before. Every
+hit is held to the decision test — did the session rely on what the fact states? — and a fact that records an
+event (a release shipped, work completed) is not kept alive by later work on the same code; only a fact stating
+a live rule, decision or contract can be relied on that way. `DECAY.md` §2's backstop sentence says the same.
+
+**Steps:**
+
+1. **Reconcile** (or hand-walk `MANIFEST.md`): re-copies `REVIEW.md` and `DECAY.md`. Built-ins, hooks, CI floors,
+   the schema and the protocol are unchanged, so there is no Semantic step.
+2. **Stamp** `.agent/version.md` → `version: 4.42.2`, `last_upgraded: <today>`, preserving `enabled_with` and
+   `mode`. Use an edit/read-before-write path, never truncate first.
+
+**Verify:** `memory-lint` output is unchanged by the upgrade (no check changed); the reconcile converges; the
+next review that archives a fact as faded records the commit check alongside the log search in its
+`## Memory Review` block.
