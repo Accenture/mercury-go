@@ -189,13 +189,17 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
 - **A fact consulted to make a decision is a use — declare it; a review reads for a faded fact's subject
   before archiving it** (maintainer, 2026-10-04, on the mercury-composable / mercury field report; shipped
   v4.42.1). *Relied on* = it shaped a decision (you would have decided differently without it); an edit
-  or a closure is always a use, a read that shaped nothing is not. A consultation leaves no diff, so
-  `[undeclared-reference]` cannot see it: the agent declares it when writing the log, and `REVIEW.md`
-  step 6's *declaration gaps (facts)* read — the subject, not the id; a mention is not an exercise — is
-  the backstop, the fact-level twin of step 5's thread rule. Why: three in-use facts archived downstream
-  in five weeks with `memory-lint` clean, and this repo's own `git-hook-fragment-dispatch` (archived
-  2026-09-18 although v4.40.1 and v4.41.0 changed its `50-` fragment in the window). The optional
-  `[overdue-subject-seen]` lint aid is RFC-0006 (open — measure first).
+  or a closure is always a use, a read that shaped nothing is not. A consultation leaves no edit to the
+  fact, so `[undeclared-reference]` cannot see it: the agent declares it when writing the log, and
+  `REVIEW.md` step 6's *declaration gaps (facts)* read — the subject, not the id; a mention is not an
+  exercise — is the backstop, the fact-level twin of step 5's thread rule. **v4.42.2 (maintainer's choice
+  of RFC-0006 option c):** the read starts with the window's commits to the paths the fact names, then the
+  logs — measured on this repo, the log search found 0 of 2 true sessions and the commits 2 of 2 — and
+  every hit is held to the decision test, so a fact recording an event (a release shipped) is not kept
+  alive by later work on the same code. Why: three in-use facts archived downstream in five weeks with
+  `memory-lint` clean, and this repo's own `git-hook-fragment-dispatch` (archived 2026-09-18 although
+  v4.40.1 and v4.41.0 changed its `50-` fragment in the window). RFC-0006 stays open for a downstream
+  validation and a path-based lint advisory.
   <!-- id: declare-consulted-references | created: 2026-10-04 | last_used: 2026-10-04 | uses: 1 | tier: working | origin: 2026-10-04-162944 -->
 - **A family-repo upgrade runs in a throwaway `git worktree` of `origin/main` — unconditionally, never in the
   checkout** (maintainer, adopted 2026-09-18; recorded as a Key Decision 2026-10-04). Why: in the v4.41.1

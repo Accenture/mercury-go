@@ -19,6 +19,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > `accenture.github.io/mercury-go`). This is a status change, not a release: `VERSION` stays
 > **4.39.2**, there is no upgrade rung, and enabled repositories need no action.
 
+## Version 4.42.2, 10/4/2026
+
+> **The step-6 subject read starts with the window's commits (PATCH).** v4.42.1 told the reviewer to search
+> the window's session logs for a faded fact's subject before archiving it. RFC-0006 then measured that search
+> on this repo's own history — every fact ever archived as faded: nine of 67 faded archivals (the other 58 were
+> completed threads, step 5's), each replayed at the review that archived it, over the 20 logs before it. Ground
+> truth: one wrongful archival, `git-hook-fragment-dispatch` (v4.40.1 and v4.41.0 changed its hook fragment in
+> the window), and eight correct ones, all release records.
+>
+> | Signal | True sessions found | Flags per correct archival (mean / max) |
+> |---|---|---|
+> | Log text: backticked terms + bold-title words (v4.42.1's search) | 0 of 2 | 18.0 / 20 |
+> | Log text: backticked terms in ≤ 10% of earlier logs, ≥ 2 co-occurring | 0 of 2 | 0.4 / 3 |
+> | Window commits touching a path the fact names | 2 of 2 | 14.4 / 20 |
+> | … keeping paths touched by ≤ 5% of all commits | 2 of 2 | 0 / 0 |
+>
+> Sessions describe their work in prose ("the pre-commit fragment"), not by the paths a fact names, so the
+> diff is where a declaration gap shows. And at looser cuts every false flag was later work on code a release
+> *record* describes — an exercise of the code, not reliance on the record — which v4.42.1's "changed, tested,
+> applied" wording would have counted.
+
+### Changed
+
+- **`REVIEW.md` step 6, declaration gaps (facts):** two places, commits first — `git log --since=<oldest window
+  log's date> -- <paths the fact names>`, leaving out hub paths (the measured cut: a path touched by at most 5% of
+  all commits, `git rev-list --count`); then the logs as before. Every hit is held to the **decision test** (did
+  the session rely on what the fact states?), and a fact recording an **event** — a release shipped, work
+  completed — is not kept alive by later work on the same code; only a fact stating a live rule, decision or
+  contract can be relied on that way.
+- **`DECAY.md` §2:** the backstop sentence names the commit check and the decision test; "a consultation leaves no
+  diff" becomes "no edit to the fact" — the work it shaped can leave a diff, which is exactly what the check reads.
+- **Review guide:** the who-does-what row.
+- **Lockstep:** `UPGRADE.md` row + `4.42.1 → 4.42.2` rung, README table; `VERSION` → 4.42.2. No protocol text change
+  → no Semantic steps row.
+
+### Not in this release
+
+- RFC-0006's other two options stay open: validating the path signal on the downstream's three field instances,
+  and a `memory-lint` advisory (`[overdue-path-touched]`) built on it. The measurement's positive set is one
+  wrongful archival, and the path signal needs a fact that names paths.
+
+Targets: reconcile re-copies `REVIEW.md` and `DECAY.md`; nothing else changes, and `memory-lint` output is
+unchanged. Register: RFC-0006 option (c), the maintainer's choice (2026-10-04).
+
 ## Version 4.42.1, 10/4/2026
 
 > **Declare a fact consulted to make a decision, and check for declaration gaps before archiving one
