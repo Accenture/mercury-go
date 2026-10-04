@@ -1667,6 +1667,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rfc-0006-overdue-subject-seen-a-memory-lint-pointer-from-an-overdue-fact-to-the-logs-that-mention-its-subject" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RFC-0006 — [overdue-subject-seen]: a memory-lint pointer from an overdue fact to the logs that mention its subject
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#rfc-0005-an-opt-in-seed-for-the-governance-pair-sample-adrmd-rfcmd-templates" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1964,6 +1975,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#rfc-0006-overdue-subject-seen-a-memory-lint-pointer-from-an-overdue-fact-to-the-logs-that-mention-its-subject" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RFC-0006 — [overdue-subject-seen]: a memory-lint pointer from an overdue fact to the logs that mention its subject
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#rfc-0005-an-opt-in-seed-for-the-governance-pair-sample-adrmd-rfcmd-templates" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2075,6 +2097,25 @@ cost, the same footing as <code>ADR.md</code> and <code>docs/DESIGN-*.md</code>)
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>**Resolution.** Empty while open; `Promoted → ADR-NNNN (date)` or `Withdrawn (date): &lt;reason&gt;`.
 </code></pre></div>
 <hr />
+<h2 id="rfc-0006-overdue-subject-seen-a-memory-lint-pointer-from-an-overdue-fact-to-the-logs-that-mention-its-subject">RFC-0006 — <code>[overdue-subject-seen]</code>: a memory-lint pointer from an overdue fact to the logs that mention its subject<a class="headerlink" href="#rfc-0006-overdue-subject-seen-a-memory-lint-pointer-from-an-overdue-fact-to-the-logs-that-mention-its-subject" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> Open · <strong>Raised:</strong> 2026-10-04 · <strong>Serves:</strong> vision-agent-memory · <strong>Thread:</strong> <code>overdue-subject-seen-advisory</code></p>
+<!-- id: rfc-0006 | status: open | thread: overdue-subject-seen-advisory -->
+
+<p><strong>Proposal.</strong> The optional half of the mercury-composable / mercury field report (2026-10-04) whose
+guidance half shipped as v4.42.1: for each <code>[overdue]</code> fact, <code>memory-lint</code> lists the <code>archive_window</code>
+session logs whose body mentions the fact's distinctive terms (backticked identifiers, words from its bold
+title), e.g. <code>[overdue-subject-seen] &lt;id&gt;: &lt;session&gt; mentions '&lt;term&gt;'</code>. Advisory only — a prompt for
+<code>REVIEW.md</code> step 6's declaration-gap read and <strong>never a use</strong>: counting prose mentions would reintroduce
+the <code>ot-review-step6-prose</code> archival livelock. Committing to it means a term-selection heuristic
+implemented identically in both runtimes, mirrored tests, and one more advisory in every review.</p>
+<p><strong>Options.</strong> (a) Ship it as specified, skipping <code>## Memory Review</code> and <code>## Memory References</code> blocks.
+(b) Ship it only after measuring the heuristic on this repo's logs — would it have flagged
+<code>git-hook-fragment-dispatch</code> before the 2026-09-18 archival, and how many hits per overdue fact does it
+raise? Common backticked paths (<code>memory/continuity.md</code>, <code>REVIEW.md</code>) match nearly every log, so terms
+probably need a rarity cut (drop a term found in most window logs). (c) Leave it to prose: step 6 already
+tells the reviewer to search for the subject's terms, and reviews are infrequent. The agent recommends
+(b), then (a) or (c) on the measurement.</p>
+<p><strong>Resolution.</strong> —</p>
 <h2 id="rfc-0005-an-opt-in-seed-for-the-governance-pair-sample-adrmd-rfcmd-templates">RFC-0005 — An opt-in seed for the governance pair: sample <code>ADR.md</code> + <code>RFC.md</code> templates<a class="headerlink" href="#rfc-0005-an-opt-in-seed-for-the-governance-pair-sample-adrmd-rfcmd-templates" title="Permanent link">&para;</a></h2>
 <p><strong>Status:</strong> Promoted → ADR-0009 · <strong>Raised:</strong> 2026-09-18 · <strong>Serves:</strong> vision-agent-memory · <strong>Thread:</strong> <code>governance-pair-opt-in-seed</code> (closed — shipped)</p>
 <!-- id: rfc-0005 | status: promoted | adr: ADR-0009 | thread: governance-pair-opt-in-seed -->

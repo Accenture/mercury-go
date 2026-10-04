@@ -2532,7 +2532,9 @@ or living under <code>## Architectural Invariants</code>.</p>
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">-</span><span class="w"> </span>Reactivated: drizzle-vs-prisma
 </code></pre></div>
 <ul>
-<li><strong>Referenced</strong> — ids the session relied on or reinforced.</li>
+<li><strong>Referenced</strong> — ids the session relied on or reinforced. <em>Relied on</em> = consulted to make a
+  decision — the session would have decided differently without the fact (v4.42.1); a read
+  that shaped nothing is not a use.</li>
 <li><strong>Created</strong> — new facts this session added to <code>continuity.md</code> (born <code>working</code>).</li>
 <li><strong>Reactivated</strong> — ids pulled back from the archive because they came up again.</li>
 </ul>
