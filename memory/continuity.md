@@ -7,7 +7,7 @@
 ## Project State
 
 - **project:** agent-memory
-- **status:** v4.42.1 — official Accenture open source in the Mercury family (graduated 2026-09-10; home `Accenture/mercury-go`, docs `accenture.github.io/mercury-go`); a vendor-neutral, no-code (markdown) shared-AI-memory + AI-enablement tool: backward memory (decay/review/archive), forward VBDI loop, cross-vendor skills layer, declarative enable/upgrade (MANIFEST reconcile), forge-aware ritual triggers (GitHub/GitLab/AzDO), the merge-scale thread layout (`memory/open-threads/`), and the stalled-thread human closure gate (`[thread-stale]` + `REVIEW.md` step 8). Detail: What's Been Built below; per-version history: `UPGRADE.md` + session logs.
+- **status:** v4.42.2 — official Accenture open source in the Mercury family (graduated 2026-09-10; home `Accenture/mercury-go`, docs `accenture.github.io/mercury-go`); a vendor-neutral, no-code (markdown) shared-AI-memory + AI-enablement tool: backward memory (decay/review/archive), forward VBDI loop, cross-vendor skills layer, declarative enable/upgrade (MANIFEST reconcile), forge-aware ritual triggers (GitHub/GitLab/AzDO), the merge-scale thread layout (`memory/open-threads/`), and the stalled-thread human closure gate (`[thread-stale]` + `REVIEW.md` step 8). Detail: What's Been Built below; per-version history: `UPGRADE.md` + session logs.
 - **last_enabled:** 2026-06-12
 - **last_review:** 2026-09-18 | through 2026-09-19-000416
 - **last_invariant_check:** 2026-08-22 | through 2026-08-22-174808 (all 6 confirmed by Eric — walkthrough with live-tree evidence; no-build-step wording refreshed)
