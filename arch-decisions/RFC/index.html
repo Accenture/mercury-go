@@ -1667,10 +1667,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#rfc-0006-overdue-subject-seen-a-memory-lint-pointer-from-an-overdue-fact-to-the-logs-that-mention-its-subject" class="md-nav__link">
+  <a href="#rfc-0006-overdue-subject-seen-a-memory-lint-pointer-from-an-overdue-fact-to-the-logs-that-mention-its-subject-measured-the-diff-not-the-log-text" class="md-nav__link">
     <span class="md-ellipsis">
       
-        RFC-0006 — [overdue-subject-seen]: a memory-lint pointer from an overdue fact to the logs that mention its subject
+        RFC-0006 — [overdue-subject-seen]: a memory-lint pointer from an overdue fact to the logs that mention its subject (measured: the diff, not the log text)
       
     </span>
   </a>
@@ -1975,10 +1975,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#rfc-0006-overdue-subject-seen-a-memory-lint-pointer-from-an-overdue-fact-to-the-logs-that-mention-its-subject" class="md-nav__link">
+  <a href="#rfc-0006-overdue-subject-seen-a-memory-lint-pointer-from-an-overdue-fact-to-the-logs-that-mention-its-subject-measured-the-diff-not-the-log-text" class="md-nav__link">
     <span class="md-ellipsis">
       
-        RFC-0006 — [overdue-subject-seen]: a memory-lint pointer from an overdue fact to the logs that mention its subject
+        RFC-0006 — [overdue-subject-seen]: a memory-lint pointer from an overdue fact to the logs that mention its subject (measured: the diff, not the log text)
       
     </span>
   </a>
@@ -2097,7 +2097,7 @@ cost, the same footing as <code>ADR.md</code> and <code>docs/DESIGN-*.md</code>)
 <a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>**Resolution.** Empty while open; `Promoted → ADR-NNNN (date)` or `Withdrawn (date): &lt;reason&gt;`.
 </code></pre></div>
 <hr />
-<h2 id="rfc-0006-overdue-subject-seen-a-memory-lint-pointer-from-an-overdue-fact-to-the-logs-that-mention-its-subject">RFC-0006 — <code>[overdue-subject-seen]</code>: a memory-lint pointer from an overdue fact to the logs that mention its subject<a class="headerlink" href="#rfc-0006-overdue-subject-seen-a-memory-lint-pointer-from-an-overdue-fact-to-the-logs-that-mention-its-subject" title="Permanent link">&para;</a></h2>
+<h2 id="rfc-0006-overdue-subject-seen-a-memory-lint-pointer-from-an-overdue-fact-to-the-logs-that-mention-its-subject-measured-the-diff-not-the-log-text">RFC-0006 — <code>[overdue-subject-seen]</code>: a memory-lint pointer from an overdue fact to the logs that mention its subject (measured: the diff, not the log text)<a class="headerlink" href="#rfc-0006-overdue-subject-seen-a-memory-lint-pointer-from-an-overdue-fact-to-the-logs-that-mention-its-subject-measured-the-diff-not-the-log-text" title="Permanent link">&para;</a></h2>
 <p><strong>Status:</strong> Open · <strong>Raised:</strong> 2026-10-04 · <strong>Serves:</strong> vision-agent-memory · <strong>Thread:</strong> <code>overdue-subject-seen-advisory</code></p>
 <!-- id: rfc-0006 | status: open | thread: overdue-subject-seen-advisory -->
 
@@ -2108,13 +2108,68 @@ title), e.g. <code>[overdue-subject-seen] &lt;id&gt;: &lt;session&gt; mentions '
 <code>REVIEW.md</code> step 6's declaration-gap read and <strong>never a use</strong>: counting prose mentions would reintroduce
 the <code>ot-review-step6-prose</code> archival livelock. Committing to it means a term-selection heuristic
 implemented identically in both runtimes, mirrored tests, and one more advisory in every review.</p>
-<p><strong>Options.</strong> (a) Ship it as specified, skipping <code>## Memory Review</code> and <code>## Memory References</code> blocks.
-(b) Ship it only after measuring the heuristic on this repo's logs — would it have flagged
-<code>git-hook-fragment-dispatch</code> before the 2026-09-18 archival, and how many hits per overdue fact does it
-raise? Common backticked paths (<code>memory/continuity.md</code>, <code>REVIEW.md</code>) match nearly every log, so terms
-probably need a rarity cut (drop a term found in most window logs). (c) Leave it to prose: step 6 already
-tells the reviewer to search for the subject's terms, and reviews are infrequent. The agent recommends
-(b), then (a) or (c) on the measurement.</p>
+<p><strong>Measurement (2026-10-04, option b — this repo's logs; session <code>2026-10-04-170020</code>).</strong> Corpus: every fact this
+repo ever archived as faded — nine of 67 faded archivals (the other 58 were completed threads, which step 5
+governs, not step 6). One was wrongful: <code>git-hook-fragment-dispatch</code>, archived 2026-09-18 although v4.40.1
+and v4.41.0 changed its <code>50-</code> fragment in the window — two true sessions. Eight were correct: release
+records whose substance lives in <code>CHANGELOG.md</code> / <code>UPGRADE.md</code>. Each fact was evaluated at the review that
+archived it, over the 20 logs before it, with <code>## Memory Review</code> / <code>## Memory References</code> excluded.</p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>True sessions found</th>
+<th>Flags per correct archival (mean / max)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>As proposed: backticked terms + bold-title words in log text</td>
+<td>0 of 2</td>
+<td>18.0 / 20</td>
+</tr>
+<tr>
+<td>Backticked terms in ≤ 10% of earlier logs, ≥ 2 co-occurring</td>
+<td>0 of 2</td>
+<td>0.4 / 3</td>
+</tr>
+<tr>
+<td>Window commits touching a path the fact names</td>
+<td>2 of 2</td>
+<td>14.4 / 20</td>
+</tr>
+<tr>
+<td>… only paths touched by ≤ 5% of earlier commits</td>
+<td>2 of 2</td>
+<td>0 / 0</td>
+</tr>
+<tr>
+<td>… ≤ 10%</td>
+<td>2 of 2</td>
+<td>1.3 / 3</td>
+</tr>
+</tbody>
+</table>
+<p>Findings. (1) <strong>Log text is the wrong place to look.</strong> The two true sessions describe the work in prose ("the
+pre-commit fragment", "hook fragment runs <code>--staged</code>"), not by the paths the fact names — so the advisory as
+proposed, and the lexical log search <code>REVIEW.md</code> step 6 prescribes since v4.42.1, both miss this repo's
+motivating case. (2) <strong>The diff is the right place.</strong> The commits that touched the fact's paths are exactly
+the two true sessions; a rarity cut removes hub files (<code>AGENTS.md</code>, <code>UPGRADE.md</code>, <code>continuity.md</code>) that
+change in most releases. (3) <strong>Event records need the decision test.</strong> At looser cuts every flag on a correct
+archival is later work on code a <em>release record</em> describes (memory-lint changed after "Shipped v4.9.0") —
+an exercise of the code, not reliance on the record; step 6's "changed, tested, applied" reads as keeping
+such records alive. Caveats: one wrongful archival is a small positive set; the path signal needs a fact that
+names paths (the downstream's retry contract and release-sweep convention may not); a commit maps to the
+session log it carries, else the next one.</p>
+<p><strong>Options (revised after the measurement).</strong> (a) Ship <code>[overdue-path-touched]</code> instead of the log-text
+advisory: for each <code>[overdue]</code> fact that is not a thread, list the window's commits that touch a path it
+names, keeping paths touched by ≤ 5% of earlier commits — advisory, never a use; both runtimes, mirrored
+tests, <code>git</code> already present wherever the hooks run. (b) Validate first on the downstream's three field
+instances — their repositories, so their maintainer's go. (c) Prose regardless, as a PATCH: <code>REVIEW.md</code> step
+6 adds the commit check (<code>git log</code> over the window for the fact's paths) beside the log search, and applies
+the decision test to each hit, so a fact that records an event is not kept alive by later work on the same
+code. The agent recommends (c) now, then (b), then (a) on the downstream result; the proposal as first
+written is not recommended.</p>
 <p><strong>Resolution.</strong> —</p>
 <h2 id="rfc-0005-an-opt-in-seed-for-the-governance-pair-sample-adrmd-rfcmd-templates">RFC-0005 — An opt-in seed for the governance pair: sample <code>ADR.md</code> + <code>RFC.md</code> templates<a class="headerlink" href="#rfc-0005-an-opt-in-seed-for-the-governance-pair-sample-adrmd-rfcmd-templates" title="Permanent link">&para;</a></h2>
 <p><strong>Status:</strong> Promoted → ADR-0009 · <strong>Raised:</strong> 2026-09-18 · <strong>Serves:</strong> vision-agent-memory · <strong>Thread:</strong> <code>governance-pair-opt-in-seed</code> (closed — shipped)</p>
