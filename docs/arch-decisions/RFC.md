@@ -39,7 +39,7 @@
 
 ---
 
-## RFC-0006 — `[overdue-subject-seen]`: a memory-lint pointer from an overdue fact to the logs that mention its subject
+## RFC-0006 — `[overdue-subject-seen]`: a memory-lint pointer from an overdue fact to the logs that mention its subject (measured: the diff, not the log text)
 **Status:** Open · **Raised:** 2026-10-04 · **Serves:** vision-agent-memory · **Thread:** `overdue-subject-seen-advisory`
 <!-- id: rfc-0006 | status: open | thread: overdue-subject-seen-advisory -->
 
@@ -51,13 +51,42 @@ title), e.g. `[overdue-subject-seen] <id>: <session> mentions '<term>'`. Advisor
 the `ot-review-step6-prose` archival livelock. Committing to it means a term-selection heuristic
 implemented identically in both runtimes, mirrored tests, and one more advisory in every review.
 
-**Options.** (a) Ship it as specified, skipping `## Memory Review` and `## Memory References` blocks.
-(b) Ship it only after measuring the heuristic on this repo's logs — would it have flagged
-`git-hook-fragment-dispatch` before the 2026-09-18 archival, and how many hits per overdue fact does it
-raise? Common backticked paths (`memory/continuity.md`, `REVIEW.md`) match nearly every log, so terms
-probably need a rarity cut (drop a term found in most window logs). (c) Leave it to prose: step 6 already
-tells the reviewer to search for the subject's terms, and reviews are infrequent. The agent recommends
-(b), then (a) or (c) on the measurement.
+**Measurement (2026-10-04, option b — this repo's logs; session `2026-10-04-170020`).** Corpus: every fact this
+repo ever archived as faded — nine of 67 faded archivals (the other 58 were completed threads, which step 5
+governs, not step 6). One was wrongful: `git-hook-fragment-dispatch`, archived 2026-09-18 although v4.40.1
+and v4.41.0 changed its `50-` fragment in the window — two true sessions. Eight were correct: release
+records whose substance lives in `CHANGELOG.md` / `UPGRADE.md`. Each fact was evaluated at the review that
+archived it, over the 20 logs before it, with `## Memory Review` / `## Memory References` excluded.
+
+| Signal | True sessions found | Flags per correct archival (mean / max) |
+|---|---|---|
+| As proposed: backticked terms + bold-title words in log text | 0 of 2 | 18.0 / 20 |
+| Backticked terms in ≤ 10% of earlier logs, ≥ 2 co-occurring | 0 of 2 | 0.4 / 3 |
+| Window commits touching a path the fact names | 2 of 2 | 14.4 / 20 |
+| … only paths touched by ≤ 5% of earlier commits | 2 of 2 | 0 / 0 |
+| … ≤ 10% | 2 of 2 | 1.3 / 3 |
+
+Findings. (1) **Log text is the wrong place to look.** The two true sessions describe the work in prose ("the
+pre-commit fragment", "hook fragment runs `--staged`"), not by the paths the fact names — so the advisory as
+proposed, and the lexical log search `REVIEW.md` step 6 prescribes since v4.42.1, both miss this repo's
+motivating case. (2) **The diff is the right place.** The commits that touched the fact's paths are exactly
+the two true sessions; a rarity cut removes hub files (`AGENTS.md`, `UPGRADE.md`, `continuity.md`) that
+change in most releases. (3) **Event records need the decision test.** At looser cuts every flag on a correct
+archival is later work on code a *release record* describes (memory-lint changed after "Shipped v4.9.0") —
+an exercise of the code, not reliance on the record; step 6's "changed, tested, applied" reads as keeping
+such records alive. Caveats: one wrongful archival is a small positive set; the path signal needs a fact that
+names paths (the downstream's retry contract and release-sweep convention may not); a commit maps to the
+session log it carries, else the next one.
+
+**Options (revised after the measurement).** (a) Ship `[overdue-path-touched]` instead of the log-text
+advisory: for each `[overdue]` fact that is not a thread, list the window's commits that touch a path it
+names, keeping paths touched by ≤ 5% of earlier commits — advisory, never a use; both runtimes, mirrored
+tests, `git` already present wherever the hooks run. (b) Validate first on the downstream's three field
+instances — their repositories, so their maintainer's go. (c) Prose regardless, as a PATCH: `REVIEW.md` step
+6 adds the commit check (`git log` over the window for the fact's paths) beside the log search, and applies
+the decision test to each hit, so a fact that records an event is not kept alive by later work on the same
+code. The agent recommends (c) now, then (b), then (a) on the downstream result; the proposal as first
+written is not recommended.
 
 **Resolution.** —
 
