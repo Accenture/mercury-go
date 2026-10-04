@@ -39,6 +39,28 @@
 
 ---
 
+## RFC-0006 — `[overdue-subject-seen]`: a memory-lint pointer from an overdue fact to the logs that mention its subject
+**Status:** Open · **Raised:** 2026-10-04 · **Serves:** vision-agent-memory · **Thread:** `overdue-subject-seen-advisory`
+<!-- id: rfc-0006 | status: open | thread: overdue-subject-seen-advisory -->
+
+**Proposal.** The optional half of the mercury-composable / mercury field report (2026-10-04) whose
+guidance half shipped as v4.42.1: for each `[overdue]` fact, `memory-lint` lists the `archive_window`
+session logs whose body mentions the fact's distinctive terms (backticked identifiers, words from its bold
+title), e.g. `[overdue-subject-seen] <id>: <session> mentions '<term>'`. Advisory only — a prompt for
+`REVIEW.md` step 6's declaration-gap read and **never a use**: counting prose mentions would reintroduce
+the `ot-review-step6-prose` archival livelock. Committing to it means a term-selection heuristic
+implemented identically in both runtimes, mirrored tests, and one more advisory in every review.
+
+**Options.** (a) Ship it as specified, skipping `## Memory Review` and `## Memory References` blocks.
+(b) Ship it only after measuring the heuristic on this repo's logs — would it have flagged
+`git-hook-fragment-dispatch` before the 2026-09-18 archival, and how many hits per overdue fact does it
+raise? Common backticked paths (`memory/continuity.md`, `REVIEW.md`) match nearly every log, so terms
+probably need a rarity cut (drop a term found in most window logs). (c) Leave it to prose: step 6 already
+tells the reviewer to search for the subject's terms, and reviews are infrequent. The agent recommends
+(b), then (a) or (c) on the measurement.
+
+**Resolution.** —
+
 ## RFC-0005 — An opt-in seed for the governance pair: sample `ADR.md` + `RFC.md` templates
 **Status:** Promoted → ADR-0009 · **Raised:** 2026-09-18 · **Serves:** vision-agent-memory · **Thread:** `governance-pair-opt-in-seed` (closed — shipped)
 <!-- id: rfc-0005 | status: promoted | adr: ADR-0009 | thread: governance-pair-opt-in-seed -->
