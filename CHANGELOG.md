@@ -19,6 +19,59 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > `accenture.github.io/mercury-go`). This is a status change, not a release: `VERSION` stays
 > **4.39.2**, there is no upgrade rung, and enabled repositories need no action.
 
+## Version 4.42.1, 10/4/2026
+
+> **Declare a fact consulted to make a decision, and check for declaration gaps before archiving one
+> (PATCH).** A field report from the maintainer of mercury-composable and mercury (2026-10-04, on
+> v4.42.0), modelled on the v4.41.2 precedent. In five weeks three facts still in use were archived, or
+> demoted toward it, because the sessions that relied on them declared `(none)`: a convention reasoned
+> from explicitly (used in 42 sessions), a release that applied the release-sweep convention, and a
+> CI-flake fix whose tests pinned a recorded Redis retry contract. `refresh-metadata` read reliance as
+> non-use, a review archived the fact in its first pass, and `memory-lint` reported clean each time;
+> only a human-guided read of the window's logs for the fact's *subject* reversed it before commit.
+>
+> The gap: `DECAY.md` §2 already defined *Referenced* as "relied on or reinforced", but the working rule
+> an agent reads at session start named only the two ends — an edit or a closure is a use, inspecting
+> alone is not — and a fact consulted to make a decision is neither. It also leaves no diff, so the
+> v4.41.0 `[undeclared-reference]` check cannot see it, and `REVIEW.md` had a declaration-gap rule for
+> threads (step 5) but none for facts. This repo had the same exposure: the 2026-09-18 review archived
+> `git-hook-fragment-dispatch` although v4.40.1 and v4.41.0 both changed the `50-` pre-commit fragment in
+> the window; the maintainer reversed it and pinned the fact `core`.
+
+### Changed
+
+- **Protocol text** (both copies, *Maintain memory while working*): track every fact id *relied on*,
+  created, reactivated or closed. A fact is relied on when it shaped a decision — you would have decided
+  differently without it; an edit or a closure is always a use, a read that shaped nothing is not;
+  nothing can catch an undeclared consultation, so declare it when writing the log → Semantic steps row
+  (re-copy a still-stock target protocol; arbitrate a customized one per `ENABLE.md` §5i).
+- **`DECAY.md` §2:** *Referenced* carries the decision test; the `[undeclared-reference]` paragraph names
+  what the diff cannot see and the review-time backstop.
+- **`REVIEW.md` step 6 — declaration gaps (facts):** for each fact archived as faded, search the
+  `archive_window` logs for its subject's distinctive terms — not its id, and outside `## Memory Review`
+  / `## Memory References` — and read the hits. A session that *exercised* the subject (changed, tested,
+  applied or decided by it) without declaring the id makes the fade a declaration gap: move the fact
+  back, declare it under the review's `## Memory References` citing that session, note the reversal in
+  `## Memory Review`. A mention is not an exercise (the `ot-review-step6-prose` livelock); the read never
+  counts on its own. Step 10 lists a kept fact among the ids that belong under `## Memory References`.
+  Two refinements over the proposed text: *exercised* is defined, and the read is a search-then-read
+  rather than a full read of every window log per candidate.
+- **`.agent/schema.md`** (the `Referenced:` line), `docs/DESIGN-evolving-memory.md`, the review guide.
+- **Lockstep:** `UPGRADE.md` row + `4.42.0 → 4.42.1` rung, README table, `MANIFEST.md` Semantic steps row;
+  `VERSION` → 4.42.1.
+
+### Not in this release
+
+- The optional `memory-lint` aid — `[overdue-subject-seen]`, listing the window logs that mention an
+  overdue fact's distinctive terms as a prompt for step 6's read, **never a use** — is recorded as
+  **RFC-0006** (Open): which terms count as distinctive is unproven, common backticked paths would match
+  every log, and both runtimes plus mirrored tests are the cost. The next step is measuring the heuristic
+  against this repo's own logs.
+
+Targets: reconcile re-copies `DECAY.md`, `REVIEW.md` and `.agent/schema.md`; then the protocol semantic
+step. No check changed, so `memory-lint` output is unchanged. Credit: the mercury-composable and mercury
+maintainer's report, with three dated field instances and proposed text for all three surfaces.
+
 ## Version 4.42.0, 9/18/2026
 
 > **An opt-in seed for the governance pair, and the `optional` policy that carries it (MINOR).**

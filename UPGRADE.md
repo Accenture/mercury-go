@@ -149,6 +149,7 @@ dev-numbered 4.22–4.25 — into a single MINOR over the released 4.21.0.)*
 | 4.41.1 | **Thread ids name the thing, never their kind (PATCH):** field note (mercury-composable, 2026-09-18, on v4.41.0, cosmetic): `thread-<id>.md` plus an id beginning `ot-`/`thread-` stutters (`thread-thread-….md`); near-universal across the family repos, and the tool caused most of it (the mandated `ot-close-stalled-threads-<date>` gate id, the dogfood `ot-` habit, `thread-` ids in the evolving-memory example). Maintainer ruling: an id names the thing, never its kind; an existing id is never renamed (immutable logs are `refresh-metadata`'s only input). Guidance in `DECAY.md` §1, the schema, `REVIEW.md` step 8 (new gates `close-stalled-threads-<date>`), `ENABLE.md`, the example fixture ids. The `thread-` filename prefix stays — its removal is backlogged (`open-threads-filename-prefix`). No protocol change; converges by re-copy of `DECAY.md`, `REVIEW.md`, `.agent/schema.md` |
 | 4.41.2 | **A phantom fact in every enabled repo + an ADR ledger that records decisions only (PATCH):** two mercury-composable reports (2026-09-18, on v4.41.1). (1) The seeded `continuity.md` header shows the footer format as a literal example inside an inline code span; `parse_footers` matched it, so every enabled repo carried a phantom `kebab-id` fact — active, unpinned, counted toward `[continuity-bloat]` — that raised nothing itself; in the field it fired `36 > 35` when the true count was 35, summoning a review with nothing to archive. Fix: a backtick-wrapped footer is documentation — skipped by `parse_footers`, the `[undeclared-reference]` block mapper and `archive-fact` (both runtimes; blockquote position is not the test — Vision footers are blockquoted and real); the seeded header now reads `id: <kebab-id>`. (2) The protocol's "propose a newer ADR … wait for approval" put non-decisions into the decision record (five `Proposed` ADRs for shipped decisions in the field); ruling: an ADR is written only on acceptance, proposals live in the repo's register (e.g. `docs/arch-decisions/RFC.md`, `RFC-NNNN`), never as a `Proposed` ADR. Protocol text changed → semantic row; converges by re-copy of the memory-lint + archive-fact built-ins, `DECAY.md`, the schema and a still-stock protocol |
 | 4.42.0 | **An opt-in seed for the governance pair + the `optional` MANIFEST policy (MINOR):** maintainer proposal (RFC-0005, 2026-09-18) after two field repos adopted an ADR ledger by hand. Plain `seed-copy` rejected — it would install governance ceremony everywhere and re-offer the pair after a deliberate deletion (RFC-0002). New seventh policy `optional`: installed only on an explicit `--adopt <target>` (`dir/` adopts every optional row under it), never touched when present, listed as an `optional` note when absent — never pending, never re-asked on upgrade. Skeletons `templates/docs/arch-decisions/ADR.md` + `RFC.md` (project-neutral); `ENABLE.md` Step 10 offers the pair once; both reconcile runtimes + 4 mirrored tests each (42); schema, `MANIFEST.md`, docs. No protocol change; a target converges by re-copy of `.agent/schema.md` and sees two `optional` notes |
+| 4.42.1 | **Declare a fact consulted to make a decision; check for declaration gaps before archiving one (PATCH):** field report (mercury-composable and mercury, 2026-10-04, on v4.42.0): three in-use facts archived in five weeks. Each had been consulted to make a decision — a convention reasoned from, a release-sweep rule applied, a Redis retry contract pinned by tests — and declared `(none)`; `refresh-metadata` read reliance as non-use, the fact decayed, a review archived it, and `memory-lint` reported clean. A consultation leaves no diff, so `[undeclared-reference]` cannot see it; only a human-guided subject read caught each one. `DECAY.md` §2 already counted reliance as a use, but the working rule the agent reads at session start named only the two ends (an edit or a closure is a use; inspecting alone is not). Now: the protocol tracks ids *relied on* with a decision test (it shaped a decision — you would have decided differently without it), `DECAY.md` §2 states the same, and `REVIEW.md` step 6 gains **declaration gaps (facts)** — before archiving a fact as faded, search the `archive_window` logs for its subject (not its id, outside `## Memory Review` / `## Memory References`) and read the hits; an exercised-but-undeclared subject keeps the fact and is declared in the review's log. A mention is not an exercise (`ot-review-step6-prose`). The optional `[overdue-subject-seen]` lint aid is held as RFC-0006. Protocol text changed → semantic row; converges by re-copy of `DECAY.md`, `REVIEW.md`, `.agent/schema.md` and a still-stock protocol |
 
 
 Each enabled repo records what it is on in **`.agent/version.md`**:
@@ -2702,3 +2703,47 @@ pair once, at enable; Mode B lists an unadopted pair as two `optional` notes and
 **Verify:** the reconcile converges with the two `optional` notes present and nothing pending for them;
 `--adopt docs/nope.md` is refused; in the tool repo both reconcile suites pass (42 mirrored tests each)
 and `--check-manifest` is OK in both runtimes.
+
+## Rung: 4.42.0 → 4.42.1 — declare a fact consulted to make a decision; check for declaration gaps before archiving one (PATCH)
+
+**What changed:** a field report from the maintainer of mercury-composable and mercury (2026-10-04, on
+v4.42.0). In five weeks, three facts still in use were archived (or demoted toward it) because the
+sessions that relied on them never declared them: a convention reasoned from in plain sight, a release
+applying the release-sweep rule, a CI-flake fix whose tests pinned a recorded Redis retry contract. Each
+time the footers and the reference log agreed, `memory-lint` reported clean, and only a human-guided read
+of the window's logs for the fact's *subject* reversed the archival. `DECAY.md` §2 already defined
+*Referenced* as "relied on or reinforced", but the protocol's working rule named only the two ends — an
+edit or a closure is a use, inspecting alone is not — and a consultation is neither; it also leaves no
+diff, so `[undeclared-reference]` (v4.41.0) cannot see it. This repo had the same exposure:
+`git-hook-fragment-dispatch` was archived by the 2026-09-18 review although v4.40.1 and v4.41.0 had both
+changed the `50-` hook fragments in the window — the maintainer reversed it by hand.
+
+Three guidance changes, no check changed:
+
+- **Protocol** (*Maintain memory while working*): track every fact id *relied on*, created, reactivated or
+  closed; a fact is relied on when it shaped a decision — you would have decided differently without it.
+  An edit or a closure is always a use; a read that shaped nothing is not. Nothing can catch an
+  undeclared consultation, so the agent declares it when it writes the log.
+- **`DECAY.md` §2:** *Referenced* carries the same decision test, and names the review-time backstop.
+- **`REVIEW.md` step 6, declaration gaps (facts)** — the fact-level twin of step 5's thread rule: for each
+  fact archived as faded, search the `archive_window` logs for its subject's distinctive terms (outside
+  `## Memory Review` / `## Memory References`) and read the hits; a session that exercised the subject —
+  changed, tested, applied or decided by it — without declaring the id makes the fade a declaration gap:
+  move the fact back, declare it under the review's `## Memory References` citing that session, and note
+  the reversal in `## Memory Review`. A mention is not an exercise (the `ot-review-step6-prose` livelock).
+
+**Steps:**
+
+1. **Reconcile** (or hand-walk `MANIFEST.md`): re-copies `DECAY.md`, `REVIEW.md` and `.agent/schema.md`.
+   Built-ins, hooks and CI floors are unchanged.
+2. **Protocol text changed — the mandated Semantic step:** if the target's `memory/PROTOCOL.md` is
+   byte-identical to the **4.42.0** template, re-copy it. If customized, arbitrate per `ENABLE.md` §5i:
+   the *Maintain memory while working* bullet now tracks ids *relied on* with the decision test and says
+   an undeclared consultation must be declared when writing the log — never drop local directives. A
+   local convention that already says this (mercury-composable and mercury each carry one) may shrink to
+   a pointer to the protocol text; the human decides.
+3. **Stamp** `.agent/version.md` → `version: 4.42.1`, `last_upgraded: <today>`, preserving `enabled_with`
+   and `mode`. Use an edit/read-before-write path, never truncate first.
+
+**Verify:** `memory-lint` output is unchanged by the upgrade (no check changed); the reconcile converges;
+the next review that archives a fact as faded records its subject read in the `## Memory Review` block.

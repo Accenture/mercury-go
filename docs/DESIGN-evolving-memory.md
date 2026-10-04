@@ -96,7 +96,9 @@ Session logs gain one lightweight section. The agent writes it at session end
 - Reactivated: drizzle-vs-prisma
 ```
 
-- **Referenced** — ids the session relied on or reinforced.
+- **Referenced** — ids the session relied on or reinforced. *Relied on* = consulted to make a
+  decision — the session would have decided differently without the fact (v4.42.1); a read
+  that shaped nothing is not a use.
 - **Created** — new facts this session added to `continuity.md` (born `working`).
 - **Reactivated** — ids pulled back from the archive because they came up again.
 
