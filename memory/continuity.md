@@ -197,6 +197,20 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   2026-09-18 although v4.40.1 and v4.41.0 changed its `50-` fragment in the window). The optional
   `[overdue-subject-seen]` lint aid is RFC-0006 (open — measure first).
   <!-- id: declare-consulted-references | created: 2026-10-04 | last_used: 2026-10-04 | uses: 1 | tier: working | origin: 2026-10-04-162944 -->
+- **A family-repo upgrade runs in a throwaway `git worktree` of `origin/main` — unconditionally, never in the
+  checkout** (maintainer, adopted 2026-09-18; recorded as a Key Decision 2026-10-04). Why: in the v4.41.1
+  rollout mercury-composable had an active session — a "clean, on main" snapshot went stale within a second of
+  the helper's `checkout -b`, so the upgrade commit landed on that session's feature branch and swept its
+  in-progress `pom.xml` edit into it (the session recovered by resetting its branch). Any family repo may have
+  a live session, so the worktree path applies to all of them, every rollout. Mechanics: one worktree per repo
+  on a fresh `agent-memory-v<version>` branch; reconcile with `--forge github` — it reads no forge from a
+  worktree's `.git` pointer file and would otherwise treat the forge as unknown and seed the GitLab floor; the
+  dry-run's remaining hook item is checked in the main checkout (`core.hooksPath=.githooks`); remove the worktree
+  once the branch is pushed; after merge, delete the local branch only when its content is on `origin/main`
+  (ancestry — or tree equality with the squash commit where the repo squash-merges, as mercury-composable does).
+  Used at every rollout since: v4.41.2, v4.42.0, v4.42.1. Source logs: 2026-09-18-230858 (incident + rule),
+  2026-09-18-215724 (`--forge github`), 2026-10-04-164714 (squash cleanup).
+  <!-- id: family-upgrade-worktree-path | created: 2026-10-04 | last_used: 2026-10-04 | uses: 1 | tier: working | origin: 2026-10-04-165030 -->
 
 ## Open Threads
 
