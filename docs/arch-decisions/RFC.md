@@ -91,6 +91,15 @@ written is not recommended.
 *Progress (v4.42.2):* option (c) chosen by the maintainer (2026-10-04) and shipped — `REVIEW.md` step 6 checks
 the window's commits first and holds every hit to the decision test. Open: (b), then (a).
 
+*Progress (v4.42.3):* (b) answered in large part by the downstream itself. Their maintainer ran the v4.42.2 check
+on the first real candidates and measured it on both repositories (2026-10-04): it caught the release-sweep
+conventions in both mercury-composable (`templates/*`, 1.1% of commits) and mercury (`templates/*/Cargo.toml`,
+0.5%) — each applied by the v4.12.20 release and declared by neither release log — and missed only the Snyk
+placeholder rule, whose paths were busy over all history (15%) and quiet in the window (1 of 112). Shipped as
+v4.42.3: a hub must be busy both ways (a single window commit never makes one), the window starts at the full
+timestamp of the log before it, commits map in history order. Still open: (a), the `[overdue-path-touched]`
+advisory — now with a field-tested rule to implement.
+
 **Resolution.** —
 
 ## RFC-0005 — An opt-in seed for the governance pair: sample `ADR.md` + `RFC.md` templates
