@@ -7,7 +7,7 @@
 ## Project State
 
 - **project:** agent-memory
-- **status:** v4.42.2 — official Accenture open source in the Mercury family (graduated 2026-09-10; home `Accenture/mercury-go`, docs `accenture.github.io/mercury-go`); a vendor-neutral, no-code (markdown) shared-AI-memory + AI-enablement tool: backward memory (decay/review/archive), forward VBDI loop, cross-vendor skills layer, declarative enable/upgrade (MANIFEST reconcile), forge-aware ritual triggers (GitHub/GitLab/AzDO), the merge-scale thread layout (`memory/open-threads/`), and the stalled-thread human closure gate (`[thread-stale]` + `REVIEW.md` step 8). Detail: What's Been Built below; per-version history: `UPGRADE.md` + session logs.
+- **status:** v4.42.3 — official Accenture open source in the Mercury family (graduated 2026-09-10; home `Accenture/mercury-go`, docs `accenture.github.io/mercury-go`); a vendor-neutral, no-code (markdown) shared-AI-memory + AI-enablement tool: backward memory (decay/review/archive), forward VBDI loop, cross-vendor skills layer, declarative enable/upgrade (MANIFEST reconcile), forge-aware ritual triggers (GitHub/GitLab/AzDO), the merge-scale thread layout (`memory/open-threads/`), and the stalled-thread human closure gate (`[thread-stale]` + `REVIEW.md` step 8). Detail: What's Been Built below; per-version history: `UPGRADE.md` + session logs.
 - **last_enabled:** 2026-06-12
 - **last_review:** 2026-09-18 | through 2026-09-19-000416
 - **last_invariant_check:** 2026-08-22 | through 2026-08-22-174808 (all 6 confirmed by Eric — walkthrough with live-tree evidence; no-build-step wording refreshed)
@@ -196,10 +196,13 @@ GitHub Copilot, GPT/Codex agents, Zed AI, Gemini CLI.
   of RFC-0006 option c):** the read starts with the window's commits to the paths the fact names, then the
   logs — measured on this repo, the log search found 0 of 2 true sessions and the commits 2 of 2 — and
   every hit is held to the decision test, so a fact recording an event (a release shipped) is not kept
-  alive by later work on the same code. Why: three in-use facts archived downstream in five weeks with
+  alive by later work on the same code. **v4.42.3 (mercury-composable's field measurement):** a hub is a path
+  busy over all history *and* in the window (a single window commit never makes one), the window starts at
+  the full timestamp of the log before it, and a commit maps to the next log-carrying commit in history.
+  Why: three in-use facts archived downstream in five weeks with
   `memory-lint` clean, and this repo's own `git-hook-fragment-dispatch` (archived 2026-09-18 although
-  v4.40.1 and v4.41.0 changed its `50-` fragment in the window). RFC-0006 stays open for a downstream
-  validation and a path-based lint advisory.
+  v4.40.1 and v4.41.0 changed its `50-` fragment in the window). RFC-0006 stays open for a path-based lint
+  advisory.
   <!-- id: declare-consulted-references | created: 2026-10-04 | last_used: 2026-10-04 | uses: 1 | tier: working | origin: 2026-10-04-162944 -->
 - **A family-repo upgrade runs in a throwaway `git worktree` of `origin/main` — unconditionally, never in the
   checkout** (maintainer, adopted 2026-09-18; recorded as a Key Decision 2026-10-04). Why: in the v4.41.1

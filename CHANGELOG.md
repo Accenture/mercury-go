@@ -19,6 +19,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > `accenture.github.io/mercury-go`). This is a status change, not a release: `VERSION` stays
 > **4.39.2**, there is no upgrade rung, and enabled repositories need no action.
 
+## Version 4.42.3, 10/5/2026
+
+> **The step-6 commit check, measured in the field (PATCH).** The maintainer of mercury-composable and mercury
+> ran v4.42.2's check on its first real candidates and measured it on both repositories. In mercury-composable
+> two conventions were past `archive_window`, both applied without a declaration by the v4.12.20 release (a
+> 43-file version sweep, squash `9e515825`). The check caught `conv-template-version-sweep` (`templates/*`, 1.1%
+> of all commits) and missed `snyk-retired-manifest-placeholders`: since their retirement, the two modules it
+> governs are placeholder poms only a release sweep touches — 15% of all commits, but 1 of the window's 112, the
+> release itself. The all-history 5% cut left the paths out and the log search found nothing, so the next review
+> would have archived a rule the last release relied on. In mercury the same release pattern was caught
+> (`templates/*/Cargo.toml`, 0.5%), and its release log had not declared the rule either — the write-time half
+> of v4.42.1 was needed in both repositories.
+
+### Changed
+
+- **`REVIEW.md` step 6, the commit check:**
+  - **A hub is busy both ways:** more than 5% of all commits **and** more than 5% of the window's commits, at
+    least two of them. A path that was busy once and is quiet now comes back — it carries exactly the rare
+    commit the check exists for — and a path the window touched once is never a hub. The two-commit floor is
+    the tool's addition: in a window of fewer than about twenty commits one touch already exceeds 5%, so the
+    re-admission would never fire in a quiet repository.
+  - **The window starts at the full timestamp of the log before it,** taken from its file name. git completes a
+    bare `--since` date with the current time of day (6 vs 11 commits in the tool repo, 108 vs 112 in
+    mercury-composable); and a session's commits precede its own log, so the window starts where the previous
+    log ends — the tool's refinement of the report's "oldest window log".
+  - **A commit without a log maps to the log carried by the next log-carrying commit in history,** never the next
+    log by file name: a log is named when first written and enriched by later commits (by name, the release
+    squash mapped to an unrelated session).
+- **`.agent/schema.md`:** a fact that governs specific files names them in backticks — the review reads only
+  backticked paths, and the Snyk fact had named its paths in plain text.
+- **Lockstep:** `UPGRADE.md` row + `4.42.2 → 4.42.3` rung, README table; `VERSION` → 4.42.3. No protocol text
+  change → no Semantic steps row.
+
+### Verified
+
+- Replaying the procedure as now written: mercury-composable's Snyk rule yields exactly `9e515825`, mapped in
+  history order to the release session's log; the tool repo's `git-hook-fragment-dispatch` still yields exactly
+  the v4.40.1 and v4.41.0 commits.
+- On the tool repo's RFC-0006 corpus (the 9 faded fact archivals) the both-ways cut alone changes nothing — 2 of
+  2 true sessions, no flag on a correct archival — because this repo's small windows make any touch exceed 5%;
+  with the two-commit floor, recall stays 2 of 2 at the cost of 6 flags across 5 of the 8 correct archivals, all
+  release records that the decision test dismisses. History-order mapping changes none of RFC-0006's numbers
+  (this repo's PR commits carry their own logs).
+
+Targets: reconcile re-copies `REVIEW.md` and `.agent/schema.md`; nothing else changes, and `memory-lint` output is
+unchanged. Credit: the mercury-composable / mercury maintainer's report, with the field case, a two-repository
+measurement and evidence for each point.
+
 ## Version 4.42.2, 10/4/2026
 
 > **The step-6 subject read starts with the window's commits (PATCH).** v4.42.1 told the reviewer to search

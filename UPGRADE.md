@@ -151,6 +151,7 @@ dev-numbered 4.22–4.25 — into a single MINOR over the released 4.21.0.)*
 | 4.42.0 | **An opt-in seed for the governance pair + the `optional` MANIFEST policy (MINOR):** maintainer proposal (RFC-0005, 2026-09-18) after two field repos adopted an ADR ledger by hand. Plain `seed-copy` rejected — it would install governance ceremony everywhere and re-offer the pair after a deliberate deletion (RFC-0002). New seventh policy `optional`: installed only on an explicit `--adopt <target>` (`dir/` adopts every optional row under it), never touched when present, listed as an `optional` note when absent — never pending, never re-asked on upgrade. Skeletons `templates/docs/arch-decisions/ADR.md` + `RFC.md` (project-neutral); `ENABLE.md` Step 10 offers the pair once; both reconcile runtimes + 4 mirrored tests each (42); schema, `MANIFEST.md`, docs. No protocol change; a target converges by re-copy of `.agent/schema.md` and sees two `optional` notes |
 | 4.42.1 | **Declare a fact consulted to make a decision; check for declaration gaps before archiving one (PATCH):** field report (mercury-composable and mercury, 2026-10-04, on v4.42.0): three in-use facts archived in five weeks. Each had been consulted to make a decision — a convention reasoned from, a release-sweep rule applied, a Redis retry contract pinned by tests — and declared `(none)`; `refresh-metadata` read reliance as non-use, the fact decayed, a review archived it, and `memory-lint` reported clean. A consultation leaves no diff, so `[undeclared-reference]` cannot see it; only a human-guided subject read caught each one. `DECAY.md` §2 already counted reliance as a use, but the working rule the agent reads at session start named only the two ends (an edit or a closure is a use; inspecting alone is not). Now: the protocol tracks ids *relied on* with a decision test (it shaped a decision — you would have decided differently without it), `DECAY.md` §2 states the same, and `REVIEW.md` step 6 gains **declaration gaps (facts)** — before archiving a fact as faded, search the `archive_window` logs for its subject (not its id, outside `## Memory Review` / `## Memory References`) and read the hits; an exercised-but-undeclared subject keeps the fact and is declared in the review's log. A mention is not an exercise (`ot-review-step6-prose`). The optional `[overdue-subject-seen]` lint aid is held as RFC-0006. Protocol text changed → semantic row; converges by re-copy of `DECAY.md`, `REVIEW.md`, `.agent/schema.md` and a still-stock protocol |
 | 4.42.2 | **The step-6 subject read starts with the window's commits (PATCH):** RFC-0006's measurement (2026-10-04) over every fact this repo ever archived as faded — nine of 67 faded archivals; one wrongful (`git-hook-fragment-dispatch`, two true sessions), eight correct release records. The v4.42.1 log search (backticked terms and title words in log text) found 0 of 2 true sessions: they describe the work in prose ("the pre-commit fragment"), not by the paths the fact names. The window's commits touching those paths found 2 of 2, and with hub files left out (paths touched by ≤ 5% of all commits) flagged nothing on the eight correct archivals. `REVIEW.md` step 6: commits first (`git log --since=<oldest window log> -- <paths>`), then logs; every hit held to the decision test — and a fact recording an event (a release shipped, work completed) is not kept alive by later work on the same code. `DECAY.md` §2 aligned. No protocol change; converges by re-copy of `REVIEW.md` and `DECAY.md` |
+| 4.42.3 | **The step-6 commit check, measured in the field (PATCH):** mercury-composable / mercury report (2026-10-04, on v4.42.2). In mercury-composable the check caught `conv-template-version-sweep` (`templates/*`, 1.1% of commits) but missed `snyk-retired-manifest-placeholders`: its retired modules' paths were touched by 15% of all commits and 1 of the window's 112 — the v4.12.20 release sweep that applied the rule undeclared — so the all-history 5% cut left them out. Three fixes, all verified on both repos' histories: a hub is a path busy over all history **and** in the window (more than 5% of each, at least two window commits — a path the window touched once is never a hub); the window starts at the full timestamp of the log before it (a bare `--since` date is completed with the current time of day: 6 vs 11 commits here, 108 vs 112 there); a commit without a log maps to the log carried by the next log-carrying commit in history, never the next log by file name. Schema: a fact that governs files names them in backticks. On the tool repo's RFC-0006 corpus the new cut keeps 2 of 2 true sessions and adds 6 flags across 5 of 8 correct archivals (all release records the decision test dismisses). No protocol change; converges by re-copy of `REVIEW.md` and `.agent/schema.md` |
 
 
 Each enabled repo records what it is on in **`.agent/version.md`**:
@@ -2778,3 +2779,41 @@ a live rule, decision or contract can be relied on that way. `DECAY.md` §2's ba
 **Verify:** `memory-lint` output is unchanged by the upgrade (no check changed); the reconcile converges; the
 next review that archives a fact as faded records the commit check alongside the log search in its
 `## Memory Review` block.
+
+## Rung: 4.42.2 → 4.42.3 — the step-6 commit check, measured in the field (PATCH)
+
+**What changed:** the maintainer of mercury-composable and mercury ran v4.42.2's commit check on its first real
+candidates — two mercury-composable conventions past `archive_window`, both applied without a declaration by the
+v4.12.20 release (squash `9e515825`, a 43-file version sweep). The check caught `conv-template-version-sweep`
+(`templates/*`, touched by 1.1% of all commits) and missed `snyk-retired-manifest-placeholders`: since their
+retirement the two modules it governs are placeholder poms that only a release sweep touches — 15% of all commits,
+but 1 of the window's 112, the release itself. The all-history 5% cut left both paths out, and the log search found
+nothing, so the next review would have archived a rule the last release relied on. The report adds two precision
+points and a schema suggestion; the tool repo reproduced each:
+
+- **Hub both ways.** A path is a hub only when it is touched by more than 5% of all commits **and** by more than 5%
+  of the window's commits, at least two of them. Busy-once-quiet-now paths come back (each carries few window
+  commits by construction); paths busy in the window but quiet over history stay in, as before. The two-commit
+  floor is the tool's addition: in a window of fewer than about twenty commits a single touch already exceeds 5%,
+  so without it the re-admission never fires in a quiet repository (the tool repo's windows hold 14–47 commits).
+- **Full timestamp.** `git log --since=<bare date>` is completed with the current time of day (tool repo: 6 vs 11
+  commits; mercury-composable: 108 vs 112). The window starts at the full timestamp of the log *before* it —
+  the tool's refinement of the report's "oldest window log": a session's commits precede its own log.
+- **History-order mapping.** A commit without a log maps to the log carried by the next log-carrying commit in
+  history. By file name, the squash `9e515825` mapped to an unrelated session; in history order it maps to
+  `2026-09-30-221603.md`, the release session, enriched through the release.
+- **Schema:** a fact that governs specific files names them in backticks — the Snyk fact named its paths without
+  them, so even the literal procedure could not reach them.
+
+**Steps:**
+
+1. **Reconcile** (or hand-walk `MANIFEST.md`): re-copies `REVIEW.md` and `.agent/schema.md`. Built-ins, hooks, CI
+   floors and the protocol are unchanged, so there is no Semantic step.
+2. **Optional, by hand:** backtick the paths a live fact governs where it names them in plain text (the review
+   reads only backticked paths). A team carrying evidence for a pending review in an open thread keeps it there.
+3. **Stamp** `.agent/version.md` → `version: 4.42.3`, `last_upgraded: <today>`, preserving `enabled_with` and
+   `mode`. Use an edit/read-before-write path, never truncate first.
+
+**Verify:** `memory-lint` output is unchanged by the upgrade (no check changed); the reconcile converges; the
+documented commands, replayed, find `9e515825` for the Snyk rule in mercury-composable and the v4.40.1 / v4.41.0
+commits for `git-hook-fragment-dispatch` in the tool repo.
