@@ -14,4 +14,4 @@
   Still open: (a) shipping `[overdue-path-touched]` on the v4.42.3 rule — the maintainer's call.
   → serves: vision-agent-memory (drift is detectable, never silent)
   → proposal: RFC-0006 in `docs/arch-decisions/RFC.md` (the reasoning lives there; this thread holds the state)
-  <!-- id: overdue-subject-seen-advisory | created: 2026-10-04 | last_used: 2026-10-04 | uses: 1 | tier: working | origin: 2026-10-04-162944 -->
+  <!-- id: overdue-subject-seen-advisory | created: 2026-10-04 | last_used: 2026-10-05 | uses: 4 | tier: working | origin: 2026-10-04-162944 -->

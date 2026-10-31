@@ -16,4 +16,4 @@
   `--adopt`, never touched, listed for reference, never pending), first used for the governance pair (RFC-0005 →
   ADR-0009). Still open: which of the remaining `seed-copy` rows, if any, should move to it (RFC-0002).
   → proposal: RFC-0002 in `docs/arch-decisions/RFC.md` (the reasoning lives there; this thread holds the state)
-  <!-- id: ot-seed-copy-deliberate-absence | created: 2026-09-17 | last_used: 2026-09-18 | uses: 5 | tier: working | origin: 2026-09-17-002547 -->
+  <!-- id: ot-seed-copy-deliberate-absence | created: 2026-09-17 | last_used: 2026-09-19 | uses: 6 | tier: working | origin: 2026-09-17-002547 -->

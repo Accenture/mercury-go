@@ -106,3 +106,20 @@
 - onboarding-efficiency-v4380 — Shipped v4.38.0 (MINOR) — consumer routing + close-record economy. From the — faded — 2026-Q3.md
 - protocol-pointer-enterprise-activation — (blueprint — SHIPPED v4.37.0 MINOR, 2026-08-21) Protocol behind a one-line root — faded — 2026-Q3.md
 - ot-reverify-invariants-20260814 — Re-verify invariants — all six confirmed by Eric, 2026-08-22 (one-by-one — faded — 2026-Q3.md
+- agents-shim-activation-validated — The `AGENTS.md` one-line shim (v4.37.0) activates the protocol across vendors in live use: — faded — 2026-Q4.md
+- bp-sdlc-overlay — (blueprint — DROPPED at the closure gate 2026-09-16, stalled 157 sessions) *(optional)* SD… — faded — 2026-Q4.md
+- merge-honesty-v4391 — Shipped v4.39.1 (PATCH) — same-thread merge claim: honest boundary (PR pending — faded — 2026-Q4.md
+- merge-scale-v4390 — Shipped v4.39.0 (MINOR) — merge-scale memory: threads as files (PR pending — faded — 2026-Q4.md
+- ot-agents-native-activation-canary — Field canary: AGENTS.md-native activation — CONFIRMED, closed 2026-09-16. All three canari… — faded — 2026-Q4.md
+- ot-before-session-cursor-kiro-backlog — (backlog) Before-session presence for Cursor/Kiro — closed at the closure gate 2026-09-16 — faded — 2026-Q4.md
+- ot-bitbucket-forge-backlog — (backlog) Bitbucket forge support — UNLOADED 2026-09-16 (Eric: reactivate only when anothe… — faded — 2026-Q4.md
+- ot-close-stalled-threads-20260916 — Close stalled threads (due) — dispositioned 2026-09-16 (first live exercise of `REVIEW.md`… — faded — 2026-Q4.md
+- ot-enterprise-github-migration — Migrate to enterprise GitHub — DONE 2026-09-10 (graduation). agent-memory was promoted — faded — 2026-Q4.md
+- ot-publish-github-done — Publish to GitHub — DONE 2026-06-18. Migrated GitLab → public GitHub — faded — 2026-Q4.md
+- pre-commit-secret-guard-v4340 — Shipped v4.34.0 (MINOR) — pre-commit secret guard on both surfaces (memory + config). — faded — 2026-Q4.md
+- secret-fp-guidance-ident-v4381 — Shipped v4.38.1 (PATCH) — scanner-neutral guidance constant ([PR #26](https://github.com/a… — faded — 2026-Q4.md
+- secret-scan-waiver-abort-v4392 — Shipped v4.39.2 (PATCH) — CI secret-scan waiver: silent abort on waived last file. — faded — 2026-Q4.md
+- secret-template-default-v4334 — Shipped v4.33.4 (PATCH) — reject non-empty `${…}` defaults in `[secret-material]`. — faded — 2026-Q4.md
+- secret-test-fixtures-env — Hardened `memory-lint` test fixtures against repo secret-scanner FPs (no release — faded — 2026-Q4.md
+- vbdi-lifecycle-direction — Build a VBDI lifecycle layer — closed at the closure gate 2026-09-16 (stalled 94 sessions)… — faded — 2026-Q4.md
+- ot-stalled-thread-closure-gate — Stalled open threads → human closure gate — SHIPPED v4.40.0 (MINOR), 2026-09-16. Mercury-c… — faded — 2026-Q4.md
