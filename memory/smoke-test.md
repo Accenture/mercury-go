@@ -42,3 +42,4 @@ review. Don't edit the questions to make them pass.
 | 2026-06-14 | (P4 enable) | — | baseline — run the test to populate |
 | 2026-08-14 | 2026-08-14-011037 | 12/12 | none |
 | 2026-09-18 | 2026-09-19-000416 | 12/12 | none (run alongside the review; Q11's version range in the question text is dated — answered from the status line + recent logs, questions unchanged) |
+| 2026-10-31 | 2026-10-31-023756 | 12/12 | none (run alongside the review; Q10's pointer names the `CLAUDE.md` architecture section, gone since 2026-06-14 — answered from `memory/instructions.md`, questions unchanged) |
