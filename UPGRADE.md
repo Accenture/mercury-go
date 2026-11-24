@@ -152,6 +152,7 @@ dev-numbered 4.22–4.25 — into a single MINOR over the released 4.21.0.)*
 | 4.42.1 | **Declare a fact consulted to make a decision; check for declaration gaps before archiving one (PATCH):** field report (mercury-composable and mercury, 2026-10-04, on v4.42.0): three in-use facts archived in five weeks. Each had been consulted to make a decision — a convention reasoned from, a release-sweep rule applied, a Redis retry contract pinned by tests — and declared `(none)`; `refresh-metadata` read reliance as non-use, the fact decayed, a review archived it, and `memory-lint` reported clean. A consultation leaves no diff, so `[undeclared-reference]` cannot see it; only a human-guided subject read caught each one. `DECAY.md` §2 already counted reliance as a use, but the working rule the agent reads at session start named only the two ends (an edit or a closure is a use; inspecting alone is not). Now: the protocol tracks ids *relied on* with a decision test (it shaped a decision — you would have decided differently without it), `DECAY.md` §2 states the same, and `REVIEW.md` step 6 gains **declaration gaps (facts)** — before archiving a fact as faded, search the `archive_window` logs for its subject (not its id, outside `## Memory Review` / `## Memory References`) and read the hits; an exercised-but-undeclared subject keeps the fact and is declared in the review's log. A mention is not an exercise (`ot-review-step6-prose`). The optional `[overdue-subject-seen]` lint aid is held as RFC-0006. Protocol text changed → semantic row; converges by re-copy of `DECAY.md`, `REVIEW.md`, `.agent/schema.md` and a still-stock protocol |
 | 4.42.2 | **The step-6 subject read starts with the window's commits (PATCH):** RFC-0006's measurement (2026-10-04) over every fact this repo ever archived as faded — nine of 67 faded archivals; one wrongful (`git-hook-fragment-dispatch`, two true sessions), eight correct release records. The v4.42.1 log search (backticked terms and title words in log text) found 0 of 2 true sessions: they describe the work in prose ("the pre-commit fragment"), not by the paths the fact names. The window's commits touching those paths found 2 of 2, and with hub files left out (paths touched by ≤ 5% of all commits) flagged nothing on the eight correct archivals. `REVIEW.md` step 6: commits first (`git log --since=<oldest window log> -- <paths>`), then logs; every hit held to the decision test — and a fact recording an event (a release shipped, work completed) is not kept alive by later work on the same code. `DECAY.md` §2 aligned. No protocol change; converges by re-copy of `REVIEW.md` and `DECAY.md` |
 | 4.42.3 | **The step-6 commit check, measured in the field (PATCH):** mercury-composable / mercury report (2026-10-04, on v4.42.2). In mercury-composable the check caught `conv-template-version-sweep` (`templates/*`, 1.1% of commits) but missed `snyk-retired-manifest-placeholders`: its retired modules' paths were touched by 15% of all commits and 1 of the window's 112 — the v4.12.20 release sweep that applied the rule undeclared — so the all-history 5% cut left them out. Three fixes, all verified on both repos' histories: a hub is a path busy over all history **and** in the window (more than 5% of each, at least two window commits — a path the window touched once is never a hub); the window starts at the full timestamp of the log before it (a bare `--since` date is completed with the current time of day: 6 vs 11 commits here, 108 vs 112 there); a commit without a log maps to the log carried by the next log-carrying commit in history, never the next log by file name. Schema: a fact that governs files names them in backticks. On the tool repo's RFC-0006 corpus the new cut keeps 2 of 2 true sessions and adds 6 flags across 5 of 8 correct archivals (all release records the decision test dismisses). No protocol change; converges by re-copy of `REVIEW.md` and `.agent/schema.md` |
+| 4.42.4 | **The CI floor's checkout action leaves the retired Node 20 runtime (PATCH):** found in the Mercury family (2026-11-23, on v4.42.3). GitHub's runners have retired the Node 20 runtime for JavaScript actions: a Node 20 action is run on Node 24 and the job carries a deprecation warning. The GitHub floor checked the repository out with `actions/checkout@v4`, which declares Node 20, so every enabled GitHub repository showed the warning on every push and pull request. A workflow does not choose an action's runtime — the action declares it in its own `action.yml`, and `node24` is the newest GitHub offers — so the floor moves to `actions/checkout@v7`. The releases in between change nothing the floor does: v5 is the move to Node 24, v6 keeps the persisted credentials in a file of their own, v7 refuses a fork's pull request under `pull_request_target` and `workflow_run`; the floor runs on `push` and `pull_request`, fetches full history and never pushes. The GitLab and Azure DevOps floors use no GitHub action and are unchanged. A self-hosted runner needs Actions Runner 2.327.1 or later. No protocol change; converges by re-copy of `.github/workflows/agent-memory.yml` |
 
 
 Each enabled repo records what it is on in **`.agent/version.md`**:
@@ -2817,3 +2818,31 @@ points and a schema suggestion; the tool repo reproduced each:
 **Verify:** `memory-lint` output is unchanged by the upgrade (no check changed); the reconcile converges; the
 documented commands, replayed, find `9e515825` for the Snyk rule in mercury-composable and the v4.40.1 / v4.41.0
 commits for `git-hook-fragment-dispatch` in the tool repo.
+
+## Rung: 4.42.3 → 4.42.4 — the CI floor's checkout action leaves the retired Node 20 runtime (PATCH)
+
+**What changed:** GitHub's runners have retired the Node 20 runtime for JavaScript actions: a Node 20 action is
+run on Node 24, and the job carries a deprecation warning. The GitHub floor, `.github/workflows/agent-memory.yml`,
+checked the repository out with `actions/checkout@v4`, which declares Node 20, so every enabled GitHub repository
+showed the warning on every push and pull request. A workflow does not choose an action's runtime — the action
+declares it in its own `action.yml`, and `node24` is the newest runtime GitHub offers — so the floor moves to
+`actions/checkout@v7`, the action's current release on Node 24. Found in the Mercury family (2026-11-23), whose
+four repositories had moved the line by hand before this release.
+
+- **Nothing the floor does changes.** v5 is the move to Node 24; v6 keeps the persisted credentials in a file of
+  their own; v7 refuses a fork's pull request under `pull_request_target` and `workflow_run`. The floor runs on
+  `push` and `pull_request`, fetches full history (`fetch-depth: 0`) and never pushes.
+- **GitLab and Azure DevOps targets are unaffected:** their floors use no GitHub action.
+
+**Steps:**
+
+1. **Reconcile** (or hand-walk `MANIFEST.md`): on a GitHub target, re-copies `.github/workflows/agent-memory.yml`
+   — a verbatim row. A target that already moved the line by hand converges to zero diff on re-copy. Nothing else
+   changes — no scripts, no protocol, no memory-file shape, so no adapter re-sync and no Semantic step.
+2. **Self-hosted runners only:** confirm the Actions Runner is 2.327.1 or later before the upgrade; an older
+   runner cannot start a Node 24 action. GitHub-hosted runners need nothing.
+3. **Stamp** `.agent/version.md` → `version: 4.42.4`, `last_upgraded: <today>`, preserving `enabled_with` and
+   `mode`. Use an edit/read-before-write path, never truncate first.
+
+**Verify:** the next push or pull request runs the `memory` job with no Node.js deprecation annotation;
+`memory-lint` output is unchanged by the upgrade (no check changed); the reconcile converges.

@@ -19,6 +19,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > `accenture.github.io/mercury-go`). This is a status change, not a release: `VERSION` stays
 > **4.39.2**, there is no upgrade rung, and enabled repositories need no action.
 
+## Version 4.42.4, 11/23/2026
+
+> **The CI floor's checkout action leaves the retired Node 20 runtime (PATCH).** GitHub's runners have retired
+> the Node 20 runtime for JavaScript actions: a Node 20 action is run on Node 24, and the job carries a
+> deprecation warning. The GitHub floor this tool installs, `.github/workflows/agent-memory.yml`, checked the
+> repository out with `actions/checkout@v4`, which declares Node 20, so every enabled GitHub repository showed
+> the warning on every push and pull request. A workflow does not choose an action's runtime — the action
+> declares it in its own `action.yml`, and `node24` is the newest runtime GitHub offers — so the remedy is the
+> release of the action that declares it. Found in the Mercury family (2026-11-23): the four repositories moved
+> their own workflows' actions, and the floor was the one line that belonged upstream.
+
+### Changed
+
+- **`.github/workflows/agent-memory.yml` (the GitHub CI floor):** `actions/checkout@v4` → `actions/checkout@v7`,
+  the action's current release on Node 24. The releases in between change nothing the floor does: v5 is the move
+  to Node 24, v6 keeps the persisted credentials in a file of their own, v7 refuses a fork's pull request under
+  `pull_request_target` and `workflow_run`. The floor runs on `push` and `pull_request`, fetches full history and
+  never pushes.
+- **Tool repo only:** `docs.yml` and `tests.yml` take `actions/checkout@v7`, and `docs.yml` takes
+  `actions/setup-python@v7`. Neither workflow is installed in an enabled repository.
+- **Lockstep:** `UPGRADE.md` row + `4.42.3 → 4.42.4` rung, README table; `VERSION` → 4.42.4. No protocol text
+  change → no Semantic steps row. The GitLab and Azure DevOps floors use no GitHub action and are unchanged.
+
+### Verified
+
+- Each action named by the three workflows declares `node24` in its `action.yml`, and the workflows parse as YAML.
+- The floor ran with this exact line in the four family repositories before the release (mercury #418,
+  mercury-composable #665, mercury-python #79, mercury-nodejs #142): the `memory` job passed, and it carries no
+  Node.js deprecation annotation.
+- `tests/*.sh` pass: the waiver test extracts the floor's filter loop verbatim, and the loop is unchanged.
+
+Targets: on a GitHub target, reconcile re-copies `.github/workflows/agent-memory.yml`; a repository that already
+moved the line by hand converges to zero diff. A self-hosted runner needs Actions Runner 2.327.1 or later to start
+a Node 24 action; GitHub-hosted runners need nothing. `memory-lint` output is unchanged.
+
 ## Version 4.42.3, 10/5/2026
 
 > **The step-6 commit check, measured in the field (PATCH).** The maintainer of mercury-composable and mercury
